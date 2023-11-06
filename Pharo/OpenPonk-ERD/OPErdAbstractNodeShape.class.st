@@ -13,6 +13,14 @@ OPErdAbstractNodeShape >> adornmentCreationBlock: aBlock [
 	adornmentCreationBlock := aBlock
 ]
 
+{ #category : #rendering }
+OPErdAbstractNodeShape >> renderShapeDetails [
+
+	self roassalShape
+		when: RSPositionChangedEvent do: [ self updateRenderFromModel ];
+		when: RSExtentChangedEvent do: [ self updateRenderFromModel ]
+]
+
 { #category : #interactions }
 OPErdAbstractNodeShape >> selectableInteraction [
 
