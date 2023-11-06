@@ -42,13 +42,6 @@ OPErdExtensionsShape >> renderShapeDetails [
 		label remove]
 ]
 
-{ #category : #hooks }
-OPErdExtensionsShape >> setupHighlight: aHighlightable [
-
-	super setupHighlight: aHighlightable.
-	aHighlightable highlightBorderColor: Color blue
-]
-
 { #category : #'as yet unclassified' }
 OPErdExtensionsShape >> updateDetails [
 	self updateLabel

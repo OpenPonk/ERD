@@ -31,48 +31,44 @@ OPErdAttributeShape >> renderShapeDetails [
 	label := RSLabel new
 		         color: Color black;
 		         height: 11;
-					width: 10;
+		         width: 10;
 		         model: self;
 		         yourself.
 	RSLocation new stick: label on: self roassalShape.
 	border := RSEllipse new
-							radius: (self roassalShape radius);
-		     	         	width: (self roassalShape width);
-							height: (self roassalShape height);
-		               	color: Color transparent;
-							border: (RSBorder new
-								dashArray: #(10 10);
-				   				width: 1.5;
-				   				yourself);
-		               model: self;
-		               yourself.
+		          radius: self roassalShape radius;
+		          width: self roassalShape width;
+		          height: self roassalShape height;
+		          color: Color transparent;
+		          border: (RSBorder new
+				           dashArray: #( 10 10 );
+				           width: 1.5;
+				           yourself);
+		          model: self;
+		          yourself.
 	RSLocation new stick: border on: self roassalShape.
 	innerEllipse := RSEllipse new
-		  					radius: (self roassalShape radius - 3);
-		  					width: (self roassalShape width - 7);
-							height: (self roassalShape height - 7);
-		  					color: Color transparent;
-		  					border: (RSBorder new
-				   						color: Color transparent;
-				  						width: 1.5;
-				   						yourself);
-		  					yourself.
+		                radius: self roassalShape radius - 3;
+		                width: self roassalShape width - 7;
+		                height: self roassalShape height - 7;
+		                color: Color transparent;
+		                border: (RSBorder new
+				                 color: Color transparent;
+				                 width: 1.5;
+				                 yourself);
+		                yourself.
 	RSLocation new stick: innerEllipse on: self roassalShape.
 	self canvas
-		 add: border;
-		 add: label;
-		 add: innerEllipse.
-	self roassalShape when: RSShapeRemovedEvent do: [ 
-		label remove.
-		border remove.
-		innerEllipse remove ]
-]
-
-{ #category : #rendering }
-OPErdAttributeShape >> setupHighlight: aHighlightable [
-
-	super setupHighlight: aHighlightable.
-	aHighlightable highlightBorderColor: Color blue
+		add: border;
+		add: label;
+		add: innerEllipse.
+	self roassalShape
+		when: RSShapeRemovedEvent
+		do: [
+			label remove.
+			border remove.
+			innerEllipse remove ]
+		for: self
 ]
 
 { #category : #'as yet unclassified' }

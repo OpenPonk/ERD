@@ -1,6 +1,6 @@
 Class {
 	#name : #OPErdAbstractNodeShape,
-	#superclass : #OPShape,
+	#superclass : #OPBoundNode,
 	#instVars : [
 		'adornmentCreationBlock'
 	],
@@ -13,30 +13,32 @@ OPErdAbstractNodeShape >> adornmentCreationBlock: aBlock [
 	adornmentCreationBlock := aBlock
 ]
 
-{ #category : #rendering }
-OPErdAbstractNodeShape >> renderShapeDetails [
+{ #category : #interactions }
+OPErdAbstractNodeShape >> selectableInteraction [
 
-	| selectable |
-	selectable := OPRSSelectable new.
-	self setupHighlight: selectable.
-	self roassalShape @ selectable.
-	self roassalShape @ OPRSSelectionDraggable.
-	self roassalShape @ OPRSResizable.
-	self roassalShape
-		when: RSPositionChangedEvent do: [ self updateRenderFromModel ];
-		when: RSExtentChangedEvent do: [ self updateRenderFromModel ]
-]
-
-{ #category : #hooks }
-OPErdAbstractNodeShape >> setupHighlight: aHighlightable [
-
-	aHighlightable highlightAdornments: [ :builder | 
+	| selectableInteraction |
+	selectableInteraction := OPRSSelectable highlightBorderColorBlue.
+	adornmentCreationBlock ifNil: [ ^ selectableInteraction ].
+	selectableInteraction highlightAdornments: [ :builder |
 		builder horizontalLocation
 			outer;
 			right.
 		builder verticalLocation
 			inner;
-			middle.
+			top.
 		builder directionDown.
-		adornmentCreationBlock value: builder ]
+		adornmentCreationBlock value: builder ].
+	^ selectableInteraction
+]
+
+{ #category : #interactions }
+OPErdAbstractNodeShape >> shouldBePositionableByUser [
+
+	^ true
+]
+
+{ #category : #interactions }
+OPErdAbstractNodeShape >> shouldBeResizableByUser [
+
+	^ true
 ]
