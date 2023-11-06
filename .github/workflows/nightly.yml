@@ -1,0 +1,17 @@
+name: Nightly
+
+on:
+  workflow_dispatch:
+    inputs:
+      build-dependent:
+        description: 'Should build dependent repositories? (true/false)'
+        required: false
+        default: false
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  plugins:
+    uses: OpenPonk/ci-scripts/.github/workflows/publish-nightly.yml@master
+    secrets: inherit
