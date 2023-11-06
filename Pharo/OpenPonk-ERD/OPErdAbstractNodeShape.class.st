@@ -17,8 +17,11 @@ OPErdAbstractNodeShape >> adornmentCreationBlock: aBlock [
 OPErdAbstractNodeShape >> renderShapeDetails [
 
 	self roassalShape
-		when: RSPositionChangedEvent do: [ self updateRenderFromModel ];
-		when: RSExtentChangedEvent do: [ self updateRenderFromModel ]
+		when: RSExtentChangedEvent
+		do: [ self updateRenderFromModel ]
+		for: self.
+
+	super renderShapeDetails
 ]
 
 { #category : #interactions }
