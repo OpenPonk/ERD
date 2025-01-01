@@ -1,7 +1,7 @@
 SmalltalkCISpec {
 	#loading : [
 		SCIMetacelloLoadSpec {
-			#baseline : 'ERD',
+			#baseline : 'OpenPonkERD',
 			#directory : 'Pharo',
 			#platforms : [ #pharo ]
 		}
