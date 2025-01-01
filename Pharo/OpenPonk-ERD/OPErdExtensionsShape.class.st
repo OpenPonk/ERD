@@ -1,13 +1,15 @@
 Class {
-	#name : #OPErdExtensionsShape,
-	#superclass : #OPErdAbstractNodeShape,
+	#name : 'OPErdExtensionsShape',
+	#superclass : 'OPErdAbstractNodeShape',
 	#instVars : [
 		'label'
 	],
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdExtensionsShape >> renderBasicShape [
 
 	^ RSEllipse new
@@ -21,33 +23,34 @@ OPErdExtensionsShape >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdExtensionsShape >> renderShapeDetails [
 
 	super renderShapeDetails.
 
 	label := RSLabel new
 		         color: Color black;
-		         height: (self roassalShape height / 4);
-					width: (self roassalShape width);
-					fontSize: (self roassalShape height / 4);
+		         height: self roassalShape height / 4;
+		         width: self roassalShape width;
+		         fontSize: self roassalShape height / 4;
 		         model: self;
 		         yourself.
-	RSLocation new 
+	RSLocation new
 		stick: label on: self roassalShape;
 		center.
-	self canvas
-		add: label.
-	self roassalShape when: RSShapeRemovedEvent do: [ 
-		label remove]
+	self canvas add: label.
+	self roassalShape
+		when: RSShapeRemovedEvent
+		do: [ label remove ]
+		for: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdExtensionsShape >> updateDetails [
 	self updateLabel
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPErdExtensionsShape >> updateLabel [
 	label
 		height: (self roassalShape height / 4);
@@ -56,7 +59,7 @@ OPErdExtensionsShape >> updateLabel [
 		ifTrue: [ label fontSize: (self roassalShape width / 4) ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdExtensionsShape >> updateRenderFromModel [
 	
 	(self modelElement isUnion

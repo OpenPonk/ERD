@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdWeakEntityController,
-	#superclass : #OPErdEntityController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdWeakEntityController',
+	#superclass : 'OPErdEntityController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdWeakEntityController >> canBeTargetFor: aController [
 	^ (aController class == OPErdTotalTransitionController)
 		ifTrue: [ (aController source modelClass == OPErdRelation)
@@ -18,7 +20,7 @@ OPErdWeakEntityController >> canBeTargetFor: aController [
 				ifFalse: [ ^ false ] ] ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdWeakEntityController >> createModelIn: aParentModel [
 
 	^ (super createModelIn: aParentModel)
@@ -26,14 +28,14 @@ OPErdWeakEntityController >> createModelIn: aParentModel [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdWeakEntityController >> sourceIsValid: aModel [
 	(aModel class == self modelClass)
 		ifTrue: [ ^ false ]
 		ifFalse: [ ^ self validSources includes: aModel class ]
 ]
 
-{ #category : #'accessing - DirectedRelationship' }
+{ #category : 'accessing - DirectedRelationship' }
 OPErdWeakEntityController >> validSources [
 "does not include self to avoid self -> self connections if not allowed"
 	^ { OPErdAttribute.

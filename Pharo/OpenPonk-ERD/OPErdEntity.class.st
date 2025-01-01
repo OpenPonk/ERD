@@ -1,51 +1,53 @@
 Class {
-	#name : #OPErdEntity,
-	#superclass : #OPErdNode,
+	#name : 'OPErdEntity',
+	#superclass : 'OPErdNode',
 	#instVars : [
 		'isWeak'
 	],
-	#category : #'OpenPonk-ERD-Models'
+	#category : 'OpenPonk-ERD-Models',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Models'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdEntity >> beNormal [
 	self isWeak: false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdEntity >> beWeak [
 	self isWeak: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdEntity >> diagramElement [
 	^ OPErdEntityShape
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdEntity >> graphmlType [
 	self isWeak 
 		ifTrue: [ ^ #weak ]
 		ifFalse: [ ^ #regularEntity ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPErdEntity >> initialize [
 	super initialize.
 	isWeak := false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdEntity >> isNormal [
 	^ isWeak not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdEntity >> isWeak [
 	^ isWeak 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdEntity >> isWeak: aBoolean [
 	isWeak := aBoolean.
 	self changed

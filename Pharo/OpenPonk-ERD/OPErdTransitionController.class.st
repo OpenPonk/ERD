@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdTransitionController,
-	#superclass : #OPDirectionalRelationshipController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdTransitionController',
+	#superclass : 'OPDirectionalRelationshipController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdTransitionController >> buildEditorForm: aForm [
 
 	super buildEditorForm: aForm.
@@ -26,62 +28,66 @@ OPErdTransitionController >> buildEditorForm: aForm [
 			self diagramElement modelChanged ].
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdTransitionController >> diagramElementClass [
 
 	^ OPErdTransitionShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransitionController >> ensureSourceAndTargetIn: aDiagramController [
 
-	source ifNil: [ 
+	source ifNil: [
 		self source:
 			(aDiagramController showWithoutDependentInDiagramModel:
-				 model source) ].
-	target ifNil: [ 
+				 self model source) ].
+	target ifNil: [
 		self target:
 			(aDiagramController showWithoutDependentInDiagramModel:
-				 model target) ]
+				 self model target) ]
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPErdTransitionController >> internalSubscribeTo: aModel [
+
 	super internalSubscribeTo: aModel.
-	aModel when: OPElementRemoved do: [ :e | self removeController ]
+	aModel
+		when: OPElementRemoved
+		do: [ :e | self removeController ]
+		for: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPErdTransitionController >> isHideable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransitionController >> modelClass [
 	^ OPErdTransition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPErdTransitionController >> removeModel [
 	self model announcer unsubscribe: self.
 	self diagramController model remove: self model
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdTransitionController >> showInDiagram: aDiagramController [
 
 	self ensureSourceAndTargetIn: aDiagramController.
 	^ super showInDiagram: aDiagramController
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdTransitionController >> showWithoutDependentInDiagram: aDiagramController [
 
 	self ensureSourceAndTargetIn: aDiagramController.
 	^ super showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdTransitionController >> updateCheckboxOf: aForm named: aLabel [
 	aForm focusOrder do: [ :comp |
 		(comp className asString = 'SpCheckBoxPresenter')

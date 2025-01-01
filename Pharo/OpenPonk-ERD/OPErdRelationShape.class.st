@@ -1,14 +1,16 @@
 Class {
-	#name : #OPErdRelationShape,
-	#superclass : #OPErdAbstractNodeShape,
+	#name : 'OPErdRelationShape',
+	#superclass : 'OPErdAbstractNodeShape',
 	#instVars : [
 		'label',
 		'identifying'
 	],
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdRelationShape >> renderBasicShape [
 
 	^  RSPolygon new
@@ -18,7 +20,7 @@ OPErdRelationShape >> renderBasicShape [
 		yourself.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdRelationShape >> renderShapeDetails [
 
 	super renderShapeDetails.
@@ -57,7 +59,7 @@ OPErdRelationShape >> renderShapeDetails [
 		for: self
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdRelationShape >> updateRenderFromModel [
 
 	label text: self modelElement name.

@@ -1,57 +1,59 @@
 Class {
-	#name : #OPErdNode,
-	#superclass : #OPModelObject,
-	#category : #'OpenPonk-ERD-Models'
+	#name : 'OPErdNode',
+	#superclass : 'OPModelObject',
+	#category : 'OpenPonk-ERD-Models',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Models'
 }
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> -> aVertex [
 	^ OPErdTransition from: self to: aVertex
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> graphmlType [
 	^ self subclassResponsibility
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> incoming [
 	owner ifNil: [ ^ #() ].
 	^ owner transitions select: [ :each | each target = self ]
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> isDerived [
 	^ false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> isNormal [
 	^ false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> isState [
 	^ true
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> isTransition [
 	^ false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> outgoing [
 	owner ifNil: [ ^ #() ].
 	^ owner transitions select: [ :each | each source = self ]
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> relatedElements [
 	^ (self incoming , self outgoing) asSet asOrderedCollection
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdNode >> removedFrom: aDiagram [
 	self
 		removedFrom: aDiagram

@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdDisjointExtensionController,
-	#superclass : #OPErdExtensionsController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdDisjointExtensionController',
+	#superclass : 'OPErdExtensionsController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdDisjointExtensionController >> createModelIn: aParentModel [
 
 	^ (super createModelIn: aParentModel)

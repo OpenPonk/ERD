@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdExamples,
-	#superclass : #Object,
-	#category : #'OpenPonk-ERD-Examples'
+	#name : 'OPErdExamples',
+	#superclass : 'Object',
+	#category : 'OpenPonk-ERD-Examples',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Examples'
 }
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 OPErdExamples class >> exampleERDsample [
 	| project erd |
 	project := OPProject new name: 'Entity Relationship Diagram'''.
@@ -13,7 +15,7 @@ OPErdExamples class >> exampleERDsample [
 	(OPWorkbench openProject: project) showAllElementsInAllDiagrams
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 OPErdExamples class >> exampleEmpty [
 	| project erd |
 	project := OPProject new name: 'Entity Relationship Diagram'.
@@ -22,7 +24,7 @@ OPErdExamples class >> exampleEmpty [
 	(OPWorkbench openProject: project) showAllElementsInAllDiagrams
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 OPErdExamples class >> menuCommandOn: aBuilder [
 
 	<worldMenu>

@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdRelationController,
-	#superclass : #OPErdNodeController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdRelationController',
+	#superclass : 'OPErdNodeController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdRelationController >> buildEditorForm: aForm [
 	super buildEditorForm: aForm.
 	(aForm addCheckbox: 'Identifying')
@@ -14,13 +16,13 @@ OPErdRelationController >> buildEditorForm: aForm [
 			self diagramElement modelChanged]
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdRelationController >> canBeSourceFor: aController [
 	^ (aController class == OPErdTransitionController) |
 	  (aController class == OPErdTotalTransitionController)
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdRelationController >> canBeTargetFor: aController [
 	^ (aController class == OPErdTotalTransitionController) 
 	  ifTrue: [ (aController source model class == OPErdEntity)
@@ -36,13 +38,13 @@ OPErdRelationController >> canBeTargetFor: aController [
 		ifFalse: [ ^ false ] ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdRelationController >> diagramElementClass [
 
 	^ OPErdRelationShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdRelationController >> modelClass [
 	^ OPErdRelation
 ]

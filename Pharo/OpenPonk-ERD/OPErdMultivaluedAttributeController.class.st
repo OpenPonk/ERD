@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdMultivaluedAttributeController,
-	#superclass : #OPErdAttributeController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdMultivaluedAttributeController',
+	#superclass : 'OPErdAttributeController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdMultivaluedAttributeController >> createModelIn: aParentModel [
 
 	^ (super createModelIn: aParentModel)

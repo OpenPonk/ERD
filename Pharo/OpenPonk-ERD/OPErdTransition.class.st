@@ -1,6 +1,6 @@
 Class {
-	#name : #OPErdTransition,
-	#superclass : #OPModelObject,
+	#name : 'OPErdTransition',
+	#superclass : 'OPModelObject',
 	#instVars : [
 		'source',
 		'target',
@@ -8,10 +8,12 @@ Class {
 		'isTotal',
 		'isInheritance'
 	],
-	#category : #'OpenPonk-ERD-Models'
+	#category : 'OpenPonk-ERD-Models',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Models'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPErdTransition class >> from: aSource to: aTarget [
 	^ self new
 		source: aSource;
@@ -19,7 +21,7 @@ OPErdTransition class >> from: aSource to: aTarget [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPErdTransition class >> from: aSource to: aTarget named: aString [
 	^ self new
 		source: aSource;
@@ -28,43 +30,43 @@ OPErdTransition class >> from: aSource to: aTarget named: aString [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> = otherTransition [
 	^ (otherTransition respondsTo: #isTransition)
 		and: [ otherTransition isTransition
 				and: [ otherTransition represents: self ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> asTransition [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdTransition >> beInheritance [
 	self isInheritance: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransition >> beNormal [
 	self isTotal: false.
 	self isInheritance: false.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdTransition >> beTotal [
 	self isTotal: true
 	
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> detach [
 	super detach.
 	source := nil.
 	target := nil
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdTransition >> graphmlType [
 	self isTotal 
 		ifTrue: [ ^ #total ]
@@ -73,7 +75,7 @@ OPErdTransition >> graphmlType [
 				ifFalse: [ ^ #regular ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> initialize [
 	super initialize.
 	isTotal := false.
@@ -81,80 +83,80 @@ OPErdTransition >> initialize [
 	matchBlock := [ :aValue | (self name splitOn: ',') includes: aValue asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransition >> isInheritance [
 	^ isInheritance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransition >> isInheritance: aBoolean [
 	isInheritance := aBoolean.
 	self changed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPErdTransition >> isNormal [
-	^ (isTotal & isInheritance) not
+	^ (self isTotal & self isInheritance) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> isState [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransition >> isTotal [
 	^ isTotal 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransition >> isTotal: aBoolean [
 	isTotal := aBoolean.
 	self changed
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> isTransition [
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> matchBlock [
 	^ matchBlock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> matchBlock: aOneArgBlock [
 	matchBlock := aOneArgBlock.
 	self changed
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> matches: aValue [
 	^ matchBlock value: aValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> represents: otherTransition [
 	^ super = otherTransition
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> source [
 	^ source
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> source: aVertex [
 	source := aVertex
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> target [
 	^ target
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPErdTransition >> target: aVertex [
 	target := aVertex
 ]

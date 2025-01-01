@@ -1,1 +1,1 @@
-Package { #name : #'OpenPonk-ERD' }
+Package { #name : 'OpenPonk-ERD' }

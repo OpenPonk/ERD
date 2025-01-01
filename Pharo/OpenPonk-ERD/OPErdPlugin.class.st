@@ -1,40 +1,42 @@
 Class {
-	#name : #OPErdPlugin,
-	#superclass : #OPPlugin,
-	#category : #'OpenPonk-ERD-Plugin'
+	#name : 'OPErdPlugin',
+	#superclass : 'OPPlugin',
+	#category : 'OpenPonk-ERD-Plugin',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Plugin'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> diagramControllerClass [
 	^ OPErdController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> icon [
 	^ OPCoreIcons opErdDiagramIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> layouterClass [
 	^ OPErdLayouter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> modelClass [
 	^ OPErd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> modelSerializerClass [
 	^ OPErdModelSerializer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> name [
 	^ 'ER Diagram'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdPlugin >> supportsHidingElements [
 	^ true
 ]

@@ -1,19 +1,21 @@
 Class {
-	#name : #OPErdAbstractNodeShape,
-	#superclass : #OPBoundNode,
+	#name : 'OPErdAbstractNodeShape',
+	#superclass : 'OPBoundNode',
 	#instVars : [
 		'adornmentCreationBlock'
 	],
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdAbstractNodeShape >> adornmentCreationBlock: aBlock [
 
 	adornmentCreationBlock := aBlock
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdAbstractNodeShape >> renderShapeDetails [
 
 	self roassalShape
@@ -24,7 +26,7 @@ OPErdAbstractNodeShape >> renderShapeDetails [
 	super renderShapeDetails
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPErdAbstractNodeShape >> selectableInteraction [
 
 	| selectableInteraction |
@@ -42,13 +44,13 @@ OPErdAbstractNodeShape >> selectableInteraction [
 	^ selectableInteraction
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPErdAbstractNodeShape >> shouldBePositionableByUser [
 
 	^ true
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPErdAbstractNodeShape >> shouldBeResizableByUser [
 
 	^ true

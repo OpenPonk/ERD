@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdOverlappingExtensionController,
-	#superclass : #OPErdExtensionsController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdOverlappingExtensionController',
+	#superclass : 'OPErdExtensionsController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdOverlappingExtensionController >> createModelIn: aParentModel [
 
 	^ (super createModelIn: aParentModel)

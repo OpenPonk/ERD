@@ -1,14 +1,16 @@
 Class {
-	#name : #OPErdEntityShape,
-	#superclass : #OPErdAbstractNodeShape,
+	#name : 'OPErdEntityShape',
+	#superclass : 'OPErdAbstractNodeShape',
 	#instVars : [
 		'label',
 		'weak'
 	],
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdEntityShape >> renderBasicShape [
 	^ RSBox new
 		height: 50;
@@ -21,7 +23,7 @@ OPErdEntityShape >> renderBasicShape [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdEntityShape >> renderShapeDetails [
 
 	super renderShapeDetails.
@@ -57,7 +59,7 @@ OPErdEntityShape >> renderShapeDetails [
 		for: self
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdEntityShape >> updateRenderFromModel [
 
 	label text: self modelElement name.

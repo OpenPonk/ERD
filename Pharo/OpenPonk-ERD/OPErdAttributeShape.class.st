@@ -1,15 +1,17 @@
 Class {
-	#name : #OPErdAttributeShape,
-	#superclass : #OPErdAbstractNodeShape,
+	#name : 'OPErdAttributeShape',
+	#superclass : 'OPErdAbstractNodeShape',
 	#instVars : [
 		'label',
 		'border',
 		'innerEllipse'
 	],
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdAttributeShape >> renderBasicShape [
 
 	^ RSEllipse new
@@ -23,7 +25,7 @@ OPErdAttributeShape >> renderBasicShape [
 		  yourself.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdAttributeShape >> renderShapeDetails [
 
 	super renderShapeDetails.
@@ -71,7 +73,7 @@ OPErdAttributeShape >> renderShapeDetails [
 		for: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeShape >> updateBorder [
 	border 	
 		radius: (self roassalShape radius);
@@ -79,14 +81,14 @@ OPErdAttributeShape >> updateBorder [
 		width: (self roassalShape width).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeShape >> updateDetails [
 	self updateBorder.
 	self updateInnerEllipse.
 	self updateLabel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeShape >> updateInnerEllipse [
 	innerEllipse 	
 		radius: (self roassalShape radius - 3);
@@ -94,13 +96,13 @@ OPErdAttributeShape >> updateInnerEllipse [
 		height: (self roassalShape height - 7).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeShape >> updateLabel [
 	label 
 		width: self roassalShape width.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdAttributeShape >> updateRenderFromModel [
 
 	label text: self modelElement name.

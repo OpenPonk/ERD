@@ -1,38 +1,40 @@
 Class {
-	#name : #OPErdExtensions,
-	#superclass : #OPErdNode,
+	#name : 'OPErdExtensions',
+	#superclass : 'OPErdNode',
 	#instVars : [
 		'isOverlapping',
 		'isDisjoint',
 		'isUnion'
 	],
-	#category : #'OpenPonk-ERD-Models'
+	#category : 'OpenPonk-ERD-Models',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdExtensions >> beDisjoint [
 	self isDisjoint: true
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> beNormal [
 	self isOverlapping: false.
 	self isUnion: false.
 	self isDisjoint: false.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdExtensions >> beOverlapping [
 	self isOverlapping: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdExtensions >> beUnion [
 	self isUnion: true
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdExtensions >> graphmlType [
 	self isUnion 
 		ifTrue: [ ^ #union ]
@@ -43,7 +45,7 @@ OPErdExtensions >> graphmlType [
 										ifFalse: [ ^ #regularExtensions ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPErdExtensions >> initialize [
 	super initialize.
 	isDisjoint := false.
@@ -51,39 +53,39 @@ OPErdExtensions >> initialize [
 	isOverlapping := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> isDisjoint [
 	^ isDisjoint 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> isDisjoint: aBoolean [
 	isDisjoint := aBoolean.
 	self changed
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdExtensions >> isNormal [
 	^ (isUnion & isDisjoint & isOverlapping) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> isOverlapping [
 	^ isOverlapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> isOverlapping: aBoolean [
 	isOverlapping := aBoolean.
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> isUnion [
 	^ isUnion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensions >> isUnion: aBoolean [
 	isUnion := aBoolean.
 	self changed

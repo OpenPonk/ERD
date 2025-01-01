@@ -1,17 +1,19 @@
 Class {
-	#name : #OPErdDerivedAttributeController,
-	#superclass : #OPErdAttributeController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdDerivedAttributeController',
+	#superclass : 'OPErdAttributeController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdDerivedAttributeController >> canBeTargetFor: aController [
 	^ (aController class == OPErdTransitionController)
 		ifTrue: [ ^ self sourceIsValid: aController source model  ]
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdDerivedAttributeController >> createModelIn: aParentModel [
 
 	^ (super createModelIn: aParentModel)
@@ -19,12 +21,12 @@ OPErdDerivedAttributeController >> createModelIn: aParentModel [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdDerivedAttributeController >> sourceIsValid: aModel [
 	^ self validSources includes: aModel class 
 ]
 
-{ #category : #'accessing - DirectedRelationship' }
+{ #category : 'accessing - DirectedRelationship' }
 OPErdDerivedAttributeController >> validSources [
 "does not include self to avoid self -> self connections if not allowed"
 	^ { OPErdEntity }

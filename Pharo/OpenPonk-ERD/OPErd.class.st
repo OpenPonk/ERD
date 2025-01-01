@@ -1,25 +1,27 @@
 Class {
-	#name : #OPErd,
-	#superclass : #OPModelObject,
-	#category : #'OpenPonk-ERD-Models'
+	#name : 'OPErd',
+	#superclass : 'OPModelObject',
+	#category : 'OpenPonk-ERD-Models',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Models'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPErd >> isState [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPErd >> isTransition [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPErd >> states [
 	^ elements select: [ :each | each isState ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPErd >> transitions [
 	^ elements select: [ :each | each isTransition ]
 ]

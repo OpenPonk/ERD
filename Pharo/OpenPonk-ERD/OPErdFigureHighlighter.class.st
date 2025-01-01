@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdFigureHighlighter,
-	#superclass : #Object,
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#name : 'OPErdFigureHighlighter',
+	#superclass : 'Object',
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #'api - highlight' }
+{ #category : 'api - highlight' }
 OPErdFigureHighlighter class >> highlight: aShapedObject with: aColor [
 	aShapedObject isNode
 		ifTrue: [ self highlightNode: aShapedObject with: aColor ].
@@ -12,7 +14,7 @@ OPErdFigureHighlighter class >> highlight: aShapedObject with: aColor [
 		ifTrue: [ self highlightLine: aShapedObject with: aColor ]
 ]
 
-{ #category : #'api - highlight' }
+{ #category : 'api - highlight' }
 OPErdFigureHighlighter class >> highlightLine: aLine with: aColor [
 
 	self unhighlightNode: aLine.
@@ -21,7 +23,7 @@ OPErdFigureHighlighter class >> highlightLine: aLine with: aColor [
 	aLine signalUpdate
 ]
 
-{ #category : #'api - highlight' }
+{ #category : 'api - highlight' }
 OPErdFigureHighlighter class >> highlightNode: aNode with: aColor [
 
 	self unhighlightNode: aNode.
@@ -30,7 +32,7 @@ OPErdFigureHighlighter class >> highlightNode: aNode with: aColor [
 	aNode signalUpdate
 ]
 
-{ #category : #'api - highlight' }
+{ #category : 'api - highlight' }
 OPErdFigureHighlighter class >> unhighlight: aShapedObject [
 	aShapedObject isNode
 		ifTrue: [ self unhighlightNode: aShapedObject ].
@@ -38,7 +40,7 @@ OPErdFigureHighlighter class >> unhighlight: aShapedObject [
 		ifTrue: [ self unhighlightLine: aShapedObject ]
 ]
 
-{ #category : #'api - highlight' }
+{ #category : 'api - highlight' }
 OPErdFigureHighlighter class >> unhighlightLine: aLine [
 
 	aLine shape color: (aLine propertyAt: self name ifAbsent: [ ^ self ]).
@@ -46,7 +48,7 @@ OPErdFigureHighlighter class >> unhighlightLine: aLine [
 	aLine signalUpdate
 ]
 
-{ #category : #'api - highlight' }
+{ #category : 'api - highlight' }
 OPErdFigureHighlighter class >> unhighlightNode: aNode [
 
 	aNode shape borderColor:

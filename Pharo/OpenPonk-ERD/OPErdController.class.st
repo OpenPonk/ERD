@@ -1,37 +1,39 @@
 Class {
-	#name : #OPErdController,
-	#superclass : #OPDiagramController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdController',
+	#superclass : 'OPDiagramController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdController >> canBeTargetFor: aController [
 	^ (super canBeTargetFor: aController)
 		or: [ aController isKindOf: OPErdNodeController ]
 ]
 
-{ #category : #connecting }
+{ #category : 'accessing' }
 OPErdController >> commonModelClassPrefix [
 	^ 'OPErd'
 ]
 
-{ #category : #connecting }
+{ #category : 'accessing' }
 OPErdController >> controllerFactory [
+
 	^ super controllerFactory
 		  register: OPErdAttributeController forModel: OPErdAttribute;
 		  register: OPErdTransitionController forModel: OPErdTransition;
-		  register: OPErdTransitionController forModel: OPErdIncomingTransition;
 		  register: OPErdEntityController forModel: OPErdEntity;
 		  register: OPErdRelationController forModel: OPErdRelation;
 		  register: OPErdExtensionsController forModel: OPErdExtensions
 ]
 
-{ #category : #connecting }
+{ #category : 'accessing' }
 OPErdController >> elementsToShowInside [
-	^ model elements
+	^ self model elements
 ]
 
-{ #category : #connecting }
+{ #category : 'ui interaction' }
 OPErdController >> initializePalette: aPalette [
 	aPalette
 		newCreationTool: 'Regular Entity'
@@ -85,18 +87,7 @@ OPErdController >> initializePalette: aPalette [
 			icon: OPCoreIcons opErdOverlappingExtensionIcon
 ]
 
-{ #category : #connecting }
+{ #category : 'accessing' }
 OPErdController >> modelClass [
 	^ OPErd
-]
-
-{ #category : #connecting }
-OPErdController >> newControllerFor: aModel [
-	"IncomingTransition identifies itself as transition, but is not"
-
-	^ super
-		newControllerFor:
-			(aModel isTransition
-				ifTrue: [ aModel asTransition ]
-				ifFalse: [ aModel ])
 ]

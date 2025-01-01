@@ -1,37 +1,39 @@
 Class {
-	#name : #OPErdAttribute,
-	#superclass : #OPErdNode,
+	#name : 'OPErdAttribute',
+	#superclass : 'OPErdNode',
 	#instVars : [
 		'isDerived',
 		'isMultivalued',
 		'isKey'
 	],
-	#category : #'OpenPonk-ERD-Models'
+	#category : 'OpenPonk-ERD-Models',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Models'
 }
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> beDerived [
 	self isDerived: true
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> beKey [
 	self isKey: true
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> beMultivalued [
 	self isMultivalued: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdAttribute >> beNormal [
 	self isDerived: false.
 	self isMultivalued: false.
 	self isKey: false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> graphmlType [
 	self isDerived 
 		ifTrue: [ ^ #derived ]
@@ -42,7 +44,7 @@ OPErdAttribute >> graphmlType [
 										ifFalse: [ ^ #regularAttribute ] ] ]
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> initialize [
 	super initialize.
 	isDerived := false.
@@ -50,40 +52,40 @@ OPErdAttribute >> initialize [
 	isKey := false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> isDerived [
 	^ isDerived 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdAttribute >> isDerived: aBoolean [
 	isDerived := aBoolean.
 	self changed
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> isKey [
 	^ isKey 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdAttribute >> isKey: aBoolean [
 	isKey := aBoolean.
 	self changed
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> isMultivalued [
 	^ isMultivalued 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdAttribute >> isMultivalued: aBoolean [
 	isMultivalued := aBoolean.
 	self changed
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 OPErdAttribute >> isNormal [
 	^ (isDerived & isMultivalued & isKey) not
 ]

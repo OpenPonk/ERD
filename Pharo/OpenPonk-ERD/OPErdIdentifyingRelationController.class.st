@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdIdentifyingRelationController,
-	#superclass : #OPErdRelationController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdIdentifyingRelationController',
+	#superclass : 'OPErdRelationController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdIdentifyingRelationController >> canBeTargetFor: aController [
 	^ (aController class == OPErdTotalTransitionController) 
 	  ifTrue: [ (aController source model class == OPErdEntity)
@@ -20,7 +22,7 @@ OPErdIdentifyingRelationController >> canBeTargetFor: aController [
 		ifFalse: [ ^ false ] ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdIdentifyingRelationController >> createModelIn: aParentModel [
 
 	^ (super createModelIn: aParentModel)

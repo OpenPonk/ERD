@@ -1,14 +1,16 @@
 Class {
-	#name : #OPErdGraphML,
-	#superclass : #Object,
+	#name : 'OPErdGraphML',
+	#superclass : 'Object',
 	#classVars : [
 		'xPositions',
 		'yPositions'
 	],
-	#category : #'OpenPonk-ERD-Serialization'
+	#category : 'OpenPonk-ERD-Serialization',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Serialization'
 }
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPErdGraphML class >> exportPackage: aModel [
 
 	StFBSaveFileDialog new
@@ -30,7 +32,7 @@ OPErdGraphML class >> exportPackage: aModel [
 		open
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPErdGraphML class >> importToModel: aModel withBuilder: aBuilder [
 
 	StFBOpenFileDialog new
@@ -43,7 +45,7 @@ OPErdGraphML class >> importToModel: aModel withBuilder: aBuilder [
 		open.
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPErdGraphML class >> toolbarMenu: aBuilder [
 
 	<opEditorToolbarMenu: #OPErdPlugin>
@@ -55,14 +57,14 @@ OPErdGraphML class >> toolbarMenu: aBuilder [
 		action: [ self importToModel: aBuilder model diagramController model withBuilder: aBuilder ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML class >> updateModelAfterImport: aModel [
 	aModel workbench projectTree refresh.
 	aModel diagramController showAllElements.
 	self updateNodePositionsof: aModel.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML class >> updateNodePositionsof: aModel [
 	aModel diagramController diagramElement ownedElements
 		do: [ :each | 
@@ -73,7 +75,7 @@ OPErdGraphML class >> updateNodePositionsof: aModel [
 						@ (yPositions at: each modelElement uuid) asInteger ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML >> edgeForType: aType [
 	aType = #regular
 		ifTrue: [ ^ OPErdTransition new
@@ -89,7 +91,7 @@ OPErdGraphML >> edgeForType: aType [
 			yourself ]
 ]
 
-{ #category : #'public-exporting' }
+{ #category : 'public-exporting' }
 OPErdGraphML >> export: aModel [
 	^ (MustacheTemplate on: self template)
 		value:
@@ -115,7 +117,7 @@ OPErdGraphML >> export: aModel [
 								with: #graphmlType -> each graphmlType ]))} asDictionary"
 ]
 
-{ #category : #import }
+{ #category : 'import' }
 OPErdGraphML >> import: aXml [
 	| model doc graph graphData node nodeData edge edgeData nodes |
 	doc := XMLDOMParser parse: aXml.
@@ -156,7 +158,7 @@ OPErdGraphML >> import: aXml [
 	^ model
 ]
 
-{ #category : #import }
+{ #category : 'import' }
 OPErdGraphML >> import: aXml into: model [
 	| doc graph graphData node nodeData edge edgeData nodes |
 	doc := XMLDOMParser parse: aXml.
@@ -195,7 +197,7 @@ OPErdGraphML >> import: aXml into: model [
 	^ model
 ]
 
-{ #category : #import }
+{ #category : 'import' }
 OPErdGraphML >> nodeForType: aType [
 	aType = #derived
 		ifTrue: [ ^ OPErdAttribute new
@@ -247,7 +249,7 @@ OPErdGraphML >> nodeForType: aType [
 				yourself ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML >> positionOfNode: aNode [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd
@@ -256,7 +258,7 @@ OPErdGraphML >> positionOfNode: aNode [
 	^ 'position not found'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML >> setXPositionOfNode: aNode position: xPosition [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd
@@ -264,7 +266,7 @@ OPErdGraphML >> setXPositionOfNode: aNode position: xPosition [
 				ifTrue: [ subs subscriber diagramElement position x: xPosition ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML >> setYPositionOfNode: aNode position: yPosition [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd
@@ -272,7 +274,7 @@ OPErdGraphML >> setYPositionOfNode: aNode position: yPosition [
 				ifTrue: [ subs subscriber diagramElement position y: yPosition ] ] ]
 ]
 
-{ #category : #'accessing - TemplateSignature' }
+{ #category : 'accessing - TemplateSignature' }
 OPErdGraphML >> template [
 	<script: '(XMLDOMParser parse: self new template) inspect'>
 	^ '<?xml version="1.0" encoding="UTF-8"?>
@@ -308,7 +310,7 @@ OPErdGraphML >> template [
 </graphml>'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML >> xPositionOfNode: aNode [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd
@@ -317,7 +319,7 @@ OPErdGraphML >> xPositionOfNode: aNode [
 	^ 'position not found'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdGraphML >> yPositionOfNode: aNode [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd

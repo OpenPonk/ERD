@@ -1,21 +1,23 @@
 Class {
-	#name : #OPErdTransitionShape,
-	#superclass : #OPEdge,
+	#name : 'OPErdTransitionShape',
+	#superclass : 'OPEdge',
 	#instVars : [
 		'total',
 		'inheritance'
 	],
-	#category : #'OpenPonk-ERD-DiagramElements'
+	#category : 'OpenPonk-ERD-DiagramElements',
+	#package : 'OpenPonk-ERD',
+	#tag : 'DiagramElements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPErdTransitionShape >> createOwnedElementsWithoutController [
 
 	self ownedElements ifNotEmpty: [ ^ self ].
 	OPErdTransitionLabel in: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdTransitionShape >> inheritanceMarker [
 	^ (RSMarker new
 				shape: (RSPolygon new
@@ -30,7 +32,7 @@ OPErdTransitionShape >> inheritanceMarker [
 				yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdTransitionShape >> inheritanceMarkerNil [
 	^ RSMarker new
 				shape: (RSPolygon new
@@ -39,7 +41,7 @@ OPErdTransitionShape >> inheritanceMarkerNil [
 				yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPErdTransitionShape >> renderBasicShape [
 	^ (self source = self target
 		   ifTrue: [ OPRSBezier ]
@@ -53,33 +55,34 @@ OPErdTransitionShape >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdTransitionShape >> renderShapeDetails [
 
 	super renderShapeDetails.
 	total := (self source = self target
-		   ifTrue: [ OPRSBezier ]
-		   ifFalse: [ OPRSPolyline ]) new
-		  attachPoint: (RSBorderAttachPoint new offset: 3);
-		  controlPointsController: OPRSDraggableCPController new;
-		  addInteraction: OPRSDraggableControlPoints;
-		  color: Color transparent;
-		  from: self source roassalShape;
-		  to: self target roassalShape;
-		  yourself.
+		          ifTrue: [ OPRSBezier ]
+		          ifFalse: [ OPRSPolyline ]) new
+		         attachPoint: (RSBorderAttachPoint new offset: 3);
+		         controlPointsController: OPRSDraggableCPController new;
+		         addInteraction: OPRSDraggableControlPoints;
+		         color: Color transparent;
+		         from: self source roassalShape;
+		         to: self target roassalShape;
+		         yourself.
 	RSLocation new stick: total on: self roassalShape.
-	self canvas
-		add: total.
-	self roassalShape when: RSShapeRemovedEvent do: [ 
-		total remove ]
+	self canvas add: total.
+	self roassalShape
+		when: RSShapeRemovedEvent
+		do: [ total remove ]
+		for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdTransitionShape >> total [
 	^ total
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPErdTransitionShape >> updateRenderFromModel [
 
 	total color: (self modelElement isTotal 

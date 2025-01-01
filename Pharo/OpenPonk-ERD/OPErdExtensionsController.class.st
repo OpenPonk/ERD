@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdExtensionsController,
-	#superclass : #OPErdNodeController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdExtensionsController',
+	#superclass : 'OPErdNodeController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdExtensionsController >> buildEditorForm: aForm [
 	super buildEditorForm: aForm.
 	(aForm addCheckbox: 'Disjoint')
@@ -34,26 +36,26 @@ OPErdExtensionsController >> buildEditorForm: aForm [
 	self diagramController updateCanvas
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdExtensionsController >> canBeSourceFor: aController [
 	^ (aController class == OPErdTransitionController) | 
 	  (aController class == OPErdTotalTransitionController)
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdExtensionsController >> canBeTargetFor: aController [
 	^ (aController isKindOf: OPErdTransitionController)
 		ifTrue: [ ^ aController source model class == OPErdEntity  ]
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdExtensionsController >> diagramElementClass [
 
 	^ OPErdExtensionsShape 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdExtensionsController >> modelClass [
 	^ OPErdExtensions 
 ]

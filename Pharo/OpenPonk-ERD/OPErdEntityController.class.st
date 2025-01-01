@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdEntityController,
-	#superclass : #OPErdNodeController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdEntityController',
+	#superclass : 'OPErdNodeController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdEntityController >> buildEditorForm: aForm [
 	super buildEditorForm: aForm.
 	(aForm addCheckbox: 'Weak')
@@ -14,12 +16,12 @@ OPErdEntityController >> buildEditorForm: aForm [
 			self diagramElement modelChanged ]
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdEntityController >> canBeSourceFor: aController [
 	^ (aController isKindOf: OPErdTransitionController)
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdEntityController >> canBeTargetFor: aController [
 	^ (aController class == OPErdInheritanceTransitionController)
 		ifTrue: [ ^ self sourceIsValid: aController source model ]
@@ -32,25 +34,25 @@ OPErdEntityController >> canBeTargetFor: aController [
 				ifFalse: [ ^ false ] ] ]
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdEntityController >> diagramElementClass [
 
 	^ OPErdEntityShape
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdEntityController >> modelClass [
 	^ OPErdEntity
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdEntityController >> sourceIsValid: aModel [
 	(aModel class == self modelClass)
 		ifTrue: [ ^ (aModel uuid ~~ self model uuid) ]
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : #'accessing - DirectedRelationship' }
+{ #category : 'accessing - DirectedRelationship' }
 OPErdEntityController >> validSources [
 "does not include self to avoid self -> self connections if not allowed"
 	^ { OPErdRelation.

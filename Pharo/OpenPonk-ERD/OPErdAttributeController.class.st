@@ -1,10 +1,12 @@
 Class {
-	#name : #OPErdAttributeController,
-	#superclass : #OPErdNodeController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdAttributeController',
+	#superclass : 'OPErdNodeController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPErdAttributeController >> buildEditorForm: aForm [
 
 	super buildEditorForm: aForm.
@@ -39,13 +41,13 @@ OPErdAttributeController >> buildEditorForm: aForm [
 	self diagramController updateCanvas.
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdAttributeController >> canBeSourceFor: aController [
 	^ (aController class == OPErdTransitionController)
 
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdAttributeController >> canBeTargetFor: aController [
 	^ (aController class == OPErdTransitionController)
 		ifTrue: [ ^ self sourceIsValid: aController source model  ]
@@ -53,33 +55,35 @@ OPErdAttributeController >> canBeTargetFor: aController [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeController >> derivedValidation [
+
 	| inc out |
-	self model incoming isEmpty 
-		ifTrue: [ inc := true ]
-		ifFalse: [ inc := self model incoming allSatisfy: 
-			[ :each | self validDerivedSources includes: each source class] ].
-	
-	self model outgoing isEmpty 
-		ifTrue: [ out := true ]
-		ifFalse: [ out := self model outgoing includesAny: self validDerivedTargets ].
-	(inc & out) ifTrue: [ ^ true ].
+	inc := self model incoming isEmpty
+		       ifTrue: [ true ]
+		       ifFalse: [
+			       self model incoming allSatisfy: [ :each |
+				       self validDerivedSources includes: each source class ] ].
+	out := self model outgoing isEmpty
+		       ifTrue: [ true ]
+		       ifFalse: [
+		       self model outgoing includesAny: self validDerivedTargets ].
+	inc & out ifTrue: [ ^ true ].
 	^ false
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPErdAttributeController >> diagramElementClass [
 
 	^ OPErdAttributeShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPErdAttributeController >> modelClass [
 	^ OPErdAttribute
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeController >> sourceIsValid: aModel [
 	(aModel class == self modelClass)
 		ifTrue: [ ^ ((aModel uuid ~~ self model uuid) and: 
@@ -88,18 +92,18 @@ OPErdAttributeController >> sourceIsValid: aModel [
 		ifFalse: [ ^ self validSources includes: aModel class ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeController >> validDerivedSources [
 	^ { OPErdEntity.
 		 OPErdRelation. }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdAttributeController >> validDerivedTargets [
 	^ { OPErdEntity. }
 ]
 
-{ #category : #'accessing - DirectedRelationship' }
+{ #category : 'accessing - DirectedRelationship' }
 OPErdAttributeController >> validSources [
 "does not include self to avoid self -> self connections if not allowed"
 	^ { OPErdEntity.

@@ -1,21 +1,23 @@
 Class {
-	#name : #OPErdNodeController,
-	#superclass : #OPElementController,
-	#category : #'OpenPonk-ERD-Controllers'
+	#name : 'OPErdNodeController',
+	#superclass : 'OPElementController',
+	#category : 'OpenPonk-ERD-Controllers',
+	#package : 'OpenPonk-ERD',
+	#tag : 'Controllers'
 }
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdNodeController >> canBeSourceFor: aController [
 	^ (aController respondsTo: #modelClass) and: 
 	[ aController modelClass = OPErdTransition ]
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdNodeController >> canBeTargetFor: aController [
 	^ self canBeSourceFor: aController
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdNodeController >> createAttributeAdornmentBy: builder [
 
 	builder
@@ -43,7 +45,7 @@ OPErdNodeController >> createAttributeAdornmentBy: builder [
 			self diagramController editor palette selectTool: tool ]
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdNodeController >> createRelationAdornmentBy: builder [
 
 	builder
@@ -72,7 +74,7 @@ OPErdNodeController >> createRelationAdornmentBy: builder [
 			self diagramController editor palette selectTool: tool ]
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdNodeController >> createTransitionAdornmentBy: builder [
 
 	builder
@@ -90,12 +92,12 @@ OPErdNodeController >> createTransitionAdornmentBy: builder [
 			tool selectedControllers: { self } ]
 ]
 
-{ #category : #connecting }
+{ #category : 'accessing' }
 OPErdNodeController >> dependentElements [
-	^ (model incoming , model outgoing) asSet
+	^ (self model incoming , self model outgoing) asSet
 ]
 
-{ #category : #connecting }
+{ #category : 'construction' }
 OPErdNodeController >> hookDiagramElement [
 
 	super hookDiagramElement.
@@ -107,29 +109,28 @@ OPErdNodeController >> hookDiagramElement [
 			createTransitionAdornmentBy: builder ]
 ]
 
-{ #category : #connecting }
+{ #category : 'announcements' }
 OPErdNodeController >> internalSubscribeTo: aModel [
+
 	super internalSubscribeTo: aModel.
-	aModel when: OPElementRemoved do: [ :e | self removeController ]
+	aModel
+		when: OPElementRemoved
+		do: [ :e | self removeController ]
+		for: self
 ]
 
-{ #category : #connecting }
-OPErdNodeController >> isHideable [
-	^ true
-]
-
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPErdNodeController >> modelAsParent [
 	^ self model owner
 ]
 
-{ #category : #connecting }
+{ #category : 'destruction' }
 OPErdNodeController >> removeModel [
 	self model announcer unsubscribe: self.
 	self diagramController model remove: self model
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPErdNodeController >> updateCheckboxOf: aForm named: aLabel [
 	aForm focusOrder do: [ :comp |
 		(comp class == SpCheckBoxPresenter)
