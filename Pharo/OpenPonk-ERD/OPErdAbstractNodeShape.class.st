@@ -45,12 +45,6 @@ OPErdAbstractNodeShape >> selectableInteraction [
 ]
 
 { #category : 'interactions' }
-OPErdAbstractNodeShape >> shouldBePositionableByUser [
-
-	^ true
-]
-
-{ #category : 'interactions' }
 OPErdAbstractNodeShape >> shouldBeResizableByUser [
 
 	^ true
