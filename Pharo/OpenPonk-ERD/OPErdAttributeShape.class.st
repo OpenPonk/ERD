@@ -1,3 +1,7 @@
+"
+I am a diagram element representing an ERD attribute.
+I manage the creation and updates of its underlying Roassal shape, handling rendering details such as dashed borders for derived attributes or double ellipses for multi-valued attributes.
+"
 Class {
 	#name : 'OPErdAttributeShape',
 	#superclass : 'OPErdAbstractNodeShape',
@@ -73,7 +77,7 @@ OPErdAttributeShape >> renderShapeDetails [
 		for: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'update' }
 OPErdAttributeShape >> updateBorder [
 	border 	
 		radius: (self roassalShape radius);
@@ -96,7 +100,7 @@ OPErdAttributeShape >> updateInnerEllipse [
 		height: (self roassalShape height - 7).
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
 OPErdAttributeShape >> updateLabel [
 	label 
 		width: self roassalShape width.

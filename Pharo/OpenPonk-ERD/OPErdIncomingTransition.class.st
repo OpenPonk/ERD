@@ -1,12 +1,16 @@
+"
+I am a deprecated model representing an incoming transition in an ERD.
+I should no longer be used in new ERD models.
+"
 Class {
 	#name : 'OPErdIncomingTransition',
 	#superclass : 'OPErdTransition',
 	#instVars : [
 		'transition'
 	],
-	#category : 'OpenPonk-ERD-Adapters',
+	#category : 'OpenPonk-ERD-ViewModels',
 	#package : 'OpenPonk-ERD',
-	#tag : 'Adapters'
+	#tag : 'ViewModels'
 }
 
 { #category : 'testing' }

@@ -1,3 +1,7 @@
+"
+Controller for the top-level Entity-Relationship Diagram. 
+Manages the lifecycle, layout applications, and palette initialization.
+"
 Class {
 	#name : 'OPErdController',
 	#superclass : 'OPDiagramController',
@@ -6,15 +10,15 @@ Class {
 	#tag : 'Controllers'
 }
 
+{ #category : 'accessing' }
+OPErdController class >> viewModelClass [
+	^ OPErdViewModel
+]
+
 { #category : 'connecting' }
 OPErdController >> canBeTargetFor: aController [
 	^ (super canBeTargetFor: aController)
 		or: [ aController isKindOf: OPErdNodeController ]
-]
-
-{ #category : 'accessing' }
-OPErdController >> commonModelClassPrefix [
-	^ 'OPErd'
 ]
 
 { #category : 'accessing' }
@@ -26,11 +30,6 @@ OPErdController >> controllerFactory [
 		  register: OPErdEntityController forModel: OPErdEntity;
 		  register: OPErdRelationController forModel: OPErdRelation;
 		  register: OPErdExtensionsController forModel: OPErdExtensions
-]
-
-{ #category : 'accessing' }
-OPErdController >> elementsToShowInside [
-	^ self model elements
 ]
 
 { #category : 'ui interaction' }
@@ -85,9 +84,4 @@ OPErdController >> initializePalette: aPalette [
 		newCreationTool: 'Overlapping' 
 			factory: [ OPErdOverlappingExtensionController new ] 
 			icon: OPCoreIcons opErdOverlappingExtensionIcon
-]
-
-{ #category : 'accessing' }
-OPErdController >> modelClass [
-	^ OPErd
 ]

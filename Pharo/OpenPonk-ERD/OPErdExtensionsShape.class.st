@@ -1,3 +1,7 @@
+"
+I am a diagram element representing an ERD extension (generalization/specialization).
+I handle the rendering of its underlying Roassal shape and label corresponding to the type of extension (e.g., overlapping, disjoint, union).
+"
 Class {
 	#name : 'OPErdExtensionsShape',
 	#superclass : 'OPErdAbstractNodeShape',

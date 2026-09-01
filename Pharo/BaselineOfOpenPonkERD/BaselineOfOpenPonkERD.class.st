@@ -1,3 +1,6 @@
+"
+Metacello baseline for the OpenPonk Entity-Relationship Diagram (ERD) plugin, defining its package dependencies and load configurations.
+"
 Class {
 	#name : 'BaselineOfOpenPonkERD',
 	#superclass : 'BaselineOf',

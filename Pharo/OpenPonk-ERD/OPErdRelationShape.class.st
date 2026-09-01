@@ -1,3 +1,7 @@
+"
+I am a diagram element representing an ERD relationship.
+I manage the creation and updates of its underlying Roassal shape, such as drawing a double-bordered diamond if the relationship is identifying.
+"
 Class {
 	#name : 'OPErdRelationShape',
 	#superclass : 'OPErdAbstractNodeShape',

@@ -1,3 +1,7 @@
+"
+I am a specialized controller that initializes and handles weak entity models in an ERD diagram.
+I enforce connection rules, such as valid targets for weak entities.
+"
 Class {
 	#name : 'OPErdWeakEntityController',
 	#superclass : 'OPErdEntityController',
@@ -22,23 +26,7 @@ OPErdWeakEntityController >> canBeTargetFor: aController [
 
 { #category : 'construction' }
 OPErdWeakEntityController >> createModelIn: aParentModel [
-
 	^ (super createModelIn: aParentModel)
 		  beWeak;
 		  yourself
-]
-
-{ #category : 'as yet unclassified' }
-OPErdWeakEntityController >> sourceIsValid: aModel [
-	(aModel class == self modelClass)
-		ifTrue: [ ^ false ]
-		ifFalse: [ ^ self validSources includes: aModel class ]
-]
-
-{ #category : 'accessing - DirectedRelationship' }
-OPErdWeakEntityController >> validSources [
-"does not include self to avoid self -> self connections if not allowed"
-	^ { OPErdAttribute.
-		 OPErdExtensions.
-		 "OPErdRelation" }
 ]

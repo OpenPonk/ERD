@@ -1,3 +1,6 @@
+"
+I am a specialized controller that initializes and handles disjoint extension models within the ERD diagram.
+"
 Class {
 	#name : 'OPErdDisjointExtensionController',
 	#superclass : 'OPErdExtensionsController',
@@ -8,7 +11,6 @@ Class {
 
 { #category : 'construction' }
 OPErdDisjointExtensionController >> createModelIn: aParentModel [
-
 	^ (super createModelIn: aParentModel)
 		  beDisjoint;
 		  yourself

@@ -1,3 +1,7 @@
+"
+Model representing a relationship or connection in an Entity-Relationship Diagram. 
+Connects source and target nodes, supporting inheritance, totality, and matching blocks.
+"
 Class {
 	#name : 'OPErdTransition',
 	#superclass : 'OPModelObject',
@@ -47,7 +51,7 @@ OPErdTransition >> beInheritance [
 	self isInheritance: true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPErdTransition >> beNormal [
 	self isTotal: false.
 	self isInheritance: false.
@@ -59,7 +63,7 @@ OPErdTransition >> beTotal [
 	
 ]
 
-{ #category : 'comparing' }
+{ #category : 'removing' }
 OPErdTransition >> detach [
 	super detach.
 	source := nil.
@@ -75,7 +79,7 @@ OPErdTransition >> graphmlType [
 				ifFalse: [ ^ #regular ] ]
 ]
 
-{ #category : 'comparing' }
+{ #category : 'initialization' }
 OPErdTransition >> initialize [
 	super initialize.
 	isTotal := false.

@@ -1,3 +1,6 @@
+"
+I am a specialized controller that initializes and handles union extension models in an ERD diagram.
+"
 Class {
 	#name : 'OPErdUnionExtensionController',
 	#superclass : 'OPErdExtensionsController',
@@ -8,7 +11,6 @@ Class {
 
 { #category : 'construction' }
 OPErdUnionExtensionController >> createModelIn: aParentModel [
-
 	^ (super createModelIn: aParentModel)
 		  beUnion;
 		  yourself

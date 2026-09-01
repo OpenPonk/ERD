@@ -1,3 +1,7 @@
+"
+I represent an extension (generalization/specialization) node in an Entity-Relationship Diagram (ERD).
+I store the type of extension (overlapping, disjoint, or union) and manage its state.
+"
 Class {
 	#name : 'OPErdExtensions',
 	#superclass : 'OPErdNode',
@@ -17,7 +21,7 @@ OPErdExtensions >> beDisjoint [
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPErdExtensions >> beNormal [
 	self isOverlapping: false.
 	self isUnion: false.

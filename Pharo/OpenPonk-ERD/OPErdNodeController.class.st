@@ -1,3 +1,7 @@
+"
+Abstract base controller for a node in an Entity-Relationship Diagram. 
+Handles diagram interactions, adornments, and validates connections for ERD elements.
+"
 Class {
 	#name : 'OPErdNodeController',
 	#superclass : 'OPElementController',
@@ -92,11 +96,6 @@ OPErdNodeController >> createTransitionAdornmentBy: builder [
 			tool selectedControllers: { self } ]
 ]
 
-{ #category : 'accessing' }
-OPErdNodeController >> dependentElements [
-	^ (self model incoming , self model outgoing) asSet
-]
-
 { #category : 'construction' }
 OPErdNodeController >> hookDiagramElement [
 
@@ -109,28 +108,12 @@ OPErdNodeController >> hookDiagramElement [
 			createTransitionAdornmentBy: builder ]
 ]
 
-{ #category : 'announcements' }
-OPErdNodeController >> internalSubscribeTo: aModel [
-
-	super internalSubscribeTo: aModel.
-	aModel
-		when: OPElementRemoved
-		do: [ :e | self removeController ]
-		for: self
-]
-
 { #category : 'connecting' }
 OPErdNodeController >> modelAsParent [
 	^ self model owner
 ]
 
-{ #category : 'destruction' }
-OPErdNodeController >> removeModel [
-	self model announcer unsubscribe: self.
-	self diagramController model remove: self model
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'forms' }
 OPErdNodeController >> updateCheckboxOf: aForm named: aLabel [
 	aForm focusOrder do: [ :comp |
 		(comp class == SpCheckBoxPresenter)

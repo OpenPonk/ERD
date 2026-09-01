@@ -1,3 +1,6 @@
+"
+I am a specialized controller that initializes and handles overlapping extension models in an ERD diagram.
+"
 Class {
 	#name : 'OPErdOverlappingExtensionController',
 	#superclass : 'OPErdExtensionsController',
@@ -8,7 +11,6 @@ Class {
 
 { #category : 'construction' }
 OPErdOverlappingExtensionController >> createModelIn: aParentModel [
-
 	^ (super createModelIn: aParentModel)
 		  beOverlapping;
 		  yourself

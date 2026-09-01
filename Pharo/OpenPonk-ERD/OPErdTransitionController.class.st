@@ -1,3 +1,7 @@
+"
+I am the controller for ERD transitions (edges).
+I handle the creation, display, and visibility toggling of transitions between ERD nodes, including managing dependent elements in the diagram.
+"
 Class {
 	#name : 'OPErdTransitionController',
 	#superclass : 'OPDirectionalRelationshipController',
@@ -6,32 +10,15 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'forms' }
-OPErdTransitionController >> buildEditorForm: aForm [
-
-	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Total')
-		state: self model isTotal;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Inheritance'. 
-			self model isTotal: newValue.
-			self model isInheritance: false.
-			self diagramElement modelChanged.
-			self diagramElement roassalShape update.
-			self diagramElement total update].
-	(aForm addCheckbox: 'Inheritance')
-		state: self model isInheritance;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Total'. 
-			self model isInheritance: newValue.
-			self model isTotal: false.
-			self diagramElement modelChanged ].
-]
-
 { #category : 'construction' }
-OPErdTransitionController >> diagramElementClass [
+OPErdTransitionController class >> diagramElementClass [
 
 	^ OPErdTransitionShape
+]
+
+{ #category : 'accessing' }
+OPErdTransitionController class >> viewModelClass [
+	^ OPErdTransitionViewModel
 ]
 
 { #category : 'accessing' }
@@ -47,30 +34,9 @@ OPErdTransitionController >> ensureSourceAndTargetIn: aDiagramController [
 				 self model target) ]
 ]
 
-{ #category : 'announcements' }
-OPErdTransitionController >> internalSubscribeTo: aModel [
-
-	super internalSubscribeTo: aModel.
-	aModel
-		when: OPElementRemoved
-		do: [ :e | self removeController ]
-		for: self
-]
-
 { #category : 'testing' }
 OPErdTransitionController >> isHideable [
 	^ true
-]
-
-{ #category : 'accessing' }
-OPErdTransitionController >> modelClass [
-	^ OPErdTransition
-]
-
-{ #category : 'private' }
-OPErdTransitionController >> removeModel [
-	self model announcer unsubscribe: self.
-	self diagramController model remove: self model
 ]
 
 { #category : 'construction' }
@@ -87,10 +53,8 @@ OPErdTransitionController >> showWithoutDependentInDiagram: aDiagramController [
 	^ super showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'deprecation' }
 OPErdTransitionController >> updateCheckboxOf: aForm named: aLabel [
-	aForm focusOrder do: [ :comp |
-		(comp className asString = 'SpCheckBoxPresenter')
-			ifTrue: [ (comp label asString = aLabel asString)
-							ifTrue: [ comp state: false ] ] ]
+	self deprecated: 'Use viewModel instead'.
+	^ self viewModel updateCheckboxOf: aForm named: aLabel
 ]

@@ -1,3 +1,7 @@
+"
+I represent a relationship node (typically a diamond) in an Entity-Relationship Diagram (ERD).
+I can act as a standard relationship or an identifying relationship for weak entities.
+"
 Class {
 	#name : 'OPErdRelation',
 	#superclass : 'OPErdNode',
@@ -14,7 +18,7 @@ OPErdRelation >> beIdentifying [
 	self isIdentifying: true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPErdRelation >> beNormal [
 	self isIdentifying: false
 ]

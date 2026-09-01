@@ -1,3 +1,7 @@
+"
+Model representing an entity node in an Entity-Relationship Diagram. 
+Tracks properties such as being a weak entity.
+"
 Class {
 	#name : 'OPErdEntity',
 	#superclass : 'OPErdNode',
@@ -9,7 +13,7 @@ Class {
 	#tag : 'Models'
 }
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPErdEntity >> beNormal [
 	self isWeak: false
 ]

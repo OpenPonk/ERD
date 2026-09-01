@@ -1,3 +1,7 @@
+"
+Model representing an attribute node in an Entity-Relationship Diagram. 
+Tracks properties such as being derived, multivalued, or a primary key.
+"
 Class {
 	#name : 'OPErdAttribute',
 	#superclass : 'OPErdNode',
@@ -26,7 +30,7 @@ OPErdAttribute >> beMultivalued [
 	self isMultivalued: true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPErdAttribute >> beNormal [
 	self isDerived: false.
 	self isMultivalued: false.
@@ -44,7 +48,7 @@ OPErdAttribute >> graphmlType [
 										ifFalse: [ ^ #regularAttribute ] ] ]
 ]
 
-{ #category : 'associating' }
+{ #category : 'initialization' }
 OPErdAttribute >> initialize [
 	super initialize.
 	isDerived := false.

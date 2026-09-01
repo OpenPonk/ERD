@@ -1,3 +1,7 @@
+"
+I am a diagram element representing a label attached to an ERD transition edge.
+I manage the creation of its underlying Roassal shape, including textual rendering, anchoring, and positioning along the transition line.
+"
 Class {
 	#name : 'OPErdTransitionLabel',
 	#superclass : 'OPEdgeLabel',
@@ -18,13 +22,13 @@ OPErdTransitionLabel >> defaultMinDistance [
 	^ 5
 ]
 
-{ #category : 'adding' }
+{ #category : 'accessing' }
 OPErdTransitionLabel >> defaultText [
 
 	^ self modelElement name
 ]
 
-{ #category : 'adding' }
+{ #category : 'rendering' }
 OPErdTransitionLabel >> renderShapeDetails [
 
 	super renderShapeDetails.

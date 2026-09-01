@@ -1,3 +1,7 @@
+"
+I am the controller responsible for the lifecycle and diagram interactions of ERD relationships.
+I manage rules regarding which elements can be connected as sources and targets.
+"
 Class {
 	#name : 'OPErdRelationController',
 	#superclass : 'OPErdNodeController',
@@ -6,14 +10,15 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'forms' }
-OPErdRelationController >> buildEditorForm: aForm [
-	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Identifying')
-		state: self model isIdentifying;
-		whenChangedDo: [ :newValue |
-			self model isIdentifying: newValue.
-			self diagramElement modelChanged]
+{ #category : 'construction' }
+OPErdRelationController class >> diagramElementClass [
+
+	^ OPErdRelationShape
+]
+
+{ #category : 'accessing' }
+OPErdRelationController class >> viewModelClass [
+	^ OPErdRelationViewModel
 ]
 
 { #category : 'connecting' }
@@ -36,15 +41,4 @@ OPErdRelationController >> canBeTargetFor: aController [
 							   (aController source model isDerived not)) ]
 				ifFalse: [ ^ false ] ] ]
 		ifFalse: [ ^ false ] ]
-]
-
-{ #category : 'construction' }
-OPErdRelationController >> diagramElementClass [
-
-	^ OPErdRelationShape
-]
-
-{ #category : 'accessing' }
-OPErdRelationController >> modelClass [
-	^ OPErdRelation
 ]

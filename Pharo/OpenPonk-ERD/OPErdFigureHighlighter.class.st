@@ -1,3 +1,6 @@
+"
+Utility class for highlighting and unhighlighting ERD diagram elements (nodes, attributes, and relationships) during simulations or analysis.
+"
 Class {
 	#name : 'OPErdFigureHighlighter',
 	#superclass : 'Object',

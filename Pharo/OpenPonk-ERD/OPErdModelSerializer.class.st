@@ -1,3 +1,6 @@
+"
+Handles serialization and materialization of ERD models and diagrams, converting between in-memory objects and persisted string formats.
+"
 Class {
 	#name : 'OPErdModelSerializer',
 	#superclass : 'OPModelSerializer',
@@ -6,19 +9,19 @@ Class {
 	#tag : 'Serialization'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPErdModelSerializer class >> exportVersion [
 
 	^ 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'formatting' }
 OPErdModelSerializer class >> formatName [
 
 	^ #'graphml-ston'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPErdModelSerializer class >> minImportVersion [
 
 	^ 1
@@ -34,12 +37,12 @@ OPErdModelSerializer >> materializeDiagramFrom: aString [
 	^ STON fromString: aString
 ]
 
-{ #category : 'formatting' }
+{ #category : 'serialize/materialize' }
 OPErdModelSerializer >> materializeModelFrom: aStream [
 	^ self materializeModelFromString: aStream contents
 ]
 
-{ #category : 'formatting' }
+{ #category : 'serialize/materialize' }
 OPErdModelSerializer >> materializeModelFromString: aString [
 	^ OPErdGraphML new import: aString
 ]
@@ -54,12 +57,12 @@ OPErdModelSerializer >> serializeDiagram: aDiagramMemento [
 	^ STON toStringPretty: aDiagramMemento
 ]
 
-{ #category : 'formatting' }
+{ #category : 'serialize/materialize' }
 OPErdModelSerializer >> serializeModel: aModel [
 	^ OPErdGraphML new export: aModel
 ]
 
-{ #category : 'formatting' }
+{ #category : 'serialize/materialize' }
 OPErdModelSerializer >> serializeModel: aModel to: aStream [
 	^ aStream << (self serializeModel: aModel)
 ]

@@ -1,3 +1,7 @@
+"
+I am a diagram element representing an ERD entity.
+I manage the creation and updates of its underlying Roassal shape, including displaying a double border if the entity is marked as weak.
+"
 Class {
 	#name : 'OPErdEntityShape',
 	#superclass : 'OPErdAbstractNodeShape',

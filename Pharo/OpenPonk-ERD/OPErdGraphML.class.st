@@ -1,3 +1,6 @@
+"
+Handles the import and export of Entity-Relationship Diagrams to and from GraphML format, including coordinate mapping for nodes.
+"
 Class {
 	#name : 'OPErdGraphML',
 	#superclass : 'Object',
@@ -13,7 +16,7 @@ Class {
 { #category : 'toolbar' }
 OPErdGraphML class >> exportPackage: aModel [
 
-	StFBSaveFileDialog new
+	StSaveFilePresenter new
 		title: 'Choose a XMI file to export to';
 		okAction: [ :file | 
 			file
@@ -35,7 +38,7 @@ OPErdGraphML class >> exportPackage: aModel [
 { #category : 'toolbar' }
 OPErdGraphML class >> importToModel: aModel withBuilder: aBuilder [
 
-	StFBOpenFileDialog new
+	StOpenFilePresenter new
 		title: 'Choose a XMI export of UML model';
 		okAction: [ :file | 
 			OPErdGraphML new import: file into: aModel.
@@ -258,7 +261,7 @@ OPErdGraphML >> positionOfNode: aNode [
 	^ 'position not found'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPErdGraphML >> setXPositionOfNode: aNode position: xPosition [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd
@@ -266,7 +269,7 @@ OPErdGraphML >> setXPositionOfNode: aNode position: xPosition [
 				ifTrue: [ subs subscriber diagramElement position x: xPosition ] ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPErdGraphML >> setYPositionOfNode: aNode position: yPosition [
 	aNode announcer subscriptions subscriptions 
 		do: 	[ :subs | subs subscriber class == OPErd

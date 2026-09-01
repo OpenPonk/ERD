@@ -1,9 +1,12 @@
+"
+Diagram element representing an Entity-Relationship Diagram relationship edge. 
+Manages rendering logic, inheritance markers, and label attachments of its underlying Roassal shape.
+"
 Class {
 	#name : 'OPErdTransitionShape',
 	#superclass : 'OPEdge',
 	#instVars : [
-		'total',
-		'inheritance'
+		'total'
 	],
 	#category : 'OpenPonk-ERD-DiagramElements',
 	#package : 'OpenPonk-ERD',
@@ -41,7 +44,7 @@ OPErdTransitionShape >> inheritanceMarkerNil [
 				yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPErdTransitionShape >> renderBasicShape [
 	^ (self source = self target
 		   ifTrue: [ OPRSBezier ]

@@ -1,3 +1,7 @@
+"
+Abstract base class for visual representations of Entity-Relationship Diagram nodes. 
+Provides basic adornment behavior and interaction definitions for the diagram.
+"
 Class {
 	#name : 'OPErdAbstractNodeShape',
 	#superclass : 'OPBoundNode',

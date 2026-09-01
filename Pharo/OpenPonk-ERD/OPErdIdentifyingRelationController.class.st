@@ -1,3 +1,6 @@
+"
+I am a specialized controller that initializes and handles identifying relationship models, typically used in conjunction with weak entities.
+"
 Class {
 	#name : 'OPErdIdentifyingRelationController',
 	#superclass : 'OPErdRelationController',
@@ -24,7 +27,6 @@ OPErdIdentifyingRelationController >> canBeTargetFor: aController [
 
 { #category : 'construction' }
 OPErdIdentifyingRelationController >> createModelIn: aParentModel [
-
 	^ (super createModelIn: aParentModel)
 		  beIdentifying;
 		  yourself

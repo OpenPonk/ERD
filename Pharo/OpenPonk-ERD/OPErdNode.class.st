@@ -1,3 +1,6 @@
+"
+Abstract base model representing a node (entity, attribute, or relationship) in an Entity-Relationship Diagram.
+"
 Class {
 	#name : 'OPErdNode',
 	#superclass : 'OPModelObject',
@@ -48,12 +51,12 @@ OPErdNode >> outgoing [
 	^ owner transitions select: [ :each | each source = self ]
 ]
 
-{ #category : 'associating' }
+{ #category : 'accessing' }
 OPErdNode >> relatedElements [
 	^ (self incoming , self outgoing) asSet asOrderedCollection
 ]
 
-{ #category : 'associating' }
+{ #category : 'removing' }
 OPErdNode >> removedFrom: aDiagram [
 	self
 		removedFrom: aDiagram

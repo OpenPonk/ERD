@@ -1,3 +1,6 @@
+"
+Provides example models and diagram setups for Entity-Relationship Diagrams (ERD).
+"
 Class {
 	#name : 'OPErdExamples',
 	#superclass : 'Object',

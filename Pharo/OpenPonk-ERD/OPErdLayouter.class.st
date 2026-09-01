@@ -1,6 +1,9 @@
+"
+Applies automated layout algorithms to Entity-Relationship Diagrams, positioning nodes and routing edges for optimal visual structure.
+"
 Class {
 	#name : 'OPErdLayouter',
-	#superclass : 'OPLayouter',
+	#superclass : 'OPNodesAndEdgesLayouter',
 	#category : 'OpenPonk-ERD-Plugin',
 	#package : 'OpenPonk-ERD',
 	#tag : 'Plugin'
@@ -20,7 +23,7 @@ OPErdLayouter >> allNodes [
 		thenCollect: #roassalShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'layouts' }
 OPErdLayouter >> defaultLayout [
 	self gridLayout
 ]

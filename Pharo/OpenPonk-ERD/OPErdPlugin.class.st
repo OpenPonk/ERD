@@ -1,3 +1,7 @@
+"
+Defines the plugin configuration for Entity-Relationship Diagrams. 
+Maps top-level controllers, models, view models, and serializers for the OpenPonk framework.
+"
 Class {
 	#name : 'OPErdPlugin',
 	#superclass : 'OPPlugin',
@@ -36,7 +40,7 @@ OPErdPlugin >> name [
 	^ 'ER Diagram'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 OPErdPlugin >> supportsHidingElements [
 	^ true
 ]

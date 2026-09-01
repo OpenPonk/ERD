@@ -1,3 +1,7 @@
+"
+Controller for an Entity-Relationship Diagram attribute. 
+Manages the diagram lifecycle, valid connections, and validation rules for attributes.
+"
 Class {
 	#name : 'OPErdAttributeController',
 	#superclass : 'OPErdNodeController',
@@ -6,39 +10,15 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'forms' }
-OPErdAttributeController >> buildEditorForm: aForm [
+{ #category : 'construction' }
+OPErdAttributeController class >> diagramElementClass [
 
-	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Derived')
-		state: self model isDerived;
-		enabled: self derivedValidation;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Multivalued'.
-			self updateCheckboxOf: aForm named: 'Key Value'.
-			self model isDerived: newValue.
-			self model isMultivalued: false.
-			self model isKey: false.
-			self diagramElement modelChanged. ].
-	(aForm addCheckbox: 'Multivalued')
-		state: self model isMultivalued;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Derived'.
-			self updateCheckboxOf: aForm named: 'Key Value'.
-			self model isMultivalued: newValue.
-			self model isDerived: false.
-			self model isKey: false.
-			self diagramElement modelChanged. ].
-	(aForm addCheckbox: 'Key Value')
-		state: self model isKey;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Derived'.
-			self updateCheckboxOf: aForm named: 'Multivalued'.
-			self model isKey: newValue.
-			self model isDerived: false.
-			self model isMultivalued: false.
-			self diagramElement modelChanged. ].
-	self diagramController updateCanvas.
+	^ OPErdAttributeShape
+]
+
+{ #category : 'accessing' }
+OPErdAttributeController class >> viewModelClass [
+	^ OPErdAttributeViewModel
 ]
 
 { #category : 'connecting' }
@@ -55,58 +35,32 @@ OPErdAttributeController >> canBeTargetFor: aController [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'deprecation' }
 OPErdAttributeController >> derivedValidation [
-
-	| inc out |
-	inc := self model incoming isEmpty
-		       ifTrue: [ true ]
-		       ifFalse: [
-			       self model incoming allSatisfy: [ :each |
-				       self validDerivedSources includes: each source class ] ].
-	out := self model outgoing isEmpty
-		       ifTrue: [ true ]
-		       ifFalse: [
-		       self model outgoing includesAny: self validDerivedTargets ].
-	inc & out ifTrue: [ ^ true ].
-	^ false
+	self deprecated: 'Use viewModel instead' transformWith: '`@receiver derivedValidation' -> '`@receiver viewModel derivedValidation'.
+	^ self viewModel derivedValidation
 ]
 
-{ #category : 'construction' }
-OPErdAttributeController >> diagramElementClass [
-
-	^ OPErdAttributeShape
-]
-
-{ #category : 'accessing' }
-OPErdAttributeController >> modelClass [
-	^ OPErdAttribute
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'deprecation' }
 OPErdAttributeController >> sourceIsValid: aModel [
-	(aModel class == self modelClass)
-		ifTrue: [ ^ ((aModel uuid ~~ self model uuid) and: 
-			((aModel isDerived ) |
-				aModel isKey ) not) ]
-		ifFalse: [ ^ self validSources includes: aModel class ]
+	self deprecated: 'Use viewModel instead' transformWith: '`@receiver sourceIsValid: `@arg1' -> '`@receiver viewModel sourceIsValid: `@arg1'.
+	^ self viewModel sourceIsValid: aModel
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'deprecation' }
 OPErdAttributeController >> validDerivedSources [
-	^ { OPErdEntity.
-		 OPErdRelation. }
+	self deprecated: 'Use viewModel instead'.
+	^ self viewModel validDerivedSources
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'deprecation' }
 OPErdAttributeController >> validDerivedTargets [
-	^ { OPErdEntity. }
+	self deprecated: 'Use viewModel instead'.
+	^ self viewModel validDerivedTargets
 ]
 
-{ #category : 'accessing - DirectedRelationship' }
+{ #category : 'deprecation' }
 OPErdAttributeController >> validSources [
-"does not include self to avoid self -> self connections if not allowed"
-	^ { OPErdEntity.
-		 OPErdRelation }
-
+	self deprecated: 'Use viewModel instead'.
+	^ self viewModel validSources
 ]

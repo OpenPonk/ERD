@@ -1,3 +1,7 @@
+"
+Controller for an Entity-Relationship Diagram entity. 
+Manages the diagram lifecycle, valid connections, and interactions for entity nodes.
+"
 Class {
 	#name : 'OPErdEntityController',
 	#superclass : 'OPErdNodeController',
@@ -6,14 +10,15 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'forms' }
-OPErdEntityController >> buildEditorForm: aForm [
-	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Weak')
-		state: self model isWeak;
-		whenChangedDo: [ :newValue |
-			self model isWeak: newValue.
-			self diagramElement modelChanged ]
+{ #category : 'construction' }
+OPErdEntityController class >> diagramElementClass [
+
+	^ OPErdEntityShape
+]
+
+{ #category : 'accessing' }
+OPErdEntityController class >> viewModelClass [
+	^ OPErdEntityViewModel
 ]
 
 { #category : 'connecting' }
@@ -34,28 +39,14 @@ OPErdEntityController >> canBeTargetFor: aController [
 				ifFalse: [ ^ false ] ] ]
 ]
 
-{ #category : 'forms' }
-OPErdEntityController >> diagramElementClass [
-
-	^ OPErdEntityShape
-]
-
-{ #category : 'forms' }
-OPErdEntityController >> modelClass [
-	^ OPErdEntity
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'deprecation' }
 OPErdEntityController >> sourceIsValid: aModel [
-	(aModel class == self modelClass)
-		ifTrue: [ ^ (aModel uuid ~~ self model uuid) ]
-		ifFalse: [ ^ false ]
+	self deprecated: 'Use viewModel instead' transformWith: '`@receiver sourceIsValid: `@arg1' -> '`@receiver viewModel sourceIsValid: `@arg1'.
+	^ self viewModel sourceIsValid: aModel
 ]
 
-{ #category : 'accessing - DirectedRelationship' }
+{ #category : 'deprecation' }
 OPErdEntityController >> validSources [
-"does not include self to avoid self -> self connections if not allowed"
-	^ { OPErdRelation.
-		 OPErdAttribute.
-		 OPErdExtensions }
+	self deprecated: 'Use viewModel instead'.
+	^ self viewModel validSources
 ]

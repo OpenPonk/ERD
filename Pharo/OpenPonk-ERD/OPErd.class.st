@@ -1,3 +1,7 @@
+"
+Model representing an Entity-Relationship Diagram. 
+Acts as the root container for nodes, attributes, entities, and relationships.
+"
 Class {
 	#name : 'OPErd',
 	#superclass : 'OPModelObject',
