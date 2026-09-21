@@ -22,34 +22,41 @@ OPErdTransitionViewModel >> attachModelFrom: sourceViewModel to: targetViewModel
 
 { #category : 'forms' }
 OPErdTransitionViewModel >> buildEditorForm: aForm [
-
+	"Build declarative editor form for transition connection states."
 	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Total')
-		state: self model isTotal;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Inheritance'. 
-			self model isTotal: newValue.
-			self model isInheritance: false.
-			self modelChanged.
-			
-			].
-	(aForm addCheckbox: 'Inheritance')
-		state: self model isInheritance;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Total'. 
-			self model isInheritance: newValue.
-			self model isTotal: false.
-			self modelChanged ].
+	aForm bindCheckbox: 'Total' property: #isTotal.
+	aForm bindCheckbox: 'Inheritance' property: #isInheritance
+]
+
+{ #category : 'commands' }
+OPErdTransitionViewModel >> commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue [
+	"Answer a composite command ensuring mutual exclusion between total and inheritance transitions."
+	| exclusiveProperties otherProperties composite |
+	exclusiveProperties := #( #isTotal #isInheritance ).
+	((exclusiveProperties includes: aSymbol) and: [ aNewValue = true ]) ifFalse: [
+		^ super commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue ].
+	otherProperties := exclusiveProperties reject: [ :each | each = aSymbol ].
+	composite := OPCompositeCommand new.
+	composite add: (OPPropertyChangeCommand
+		viewModel: self
+		selector: aSymbol
+		accessor: anAccessor
+		oldValue: anOldValue
+		newValue: aNewValue).
+	otherProperties do: [ :eachProperty |
+		| currentPropertyValue |
+		currentPropertyValue := self model perform: eachProperty.
+		currentPropertyValue ifTrue: [
+			composite add: (OPPropertyChangeCommand
+				viewModel: self
+				selector: eachProperty
+				accessor: (OPModelPropertyAccessor on: eachProperty)
+				oldValue: currentPropertyValue
+				newValue: false) ] ].
+	composite commands size = 1 ifTrue: [ ^ composite commands first ].
+	^ composite
 ]
 
 { #category : 'accessing' }
 OPErdTransitionViewModel >> icon [ ^ self model isInheritance ifTrue: [ OPCoreIcons opErdInheritanceConnectionIcon ] ifFalse: [ self model isTotal ifTrue: [ OPCoreIcons opErdTotalConnectionIcon ] ifFalse: [ OPCoreIcons opErdConnectionIcon ] ]
-]
-
-{ #category : 'forms' }
-OPErdTransitionViewModel >> updateCheckboxOf: aForm named: aLabel [
-	aForm focusOrder do: [ :comp |
-		(comp className asString = 'SpCheckBoxPresenter')
-			ifTrue: [ (comp label asString = aLabel asString)
-							ifTrue: [ comp state: false ] ] ]
 ]

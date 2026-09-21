@@ -16,12 +16,9 @@ OPErdRelationViewModel class >> modelClass [ ^ OPErdRelation
 
 { #category : 'forms' }
 OPErdRelationViewModel >> buildEditorForm: aForm [
+	"Build declarative editor form for identifying relation state."
 	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Identifying')
-		state: self model isIdentifying;
-		whenChangedDo: [ :newValue |
-			self model isIdentifying: newValue.
-			self modelChanged]
+	aForm bindCheckbox: 'Identifying' property: #isIdentifying
 ]
 
 { #category : 'accessing' }

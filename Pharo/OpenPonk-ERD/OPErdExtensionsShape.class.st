@@ -13,6 +13,12 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'accessing' }
+OPErdExtensionsShape >> attachedShapes [
+
+	^ { label }
+]
+
 { #category : 'rendering' }
 OPErdExtensionsShape >> renderBasicShape [
 

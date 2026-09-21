@@ -15,6 +15,15 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'accessing' }
+OPErdAttributeShape >> attachedShapes [
+
+	^ {
+		  label.
+		  border.
+		  innerEllipse }
+]
+
 { #category : 'rendering' }
 OPErdAttributeShape >> renderBasicShape [
 

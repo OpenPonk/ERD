@@ -16,32 +16,40 @@ OPErdExtensionsViewModel class >> modelClass [ ^ OPErdExtensions
 
 { #category : 'forms' }
 OPErdExtensionsViewModel >> buildEditorForm: aForm [
+	"Build declarative editor form for extension states."
 	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Disjoint')
-		state: self model isDisjoint;
-		whenChangedDo: [ :newValue |
-			self model isDisjoint: newValue.
-			self model isUnion: false.
-			self model isOverlapping: false.
-			self modelChanged ].
-	(aForm addCheckbox: 'Union')
-		state: self model isUnion;
-		whenChangedDo: [ :newValue |
-			self model isUnion: newValue.
-			self model isDisjoint: false.
-			self model isOverlapping: false.
-			self modelChanged ].
-	(aForm addCheckbox: 'Overlapping')
-		state: self model isOverlapping;
-		whenChangedDo: [ :newValue |
-			self model isOverlapping: newValue.
-			self model isUnion: false.
-			self model isDisjoint: false.
-			self modelChanged ].
-	(aForm addSeparator).
-	(aForm addLabel: 'Reselect Attribute to reset Checkboxes').
-	(aForm addLabel: '- visual issue to be solved.').
-	
+	aForm bindCheckbox: 'Disjoint' property: #isDisjoint.
+	aForm bindCheckbox: 'Union' property: #isUnion.
+	aForm bindCheckbox: 'Overlapping' property: #isOverlapping
+]
+
+{ #category : 'commands' }
+OPErdExtensionsViewModel >> commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue [
+	"Answer a composite command ensuring mutual exclusion between disjoint, union, and overlapping extensions."
+	| exclusiveProperties otherProperties composite |
+	exclusiveProperties := #( #isDisjoint #isUnion #isOverlapping ).
+	((exclusiveProperties includes: aSymbol) and: [ aNewValue = true ]) ifFalse: [
+		^ super commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue ].
+	otherProperties := exclusiveProperties reject: [ :each | each = aSymbol ].
+	composite := OPCompositeCommand new.
+	composite add: (OPPropertyChangeCommand
+		viewModel: self
+		selector: aSymbol
+		accessor: anAccessor
+		oldValue: anOldValue
+		newValue: aNewValue).
+	otherProperties do: [ :eachProperty |
+		| currentPropertyValue |
+		currentPropertyValue := self model perform: eachProperty.
+		currentPropertyValue ifTrue: [
+			composite add: (OPPropertyChangeCommand
+				viewModel: self
+				selector: eachProperty
+				accessor: (OPModelPropertyAccessor on: eachProperty)
+				oldValue: currentPropertyValue
+				newValue: false) ] ].
+	composite commands size = 1 ifTrue: [ ^ composite commands first ].
+	^ composite
 ]
 
 { #category : 'accessing' }

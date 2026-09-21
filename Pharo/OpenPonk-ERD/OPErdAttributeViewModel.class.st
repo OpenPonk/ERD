@@ -16,37 +16,41 @@ OPErdAttributeViewModel class >> modelClass [ ^ OPErdAttribute
 
 { #category : 'forms' }
 OPErdAttributeViewModel >> buildEditorForm: aForm [
-
+	"Build declarative editor form for attribute properties with validation on derived state."
 	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Derived')
-		state: self model isDerived;
-		enabled: self derivedValidation;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Multivalued'.
-			self updateCheckboxOf: aForm named: 'Key Value'.
-			self model isDerived: newValue.
-			self model isMultivalued: false.
-			self model isKey: false.
-			self modelChanged. ].
-	(aForm addCheckbox: 'Multivalued')
-		state: self model isMultivalued;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Derived'.
-			self updateCheckboxOf: aForm named: 'Key Value'.
-			self model isMultivalued: newValue.
-			self model isDerived: false.
-			self model isKey: false.
-			self modelChanged. ].
-	(aForm addCheckbox: 'Key Value')
-		state: self model isKey;
-		whenChangedDo: [ :newValue |
-			self updateCheckboxOf: aForm named: 'Derived'.
-			self updateCheckboxOf: aForm named: 'Multivalued'.
-			self model isKey: newValue.
-			self model isDerived: false.
-			self model isMultivalued: false.
-			self modelChanged. ].
-	
+	(aForm bindCheckbox: 'Derived' property: #isDerived)
+		enabled: self derivedValidation.
+	aForm bindCheckbox: 'Multivalued' property: #isMultivalued.
+	aForm bindCheckbox: 'Key Value' property: #isKey
+]
+
+{ #category : 'commands' }
+OPErdAttributeViewModel >> commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue [
+	"Answer a composite command ensuring mutual exclusion between key, derived, and multivalued attributes."
+	| exclusiveProperties otherProperties composite |
+	exclusiveProperties := #( #isKey #isDerived #isMultivalued ).
+	((exclusiveProperties includes: aSymbol) and: [ aNewValue = true ]) ifFalse: [
+		^ super commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue ].
+	otherProperties := exclusiveProperties reject: [ :each | each = aSymbol ].
+	composite := OPCompositeCommand new.
+	composite add: (OPPropertyChangeCommand
+		viewModel: self
+		selector: aSymbol
+		accessor: anAccessor
+		oldValue: anOldValue
+		newValue: aNewValue).
+	otherProperties do: [ :eachProperty |
+		| currentPropertyValue |
+		currentPropertyValue := self model perform: eachProperty.
+		currentPropertyValue ifTrue: [
+			composite add: (OPPropertyChangeCommand
+				viewModel: self
+				selector: eachProperty
+				accessor: (OPModelPropertyAccessor on: eachProperty)
+				oldValue: currentPropertyValue
+				newValue: false) ] ].
+	composite commands size = 1 ifTrue: [ ^ composite commands first ].
+	^ composite
 ]
 
 { #category : 'validation' }

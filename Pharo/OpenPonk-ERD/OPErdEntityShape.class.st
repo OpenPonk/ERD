@@ -14,6 +14,14 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'accessing' }
+OPErdEntityShape >> attachedShapes [
+
+	^ {
+		  label.
+		  weak }
+]
+
 { #category : 'rendering' }
 OPErdEntityShape >> renderBasicShape [
 	^ RSBox new

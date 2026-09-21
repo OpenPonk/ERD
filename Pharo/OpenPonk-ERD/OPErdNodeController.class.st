@@ -112,11 +112,3 @@ OPErdNodeController >> hookDiagramElement [
 OPErdNodeController >> modelAsParent [
 	^ self model owner
 ]
-
-{ #category : 'forms' }
-OPErdNodeController >> updateCheckboxOf: aForm named: aLabel [
-	aForm focusOrder do: [ :comp |
-		(comp class == SpCheckBoxPresenter)
-			ifTrue: [ (comp label asString = aLabel asString)
-							ifTrue: [ comp state: false ] ] ]
-]

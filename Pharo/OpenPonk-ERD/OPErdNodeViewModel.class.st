@@ -28,11 +28,3 @@ OPErdNodeViewModel >> childrenModels [ ^ self model outgoing asArray , self mode
 OPErdNodeViewModel >> dependentElements [
 	^ (self model incoming , self model outgoing) asSet
 ]
-
-{ #category : 'forms' }
-OPErdNodeViewModel >> updateCheckboxOf: aForm named: aLabel [
-	aForm focusOrder do: [ :comp |
-		(comp className asString = 'SpCheckBoxPresenter')
-			ifTrue: [ (comp label asString = aLabel asString)
-							ifTrue: [ comp state: false ] ] ]
-]

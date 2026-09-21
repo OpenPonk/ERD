@@ -52,9 +52,3 @@ OPErdTransitionController >> showWithoutDependentInDiagram: aDiagramController [
 	self ensureSourceAndTargetIn: aDiagramController.
 	^ super showWithoutDependentInDiagram: aDiagramController
 ]
-
-{ #category : 'deprecation' }
-OPErdTransitionController >> updateCheckboxOf: aForm named: aLabel [
-	self deprecated: 'Use viewModel instead'.
-	^ self viewModel updateCheckboxOf: aForm named: aLabel
-]

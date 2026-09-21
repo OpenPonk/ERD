@@ -16,12 +16,9 @@ OPErdEntityViewModel class >> modelClass [ ^ OPErdEntity
 
 { #category : 'forms' }
 OPErdEntityViewModel >> buildEditorForm: aForm [
+	"Build declarative editor form for entity weak state."
 	super buildEditorForm: aForm.
-	(aForm addCheckbox: 'Weak')
-		state: self model isWeak;
-		whenChangedDo: [ :newValue |
-			self model isWeak: newValue.
-			self modelChanged ]
+	aForm bindCheckbox: 'Weak' property: #isWeak
 ]
 
 { #category : 'accessing' }

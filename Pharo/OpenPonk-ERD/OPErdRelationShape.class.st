@@ -14,6 +14,14 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'accessing' }
+OPErdRelationShape >> attachedShapes [
+
+	^ {
+		  label.
+		  identifying }
+]
+
 { #category : 'rendering' }
 OPErdRelationShape >> renderBasicShape [
 
