@@ -28,15 +28,19 @@ OPErdEntityController >> canBeSourceFor: aController [
 
 { #category : 'connecting' }
 OPErdEntityController >> canBeTargetFor: aController [
-	^ (aController class == OPErdInheritanceTransitionController)
-		ifTrue: [ ^ self sourceIsValid: aController source model ]
-		ifFalse: [ (aController class == OPErdTotalTransitionController) 
-			ifTrue: [ (aController source model class == OPErdRelation)
-					ifTrue: [ ^ aController source model isIdentifying not ]
-					ifFalse: [ ^ (aController source model class == OPErdExtensions) ] ]  
-			ifFalse: [ (aController class == OPErdTransitionController)
-				ifTrue: [ ^ self validSources includes: aController source model class ]
-				ifFalse: [ ^ false ] ] ]
+
+	^ aController class == OPErdInheritanceTransitionController
+		  ifTrue: [ self viewModel sourceIsValid: aController source model ]
+		  ifFalse: [
+				  aController class == OPErdTotalTransitionController
+					  ifTrue: [
+							  aController source model class == OPErdRelation
+								  ifTrue: [ aController source model isIdentifying not ]
+								  ifFalse: [ aController source model class == OPErdExtensions ] ]
+					  ifFalse: [
+							  aController class == OPErdTransitionController
+								  ifTrue: [ self validSources includes: aController source model class ]
+								  ifFalse: [ false ] ] ]
 ]
 
 { #category : 'deprecation' }
