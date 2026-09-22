@@ -10,9 +10,8 @@ Class {
 }
 
 { #category : 'examples' }
-OPErdExamples class >> exampleERDsample [
-	| project erdModel customerEntity orderEntity itemEntity customerIdAttr customerNameAttr orderIdAttr orderDateAttr itemIdAttr itemNameAttr placesRelation containsRelation |
-	project := OPProject new name: 'Entity Relationship Diagram'.
+OPErdExamples class >> exampleERDModel [
+	| erdModel customerEntity orderEntity itemEntity customerIdAttr customerNameAttr orderIdAttr orderDateAttr itemIdAttr itemNameAttr placesRelation containsRelation |
 	erdModel := OPErd new name: 'Order Management ERD'.
 
 	customerEntity := OPErdEntity new name: 'Customer'.
@@ -47,7 +46,14 @@ OPErdExamples class >> exampleERDsample [
 		(OPErdTransition new source: containsRelation; target: itemEntity)
 	}.
 
-	project addModel: erdModel.
+	^ erdModel
+]
+
+{ #category : 'examples' }
+OPErdExamples class >> exampleERDsample [
+	| project |
+	project := OPProject new name: 'Entity Relationship Diagram'.
+	project addModel: self exampleERDModel.
 	^ (OPWorkbench openProject: project) showAllElementsInAllDiagrams
 ]
 
@@ -58,22 +64,4 @@ OPErdExamples class >> exampleEmpty [
 	erd := OPErd new name: 'New ER Diagram'.
 	project addModel: erd.
 	(OPWorkbench openProject: project) showAllElementsInAllDiagrams
-]
-
-{ #category : 'world menu' }
-OPErdExamples class >> menuCommandOn: aBuilder [
-
-	<worldMenu>
-	(aBuilder item: #OPERD)
-		label: 'Entity Relationship Diagrams';
-		icon: OPCoreIcons opErdDiagramIcon;
-		action: [ self exampleEmpty ];
-		parent: #MostUsedTools;
-		order: 220;
-		with: [ 
-			(aBuilder item: #'ERD Example')
-				parent: #OPERD;
-				label: 'Entity Relationship sample';
-				icon: OPCoreIcons opErdDiagramIcon;
-				action: [ self exampleERDsample  ]. ]
 ]

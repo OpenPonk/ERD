@@ -15,6 +15,18 @@ OPErdPlugin >> diagramControllerClass [
 	^ OPErdController
 ]
 
+{ #category : 'templates' }
+OPErdPlugin >> exampleProjectTemplates [
+	"Answers example project templates for Entity Relationship Diagrams."
+
+	^ { 
+		(OPProjectTemplate
+			named: 'Order Management ERD'
+			icon: self icon
+			modelFactory: [ OPErdExamples exampleERDModel ]
+			isExample: true) }
+]
+
 { #category : 'accessing' }
 OPErdPlugin >> icon [
 	^ OPCoreIcons opErdDiagramIcon
