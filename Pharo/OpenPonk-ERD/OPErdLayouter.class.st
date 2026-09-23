@@ -12,7 +12,7 @@ Class {
 { #category : 'accessing' }
 OPErdLayouter >> allEdges [
 	^ diagramController controllers
-		select: [ :ctrl | ctrl isKindOf: OPMcTransitionController ]
+		select: [ :ctrl | ctrl isKindOf: OPErdTransitionController ]
 		thenCollect: #roassalShape 
 ]
 
