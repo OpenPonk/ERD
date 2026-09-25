@@ -22,7 +22,10 @@ OPErdEntityViewModel >> buildEditorForm: aForm [
 ]
 
 { #category : 'accessing' }
-OPErdEntityViewModel >> icon [ ^ self model isWeak ifTrue: [ OPCoreIcons opErdWeakEntityIcon ] ifFalse: [ OPCoreIcons opErdEntityIcon ]
+OPErdEntityViewModel >> icon [
+	^ self model isWeak
+		ifTrue: [ OPERDIcons opErdWeakEntityIcon ]
+		ifFalse: [ OPERDIcons opErdEntityIcon ]
 ]
 
 { #category : 'testing' }

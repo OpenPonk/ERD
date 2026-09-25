@@ -65,3 +65,35 @@ OPErdExamples class >> exampleEmpty [
 	project addModel: erd.
 	(OPWorkbench openProject: project) showAllElementsInAllDiagrams
 ]
+
+{ #category : 'examples' }
+OPErdExamples class >> exampleUniversityERD [
+	| erdModel personEntity studentEntity teacherEntity personIdAttribute personNameAttribute studentGpaAttribute teacherSalaryAttribute isaExtension |
+	erdModel := OPErd new name: 'University Specialization ERD'.
+
+	personEntity := OPErdEntity new name: 'Person'.
+	studentEntity := OPErdEntity new name: 'Student'.
+	teacherEntity := OPErdEntity new name: 'Teacher'.
+
+	personIdAttribute := OPErdAttribute new name: 'person_id'; beKey.
+	personNameAttribute := OPErdAttribute new name: 'name'.
+	studentGpaAttribute := OPErdAttribute new name: 'gpa'.
+	teacherSalaryAttribute := OPErdAttribute new name: 'salary'.
+
+	isaExtension := OPErdExtensions new name: 'ISA'; beDisjoint.
+
+	erdModel addAll: {
+		personEntity . studentEntity . teacherEntity .
+		personIdAttribute . personNameAttribute . studentGpaAttribute . teacherSalaryAttribute .
+		isaExtension .
+		(OPErdTransition new source: personEntity; target: personIdAttribute) .
+		(OPErdTransition new source: personEntity; target: personNameAttribute) .
+		(OPErdTransition new source: studentEntity; target: studentGpaAttribute) .
+		(OPErdTransition new source: teacherEntity; target: teacherSalaryAttribute) .
+		(OPErdTransition new source: personEntity; target: isaExtension) .
+		(OPErdTransition new source: isaExtension; target: studentEntity) .
+		(OPErdTransition new source: isaExtension; target: teacherEntity)
+	}.
+
+	^ erdModel
+]

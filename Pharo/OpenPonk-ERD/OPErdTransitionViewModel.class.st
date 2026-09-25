@@ -58,5 +58,8 @@ OPErdTransitionViewModel >> commandForProperty: aSymbol accessor: anAccessor old
 ]
 
 { #category : 'accessing' }
-OPErdTransitionViewModel >> icon [ ^ self model isInheritance ifTrue: [ OPCoreIcons opErdInheritanceConnectionIcon ] ifFalse: [ self model isTotal ifTrue: [ OPCoreIcons opErdTotalConnectionIcon ] ifFalse: [ OPCoreIcons opErdConnectionIcon ] ]
+OPErdTransitionViewModel >> icon [
+	self model isInheritance ifTrue: [ ^ OPERDIcons opErdInheritanceConnectionIcon ].
+	self model isTotal ifTrue: [ ^ OPERDIcons opErdTotalConnectionIcon ].
+	^ OPERDIcons opErdConnectionIcon
 ]

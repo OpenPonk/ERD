@@ -36,52 +36,52 @@ OPErdController >> controllerFactory [
 OPErdController >> initializePalette: aPalette [
 	aPalette
 		newCreationTool: 'Regular Entity'
-			factory: [ OPErdEntityController new ] 
-			icon: OPCoreIcons opErdEntityIcon;
+			factory: [ OPErdEntityController new ]
+			icon: OPERDIcons opErdEntityIcon;
 		newCreationTool: 'Weak Entity'
-			factory: [ OPErdWeakEntityController new ] 
-			icon: OPCoreIcons opErdWeakEntityIcon;
+			factory: [ OPErdWeakEntityController new ]
+			icon: OPERDIcons opErdWeakEntityIcon;
 		newSeparator;
-		newCreationTool: 'Regular Relation' 
-			factory: [ OPErdRelationController new ] 
-			icon: OPCoreIcons opErdRelationIcon;
-		newCreationTool: 'Identifying Relation' 
-			factory: [ OPErdIdentifyingRelationController new ] 
-			icon: OPCoreIcons opErdIdentifyingRelationIcon;
+		newCreationTool: 'Regular Relation'
+			factory: [ OPErdRelationController new ]
+			icon: OPERDIcons opErdRelationIcon;
+		newCreationTool: 'Identifying Relation'
+			factory: [ OPErdIdentifyingRelationController new ]
+			icon: OPERDIcons opErdIdentifyingRelationIcon;
 		newSeparator;
-		newCreationTool: 'Regular Attribute' 
-			factory: [ OPErdAttributeController new ] 
-			icon: OPCoreIcons opErdAttributeIcon;
-		newCreationTool: 'Derived Attribute' 
-			factory: [ OPErdDerivedAttributeController new ] 
-			icon: OPCoreIcons opErdDerivedAttributeIcon; 
-		newCreationTool: 'Multivalued Attribute' 
-			factory: [ OPErdMultivaluedAttributeController new ] 
-			icon: OPCoreIcons opErdMultivaluedAttributeIcon; 
-		newCreationTool: 'Key Attribute' 
-			factory: [ OPErdKeyAttributeController new ] 
-			icon: OPCoreIcons opErdKeyAttributeIcon; 
+		newCreationTool: 'Regular Attribute'
+			factory: [ OPErdAttributeController new ]
+			icon: OPERDIcons opErdAttributeIcon;
+		newCreationTool: 'Derived Attribute'
+			factory: [ OPErdDerivedAttributeController new ]
+			icon: OPERDIcons opErdDerivedAttributeIcon;
+		newCreationTool: 'Multivalued Attribute'
+			factory: [ OPErdMultivaluedAttributeController new ]
+			icon: OPERDIcons opErdMultivaluedAttributeIcon;
+		newCreationTool: 'Key Attribute'
+			factory: [ OPErdKeyAttributeController new ]
+			icon: OPERDIcons opErdKeyAttributeIcon;
 		newSeparator;
 		newConnectionCreationTool: 'Regular Connection'
 			factory: [ OPErdTransitionController new ]
-			icon: OPCoreIcons opErdConnectionIcon;
+			icon: OPERDIcons opErdConnectionIcon;
 		newConnectionCreationTool: 'Total Connection'
 			factory: [ OPErdTotalTransitionController new ]
-			icon: OPCoreIcons opErdTotalConnectionIcon;
+			icon: OPERDIcons opErdTotalConnectionIcon;
 		newConnectionCreationTool: 'Inheritance Connection'
 			factory: [ OPErdInheritanceTransitionController new ]
-			icon: OPCoreIcons opErdInheritanceConnectionIcon;
+			icon: OPERDIcons opErdInheritanceConnectionIcon;
 		newSeparator;
-		newCreationTool: 'Custom State' 
-			factory: [ OPErdExtensionsController new ] 
-			icon: OPCoreIcons opFsmRegularStateIcon;
-		newCreationTool: 'Union' 
-			factory: [ OPErdUnionExtensionController new ] 
-			icon: OPCoreIcons opErdUnionExtensionIcon;
-		newCreationTool: 'Disjoint' 
-			factory: [ OPErdDisjointExtensionController new ] 
-			icon: OPCoreIcons opErdDisjointExtensionIcon;
-		newCreationTool: 'Overlapping' 
-			factory: [ OPErdOverlappingExtensionController new ] 
-			icon: OPCoreIcons opErdOverlappingExtensionIcon
+		newCreationTool: 'Custom State'
+			factory: [ OPErdExtensionsController new ]
+			icon: OPERDIcons opErdCustomStateIcon;
+		newCreationTool: 'Union'
+			factory: [ OPErdUnionExtensionController new ]
+			icon: OPERDIcons opErdUnionExtensionIcon;
+		newCreationTool: 'Disjoint'
+			factory: [ OPErdDisjointExtensionController new ]
+			icon: OPERDIcons opErdDisjointExtensionIcon;
+		newCreationTool: 'Overlapping'
+			factory: [ OPErdOverlappingExtensionController new ]
+			icon: OPERDIcons opErdOverlappingExtensionIcon
 ]

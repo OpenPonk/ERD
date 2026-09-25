@@ -53,5 +53,9 @@ OPErdExtensionsViewModel >> commandForProperty: aSymbol accessor: anAccessor old
 ]
 
 { #category : 'accessing' }
-OPErdExtensionsViewModel >> icon [ ^ self model isDisjoint ifTrue: [ OPCoreIcons opErdDisjointExtensionIcon ] ifFalse: [ self model isOverlapping ifTrue: [ OPCoreIcons opErdOverlappingExtensionIcon ] ifFalse: [ self model isUnion ifTrue: [ OPCoreIcons opErdUnionExtensionIcon ] ifFalse: [ OPCoreIcons opFsmRegularStateIcon ] ] ]
+OPErdExtensionsViewModel >> icon [
+	self model isDisjoint ifTrue: [ ^ OPERDIcons opErdDisjointExtensionIcon ].
+	self model isOverlapping ifTrue: [ ^ OPERDIcons opErdOverlappingExtensionIcon ].
+	self model isUnion ifTrue: [ ^ OPERDIcons opErdUnionExtensionIcon ].
+	^ OPERDIcons opErdCustomStateIcon
 ]

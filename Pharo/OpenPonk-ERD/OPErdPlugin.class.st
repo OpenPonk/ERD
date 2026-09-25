@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : 'accessing' }
+OPErdPlugin class >> repositoryName [
+	^ #erd
+]
+
+{ #category : 'accessing' }
 OPErdPlugin >> diagramControllerClass [
 	^ OPErdController
 ]
@@ -19,17 +24,22 @@ OPErdPlugin >> diagramControllerClass [
 OPErdPlugin >> exampleProjectTemplates [
 	"Answers example project templates for Entity Relationship Diagrams."
 
-	^ { 
+	^ {
 		(OPProjectTemplate
 			named: 'Order Management ERD'
 			icon: self icon
 			modelFactory: [ OPErdExamples exampleERDModel ]
+			isExample: true).
+		(OPProjectTemplate
+			named: 'University Specialization ERD'
+			icon: self icon
+			modelFactory: [ OPErdExamples exampleUniversityERD ]
 			isExample: true) }
 ]
 
 { #category : 'accessing' }
 OPErdPlugin >> icon [
-	^ OPCoreIcons opErdDiagramIcon
+	^ OPERDIcons opErdDiagramIcon
 ]
 
 { #category : 'accessing' }

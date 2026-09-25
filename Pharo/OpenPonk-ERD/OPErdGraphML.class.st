@@ -50,16 +50,16 @@ OPErdGraphML class >> importToModel: aModel withBuilder: aBuilder [
 		open.
 ]
 
-{ #category : 'toolbar' }
+{ #category : 'toolbar menu' }
 OPErdGraphML class >> toolbarMenu: aBuilder [
 
 	<opEditorToolbarMenu: #OPErdPlugin>
 	(aBuilder item: 'Export as xmi')
-		icon: OPCoreIcons opFsmDiagramIcon;
+		icon: OPCoreIcons opDiagramIcon;
 		action: [ self exportPackage: aBuilder model diagramController model ].
 	(aBuilder item: 'Import as xmi')
-		icon: OPCoreIcons opFsmDiagramIcon;
-		action: [ self importToModel: aBuilder model diagramController model withBuilder: aBuilder ].
+		icon: OPCoreIcons opDiagramIcon;
+		action: [ self importToModel: aBuilder model diagramController model withBuilder: aBuilder ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -96,7 +96,7 @@ OPErdGraphML >> edgeForType: aType [
 			yourself ]
 ]
 
-{ #category : 'public-exporting' }
+{ #category : 'exporting' }
 OPErdGraphML >> export: aModel [
 	^ (MustacheTemplate on: self template)
 		value:
@@ -109,20 +109,10 @@ OPErdGraphML >> export: aModel [
 							Dictionary
 								with: #uuid -> each uuid
 								with: #name -> each name
-								with: #graphmlType -> each graphmlType 
-								with: #xPosition -> (self xPositionOfNode: each)
-								with: #yPosition -> (self yPositionOfNode: each)]))} asDictionary
-			"(#transitions
-				->
-					(aModel transitions
-						collect: [ :each | 
-							Dictionary
-								with: #uuid -> each uuid
-								with: #name -> each name
-								with: #graphmlType -> each graphmlType ]))} asDictionary"
+								with: #graphmlType -> each graphmlType ]))} asDictionary
 ]
 
-{ #category : 'import' }
+{ #category : 'importing' }
 OPErdGraphML >> import: aXml [
 	| model doc graph graphData node nodeData edge edgeData nodes |
 	doc := XMLDOMParser parse: aXml.
@@ -134,8 +124,6 @@ OPErdGraphML >> import: aXml [
 	model uuid: (UUID fromString: (graph attributeAt: #id)).
 	model name: (graphData at: #name).
 	nodes := Dictionary new.
-	xPositions := Dictionary new.
-	yPositions := Dictionary new.
 	graph / #node
 		do: [ :each | 
 			nodeData := (each / #data
@@ -144,9 +132,6 @@ OPErdGraphML >> import: aXml [
 			node := self nodeForType: (nodeData at: #'node-type').
 			node uuid: (UUID fromString: (each attributeAt: #id)).
 			node name: (nodeData at: #name).
-			"node position x: (nodeData at: #xPosition) y: (nodeData at: #yPosition)."
-			xPositions at: node uuid put: (nodeData at: #xPosition).
-			yPositions at: node uuid put: (nodeData at: #yPosition).
 			nodes at: node uuid put: node.
 			model add: node ].
 	graph / #edge
@@ -154,7 +139,7 @@ OPErdGraphML >> import: aXml [
 			edgeData := (each / #data
 				collect: [ :data | (data attributeAt: #key) -> data stringValue ])
 				asDictionary.
-			(edge := "OPErdTransition new" self edgeForType: (edgeData at: #'edge-type'))
+			(edge := self edgeForType: (edgeData at: #'edge-type'))
 				uuid: (UUID fromString: (each attributeAt: #id));
 				name: (edgeData at: #name);
 				source: (nodes at: (UUID fromString: (each attributeAt: #source)));
@@ -254,81 +239,35 @@ OPErdGraphML >> nodeForType: aType [
 				yourself ].
 ]
 
-{ #category : 'as yet unclassified' }
-OPErdGraphML >> positionOfNode: aNode [
-	aNode announcer subscriptions subscriptions 
-		do: 	[ :subs | subs subscriber class == OPErd
-			ifFalse: [ subs subscriber model uuid == aNode uuid
-				ifTrue: [ ^ subs subscriber diagramElement position X ] ] ].
-	^ 'position not found'
-]
-
-{ #category : 'initialization' }
-OPErdGraphML >> setXPositionOfNode: aNode position: xPosition [
-	aNode announcer subscriptions subscriptions 
-		do: 	[ :subs | subs subscriber class == OPErd
-			ifFalse: [ subs subscriber model uuid == aNode uuid
-				ifTrue: [ subs subscriber diagramElement position x: xPosition ] ] ]
-]
-
-{ #category : 'initialization' }
-OPErdGraphML >> setYPositionOfNode: aNode position: yPosition [
-	aNode announcer subscriptions subscriptions 
-		do: 	[ :subs | subs subscriber class == OPErd
-			ifFalse: [ subs subscriber model uuid == aNode uuid
-				ifTrue: [ subs subscriber diagramElement position y: yPosition ] ] ]
-]
-
-{ #category : 'accessing - TemplateSignature' }
+{ #category : 'accessing' }
 OPErdGraphML >> template [
-	<script: '(XMLDOMParser parse: self new template) inspect'>
 	^ '<?xml version="1.0" encoding="UTF-8"?>
 <graphml
-	xmlns="http://graphml.graphdrawing.org/xmlns"  
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
-	http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+    xmlns="http://graphml.graphdrawing.org/xmlns"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+    http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
 
-	<key id="name" attr.name="element name" attr.type="string" for="all" />
-	<key id="generated" attr.name="generation datetime" attr.type="string" for="graph" />
-	<key id="node-type" attr.name="node type" attr.type="string" for="node" />
-	<key id="edge-type" attr.name="edge type" attr.type="string" for="edge" />
+    <key id="name" attr.name="element name" attr.type="string" for="all" />
+    <key id="generated" attr.name="generation datetime" attr.type="string" for="graph" />
+    <key id="node-type" attr.name="node type" attr.type="string" for="node" />
+    <key id="edge-type" attr.name="edge type" attr.type="string" for="edge" />
 
-	<graph id="{{model.uuid}}" edgedefault="directed">
-		<data key="name">{{model.name}}</data>
-		<data key="generated">{{dateTime}}</data>
-		{{# states }}
-		<node id="{{uuid}}">
-			<data key="name">{{name}}</data>
-			<data key="node-type">{{graphmlType}}</data>
-			<data key="xPosition">{{xPosition}}</data>
-			<data key="yPosition">{{yPosition}}</data>
-		</node>
-		{{/ states }}
-		{{# model.transitions }}
-		<edge id="{{uuid}}" source="{{source.uuid}}" target="{{target.uuid}}">
-			<data key="name">{{name}}</data>
-			<data key="edge-type">{{graphmlType}}</data>
-		</edge>
-		{{/ model.transitions }}
-	</graph>
+    <graph id="{{model.uuid}}" edgedefault="directed">
+        <data key="name">{{model.name}}</data>
+        <data key="generated">{{dateTime}}</data>
+        {{# states }}
+        <node id="{{uuid}}">
+            <data key="name">{{name}}</data>
+            <data key="node-type">{{graphmlType}}</data>
+        </node>
+        {{/ states }}
+        {{# model.transitions }}
+        <edge id="{{uuid}}" source="{{source.uuid}}" target="{{target.uuid}}">
+            <data key="name">{{name}}</data>
+            <data key="edge-type">{{graphmlType}}</data>
+        </edge>
+        {{/ model.transitions }}
+    </graph>
 </graphml>'
-]
-
-{ #category : 'as yet unclassified' }
-OPErdGraphML >> xPositionOfNode: aNode [
-	aNode announcer subscriptions subscriptions 
-		do: 	[ :subs | subs subscriber class == OPErd
-			ifFalse: [ subs subscriber model uuid == aNode uuid
-				ifTrue: [ ^ subs subscriber diagramElement position x ] ] ].
-	^ 'position not found'
-]
-
-{ #category : 'as yet unclassified' }
-OPErdGraphML >> yPositionOfNode: aNode [
-	aNode announcer subscriptions subscriptions 
-		do: 	[ :subs | subs subscriber class == OPErd
-			ifFalse: [ subs subscriber model uuid == aNode uuid
-				ifTrue: [ ^ subs subscriber diagramElement position y ] ] ].
-	^ 'position not found'
 ]

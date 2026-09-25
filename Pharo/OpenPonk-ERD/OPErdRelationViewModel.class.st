@@ -22,5 +22,8 @@ OPErdRelationViewModel >> buildEditorForm: aForm [
 ]
 
 { #category : 'accessing' }
-OPErdRelationViewModel >> icon [ ^ self model isIdentifying ifTrue: [ OPCoreIcons opErdIdentifyingRelationIcon ] ifFalse: [ OPCoreIcons opErdRelationIcon ]
+OPErdRelationViewModel >> icon [
+	^ self model isIdentifying
+		ifTrue: [ OPERDIcons opErdIdentifyingRelationIcon ]
+		ifFalse: [ OPERDIcons opErdRelationIcon ]
 ]

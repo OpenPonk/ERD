@@ -30,7 +30,8 @@ OPErdViewModel >> essentialChildrenModels [
 ]
 
 { #category : 'accessing' }
-OPErdViewModel >> icon [ ^ OPCoreIcons opErdDiagramIcon
+OPErdViewModel >> icon [
+	^ OPERDIcons opErdDiagramIcon
 ]
 
 { #category : 'accessing' }

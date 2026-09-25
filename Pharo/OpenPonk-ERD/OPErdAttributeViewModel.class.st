@@ -70,7 +70,11 @@ OPErdAttributeViewModel >> derivedValidation [
 ]
 
 { #category : 'accessing' }
-OPErdAttributeViewModel >> icon [ ^ self model isDerived ifTrue: [ OPCoreIcons opErdDerivedAttributeIcon ] ifFalse: [ self model isMultivalued ifTrue: [ OPCoreIcons opErdMultivaluedAttributeIcon ] ifFalse: [ self model isKey ifTrue: [ OPCoreIcons opErdKeyAttributeIcon ] ifFalse: [ OPCoreIcons opErdAttributeIcon ] ] ]
+OPErdAttributeViewModel >> icon [
+	self model isDerived ifTrue: [ ^ OPERDIcons opErdDerivedAttributeIcon ].
+	self model isKey ifTrue: [ ^ OPERDIcons opErdKeyAttributeIcon ].
+	self model isMultivalued ifTrue: [ ^ OPERDIcons opErdMultivaluedAttributeIcon ].
+	^ OPERDIcons opErdAttributeIcon
 ]
 
 { #category : 'testing' }
