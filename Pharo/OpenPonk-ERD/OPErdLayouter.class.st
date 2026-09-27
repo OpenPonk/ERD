@@ -25,5 +25,5 @@ OPErdLayouter >> allNodes [
 
 { #category : 'layouts' }
 OPErdLayouter >> defaultLayout [
-	self gridLayout
+	self dominanceTreeLayout
 ]
