@@ -1,3 +1,6 @@
+"
+Tests controller interactions and line routing for directional connections in ERD.
+"
 Class {
 	#name : 'OPErdTransitionControllerTest',
 	#superclass : 'OPAbstractDirectionalRelationshipControllerTest',

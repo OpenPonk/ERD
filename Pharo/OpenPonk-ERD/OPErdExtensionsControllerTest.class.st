@@ -1,3 +1,6 @@
+"
+Tests diagram controller operations for extended ERD relationships and generalizations.
+"
 Class {
 	#name : 'OPErdExtensionsControllerTest',
 	#superclass : 'OPControllerOfErdTest',

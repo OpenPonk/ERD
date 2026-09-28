@@ -1,3 +1,6 @@
+"
+Tests controller interactions and rendering for ERD inheritance transitions.
+"
 Class {
 	#name : 'OPErdInheritanceTransitionControllerTest',
 	#superclass : 'OPErdTransitionControllerTest',

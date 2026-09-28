@@ -1,3 +1,6 @@
+"
+An icon utility provider that delivers icons for Entity-Relationship Diagram elements, palettes, and menus.
+"
 Class {
 	#name : 'OPERDIcons',
 	#superclass : 'Object',

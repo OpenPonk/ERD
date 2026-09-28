@@ -1,3 +1,6 @@
+"
+Verifies the initialization, registration, and shutdown lifecycle of the ERD plugin.
+"
 Class {
 	#name : 'OPErdPluginLifecycleTest',
 	#superclass : 'OPAbstractPluginExampleLifecycleTest',

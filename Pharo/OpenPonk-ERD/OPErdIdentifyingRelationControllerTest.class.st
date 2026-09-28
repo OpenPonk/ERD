@@ -1,3 +1,6 @@
+"
+Tests controller behaviors and double-diamond visual presentation for ERD identifying relationships.
+"
 Class {
 	#name : 'OPErdIdentifyingRelationControllerTest',
 	#superclass : 'OPErdRelationControllerTest',

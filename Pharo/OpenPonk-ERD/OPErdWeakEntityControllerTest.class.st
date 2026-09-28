@@ -1,3 +1,6 @@
+"
+Tests controller behaviors and double-border rendering for ERD weak entities.
+"
 Class {
 	#name : 'OPErdWeakEntityControllerTest',
 	#superclass : 'OPErdEntityControllerTest',

@@ -1,3 +1,6 @@
+"
+Tests controller logic and visual markers for overlapping specialization extensions in ERD.
+"
 Class {
 	#name : 'OPErdOverlappingExtensionControllerTest',
 	#superclass : 'OPErdExtensionsControllerTest',

@@ -1,3 +1,6 @@
+"
+Tests controller behaviors, name editing, and rectangular rendering for ERD regular entities.
+"
 Class {
 	#name : 'OPErdEntityControllerTest',
 	#superclass : 'OPControllerOfErdTest',

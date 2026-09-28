@@ -1,3 +1,6 @@
+"
+Tests controller logic, connection routing, and diamond shape rendering for ERD relationships.
+"
 Class {
 	#name : 'OPErdRelationControllerTest',
 	#superclass : 'OPControllerOfErdTest',

@@ -1,3 +1,6 @@
+"
+Tests controller logic, connection lines, and oval shape rendering for ERD attributes.
+"
 Class {
 	#name : 'OPErdAttributeControllerTest',
 	#superclass : 'OPControllerOfErdTest',

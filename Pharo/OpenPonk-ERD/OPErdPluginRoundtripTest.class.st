@@ -1,3 +1,6 @@
+"
+Verifies the serialization and deserialization roundtrip persistence for ERD models and diagrams.
+"
 Class {
 	#name : 'OPErdPluginRoundtripTest',
 	#superclass : 'OPAbstractPluginExampleRoundtripTest',

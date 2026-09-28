@@ -1,3 +1,6 @@
+"
+Tests controller logic and visual markers for disjoint specialization extensions in ERD.
+"
 Class {
 	#name : 'OPErdDisjointExtensionControllerTest',
 	#superclass : 'OPErdExtensionsControllerTest',

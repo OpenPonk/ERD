@@ -1,3 +1,6 @@
+"
+Tests dynamic property form generation, field bindings, and validation for ERD view models.
+"
 Class {
 	#name : 'OPErdViewModelFormTest',
 	#superclass : 'TestCase',

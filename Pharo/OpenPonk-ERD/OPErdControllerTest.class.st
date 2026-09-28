@@ -1,3 +1,6 @@
+"
+Tests diagram-level controller operations, entity placement, and relationship creation for ERD diagrams.
+"
 Class {
 	#name : 'OPErdControllerTest',
 	#superclass : 'OPAbstractDiagramControllerTest',

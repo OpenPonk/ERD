@@ -1,3 +1,6 @@
+"
+Tests controller logic and visual indicators for union specialization extensions in ERD.
+"
 Class {
 	#name : 'OPErdUnionExtensionControllerTest',
 	#superclass : 'OPErdExtensionsControllerTest',

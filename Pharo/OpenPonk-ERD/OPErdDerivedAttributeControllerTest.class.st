@@ -1,3 +1,6 @@
+"
+Tests controller behaviors and dashed-border presentation for ERD derived attributes.
+"
 Class {
 	#name : 'OPErdDerivedAttributeControllerTest',
 	#superclass : 'OPErdAttributeControllerTest',

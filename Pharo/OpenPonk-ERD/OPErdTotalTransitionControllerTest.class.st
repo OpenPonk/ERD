@@ -1,3 +1,6 @@
+"
+Tests controller interactions and visual double-line semantics for total specialization transitions in ERD.
+"
 Class {
 	#name : 'OPErdTotalTransitionControllerTest',
 	#superclass : 'OPErdTransitionControllerTest',

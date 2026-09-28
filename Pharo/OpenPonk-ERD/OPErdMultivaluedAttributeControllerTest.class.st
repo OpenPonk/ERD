@@ -1,3 +1,6 @@
+"
+Tests controller behaviors and visual presentation for ERD multivalued attributes.
+"
 Class {
 	#name : 'OPErdMultivaluedAttributeControllerTest',
 	#superclass : 'OPErdAttributeControllerTest',

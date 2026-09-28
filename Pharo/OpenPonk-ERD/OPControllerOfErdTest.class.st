@@ -1,3 +1,6 @@
+"
+Abstract base test suite providing shared fixtures and assertions for ERD element controllers.
+"
 Class {
 	#name : 'OPControllerOfErdTest',
 	#superclass : 'OPAbstractElementControllerTest',

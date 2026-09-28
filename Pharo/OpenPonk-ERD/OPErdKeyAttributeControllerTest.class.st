@@ -1,3 +1,6 @@
+"
+Tests controller behaviors and underlined label rendering for ERD primary key attributes.
+"
 Class {
 	#name : 'OPErdKeyAttributeControllerTest',
 	#superclass : 'OPErdAttributeControllerTest',

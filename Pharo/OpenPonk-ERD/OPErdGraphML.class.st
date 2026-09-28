@@ -37,29 +37,17 @@ OPErdGraphML class >> exportPackage: aModel [
 		open
 ]
 
-{ #category : 'toolbar' }
-OPErdGraphML class >> importToModel: aModel withBuilder: aBuilder [
-
+{ #category : 'importing' }
+OPErdGraphML class >> importToModel: aModel inEditor: anEditor [
+	"Imports XMI model data into aModel and refreshes the diagram controller and layout in anEditor."
 	StOpenFilePresenter new
 		title: 'Choose a XMI export of UML model';
 		okAction: [ :file | 
-			OPErdGraphML new import: file into: aModel.
+			self new import: file into: aModel.
 			self inform: 'Imported from ' , file fullName.
-			self updateModelAfterImport: (aBuilder model)];
-		extensions: #( xmi xml ) named: 'XMI files';
-		open.
-]
-
-{ #category : 'toolbar menu' }
-OPErdGraphML class >> toolbarMenu: aBuilder [
-
-	<opEditorToolbarMenu: #OPErdPlugin>
-	(aBuilder item: 'Export as xmi')
-		icon: OPCoreIcons opDiagramIcon;
-		action: [ self exportPackage: aBuilder model diagramController model ].
-	(aBuilder item: 'Import as xmi')
-		icon: OPCoreIcons opDiagramIcon;
-		action: [ self importToModel: aBuilder model diagramController model withBuilder: aBuilder ]
+			self updateModelAfterImport: anEditor ];
+		extensions: #( xmi xml uml ) named: 'XMI files';
+		open
 ]
 
 { #category : 'as yet unclassified' }
