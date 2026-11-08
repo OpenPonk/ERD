@@ -32,7 +32,7 @@ OPErdNodeController >> createAttributeAdornmentBy: builder [
 				 yourself)
 		action: [ 
 			| tool |
-			(tool := OPCreationTool new)
+			(tool := OPNodeCreationTool new)
 				palette: self diagramController editor palette;
 				factory: [ OPErdAttributeController new ];
 				whenCreated: [ :ctrl | 
@@ -61,7 +61,7 @@ OPErdNodeController >> createRelationAdornmentBy: builder [
 				 yourself)
 		action: [ 
 			| tool |
-			(tool := OPCreationTool new)
+			(tool := OPNodeCreationTool new)
 				palette: self diagramController editor palette;
 				factory: [ OPErdRelationController new ];
 				whenCreated: [ :ctrl | 
