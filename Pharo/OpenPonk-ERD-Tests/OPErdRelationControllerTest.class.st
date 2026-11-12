@@ -4,9 +4,9 @@ Tests controller logic, connection routing, and diamond shape rendering for ERD 
 Class {
 	#name : 'OPErdRelationControllerTest',
 	#superclass : 'OPControllerOfErdTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

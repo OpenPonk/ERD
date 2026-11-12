@@ -4,9 +4,9 @@ I verify visual cleanup of ERD relation shapes and their attached canvas element
 Class {
 	#name : 'OPErdRelationShapeTest',
 	#superclass : 'TestCase',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-DiagramElements',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'DiagramElements'
 }
 
 { #category : 'tests' }

@@ -26,6 +26,9 @@ BaselineOfOpenPonkERD >> baseline: spec [
 			package: 'OpenPonk-ERD'
 			with: [
 			spec requires: #( 'OpenPonkModel' 'Mustache' ) ].
-		spec group: 'plugin' with: #( 'OpenPonk-ERD' ).
+		spec
+			package: 'OpenPonk-ERD-Tests'
+			with: [ spec requires: #( 'OpenPonk-ERD' ) ].
+		spec group: 'plugin' with: #( 'OpenPonk-ERD' 'OpenPonk-ERD-Tests' ).
 		spec group: 'default' with: #( 'OpenPonk' 'plugin' ) ]
 ]

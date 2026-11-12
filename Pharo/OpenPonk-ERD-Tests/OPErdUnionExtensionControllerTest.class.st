@@ -4,9 +4,9 @@ Tests controller logic and visual indicators for union specialization extensions
 Class {
 	#name : 'OPErdUnionExtensionControllerTest',
 	#superclass : 'OPErdExtensionsControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

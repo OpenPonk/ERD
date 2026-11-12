@@ -4,9 +4,9 @@ Tests controller behaviors and dashed-border presentation for ERD derived attrib
 Class {
 	#name : 'OPErdDerivedAttributeControllerTest',
 	#superclass : 'OPErdAttributeControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

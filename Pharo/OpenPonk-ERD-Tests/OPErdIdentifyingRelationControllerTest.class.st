@@ -4,9 +4,9 @@ Tests controller behaviors and double-diamond visual presentation for ERD identi
 Class {
 	#name : 'OPErdIdentifyingRelationControllerTest',
 	#superclass : 'OPErdRelationControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

@@ -4,9 +4,9 @@ Tests diagram controller operations for extended ERD relationships and generaliz
 Class {
 	#name : 'OPErdExtensionsControllerTest',
 	#superclass : 'OPControllerOfErdTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

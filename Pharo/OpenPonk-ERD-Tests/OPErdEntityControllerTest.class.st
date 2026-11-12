@@ -4,9 +4,9 @@ Tests controller behaviors, name editing, and rectangular rendering for ERD regu
 Class {
 	#name : 'OPErdEntityControllerTest',
 	#superclass : 'OPControllerOfErdTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

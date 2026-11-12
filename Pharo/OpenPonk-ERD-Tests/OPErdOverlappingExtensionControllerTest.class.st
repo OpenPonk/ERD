@@ -4,9 +4,9 @@ Tests controller logic and visual markers for overlapping specialization extensi
 Class {
 	#name : 'OPErdOverlappingExtensionControllerTest',
 	#superclass : 'OPErdExtensionsControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

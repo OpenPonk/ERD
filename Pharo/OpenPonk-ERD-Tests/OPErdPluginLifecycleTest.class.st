@@ -4,9 +4,9 @@ Verifies the initialization, registration, and shutdown lifecycle of the ERD plu
 Class {
 	#name : 'OPErdPluginLifecycleTest',
 	#superclass : 'OPAbstractPluginExampleLifecycleTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Plugin',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Plugin'
 }
 
 { #category : 'accessing' }

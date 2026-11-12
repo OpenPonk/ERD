@@ -4,9 +4,9 @@ Abstract base test suite providing shared fixtures and assertions for ERD elemen
 Class {
 	#name : 'OPControllerOfErdTest',
 	#superclass : 'OPAbstractElementControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'testing' }

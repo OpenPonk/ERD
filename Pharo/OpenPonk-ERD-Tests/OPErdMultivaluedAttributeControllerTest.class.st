@@ -4,9 +4,9 @@ Tests controller behaviors and visual presentation for ERD multivalued attribute
 Class {
 	#name : 'OPErdMultivaluedAttributeControllerTest',
 	#superclass : 'OPErdAttributeControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

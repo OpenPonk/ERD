@@ -4,9 +4,9 @@ Tests controller interactions and visual double-line semantics for total special
 Class {
 	#name : 'OPErdTotalTransitionControllerTest',
 	#superclass : 'OPErdTransitionControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

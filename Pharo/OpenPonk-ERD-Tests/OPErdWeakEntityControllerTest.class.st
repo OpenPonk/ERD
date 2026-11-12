@@ -4,9 +4,9 @@ Tests controller behaviors and double-border rendering for ERD weak entities.
 Class {
 	#name : 'OPErdWeakEntityControllerTest',
 	#superclass : 'OPErdEntityControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

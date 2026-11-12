@@ -4,9 +4,9 @@ Tests controller interactions and line routing for directional connections in ER
 Class {
 	#name : 'OPErdTransitionControllerTest',
 	#superclass : 'OPAbstractDirectionalRelationshipControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

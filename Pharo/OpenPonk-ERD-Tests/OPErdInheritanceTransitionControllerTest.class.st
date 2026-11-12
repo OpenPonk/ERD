@@ -4,9 +4,9 @@ Tests controller interactions and rendering for ERD inheritance transitions.
 Class {
 	#name : 'OPErdInheritanceTransitionControllerTest',
 	#superclass : 'OPErdTransitionControllerTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }

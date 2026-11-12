@@ -4,9 +4,9 @@ Verifies the serialization and deserialization roundtrip persistence for ERD mod
 Class {
 	#name : 'OPErdPluginRoundtripTest',
 	#superclass : 'OPAbstractPluginExampleRoundtripTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Plugin',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Plugin'
 }
 
 { #category : 'accessing' }

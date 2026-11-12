@@ -8,9 +8,9 @@ Class {
 		'toolbarPresenter',
 		'mockWorkbench'
 	],
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Commands',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Commands'
 }
 
 { #category : 'running' }

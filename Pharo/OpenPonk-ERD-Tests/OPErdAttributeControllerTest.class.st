@@ -4,9 +4,9 @@ Tests controller logic, connection lines, and oval shape rendering for ERD attri
 Class {
 	#name : 'OPErdAttributeControllerTest',
 	#superclass : 'OPControllerOfErdTest',
-	#category : 'OpenPonk-ERD-Tests',
-	#package : 'OpenPonk-ERD',
-	#tag : 'Tests'
+	#category : 'OpenPonk-ERD-Tests-Controllers',
+	#package : 'OpenPonk-ERD-Tests',
+	#tag : 'Controllers'
 }
 
 { #category : 'accessing' }
