@@ -362,6 +362,39 @@ OPErdGraphMLTest >> testExportAndImportEmptyModelAndSpecialXmlCharacters [
 ]
 
 { #category : 'tests' }
+OPErdGraphMLTest >> testExportAndImportIntoTargetModelWithoutPositionsSucceeds [
+
+	| sourceModel exportedXml targetModel returnedModel importedViaImport |
+	sourceModel := OPErdExamples exampleUniversityERD.
+	exportedXml := graphML export: sourceModel.
+
+	OPErdGraphML classPool at: #xPositions put: (Dictionary with: UUID new -> '999').
+	OPErdGraphML classPool at: #yPositions put: (Dictionary with: UUID new -> '888').
+
+	targetModel := OPErd new name: 'Empty Target'.
+	returnedModel := graphML import: exportedXml into: targetModel.
+
+	self assert: returnedModel identicalTo: targetModel.
+	self assert: targetModel uuid equals: sourceModel uuid.
+	self assert: targetModel name equals: sourceModel name.
+	self assert: targetModel states size equals: sourceModel states size.
+	self assert: targetModel transitions size equals: sourceModel transitions size.
+	self assertEmpty: (OPErdGraphML classPool at: #xPositions).
+	self assertEmpty: (OPErdGraphML classPool at: #yPositions).
+
+	OPErdGraphML classPool at: #xPositions put: (Dictionary with: UUID new -> '777').
+	OPErdGraphML classPool at: #yPositions put: (Dictionary with: UUID new -> '666').
+
+	importedViaImport := graphML import: exportedXml.
+	self assert: importedViaImport uuid equals: sourceModel uuid.
+	self assert: importedViaImport name equals: sourceModel name.
+	self assert: importedViaImport states size equals: sourceModel states size.
+	self assert: importedViaImport transitions size equals: sourceModel transitions size.
+	self assertEmpty: (OPErdGraphML classPool at: #xPositions).
+	self assertEmpty: (OPErdGraphML classPool at: #yPositions)
+]
+
+{ #category : 'tests' }
 OPErdGraphMLTest >> testExportAndImportRoundtripAllTwelveNodeAndThreeEdgeTypes [
 
 	| originalModel xmlString parsedDocument graphElement importedModel |
@@ -386,16 +419,77 @@ OPErdGraphMLTest >> testExportAndImportRoundtripAllTwelveNodeAndThreeEdgeTypes [
 ]
 
 { #category : 'tests' }
+OPErdGraphMLTest >> testExportPackagePassesGraphMLExtensionsAndTitleToExportDialog [
+
+	| modelWithSpecialName capturedBlock capturedFileName capturedExtensions capturedFilterName capturedTitle exportedXml |
+	capturedBlock := nil.
+	capturedFileName := nil.
+	capturedExtensions := nil.
+	capturedFilterName := nil.
+	capturedTitle := nil.
+	modelWithSpecialName := OPErd new name: 'My / Schema'.
+	(OPExportFileDialog stub
+		 exportBlock: Any
+		 defaultFileName: Any
+		 extensions: Any
+		 named: Any
+		 title: Any) will: [ :exportBlock :defaultFileName :extensions :filterName :dialogTitle |
+			capturedBlock := exportBlock.
+			capturedFileName := defaultFileName.
+			capturedExtensions := extensions.
+			capturedFilterName := filterName.
+			capturedTitle := dialogTitle ].
+
+	OPErdGraphML exportPackage: modelWithSpecialName.
+
+	self assert: capturedFileName equals: (FileNameSanitizer sanitize: 'My / Schema') , '.graphml'.
+	self assert: capturedExtensions equals: #( graphml xml ).
+	self assert: capturedFilterName equals: 'GraphML files'.
+	self assert: capturedTitle equals: 'Choose a GraphML file to export to'.
+	exportedXml := capturedBlock value.
+	self assert: (exportedXml includesSubstring: '<graphml') description: 'Export block must generate GraphML XML'.
+	self assert: (exportedXml includesSubstring: 'My / Schema') description: 'Export block must include model name'
+]
+
+{ #category : 'tests' }
 OPErdGraphMLTest >> testImportErrorBoundaryCases [
 
-	| exportedWithoutPositions danglingEdgeXml |
+	| danglingEdgeXml missingNodeTypeXml missingEdgeTypeXml existingNodeUuid |
 	self should: [ graphML import: '<graphml><broken' ] raise: XMLWellFormednessException.
 
-	exportedWithoutPositions := graphML export: (OPErd new
-			                             name: 'No Positions';
-			                             add: (OPErdEntity new name: 'Node');
-			                             yourself).
-	self should: [ graphML import: exportedWithoutPositions into: OPErd new ] raise: KeyNotFound.
+	existingNodeUuid := UUID new.
+	missingNodeTypeXml := String streamContents: [ :stream |
+			                      stream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'.
+			                      stream nextPutAll: '<graphml xmlns="http://graphml.graphdrawing.org/xmlns">'.
+			                      stream nextPutAll: '<graph id="'.
+			                      stream nextPutAll: UUID new asString.
+			                      stream nextPutAll: '" edgedefault="directed">'.
+			                      stream nextPutAll: '<data key="name">MissingNodeType</data>'.
+			                      stream nextPutAll: '<node id="'.
+			                      stream nextPutAll: existingNodeUuid asString.
+			                      stream nextPutAll: '"><data key="name">Broken</data></node>'.
+			                      stream nextPutAll: '</graph></graphml>' ].
+	self should: [ graphML import: missingNodeTypeXml into: OPErd new ] raise: KeyNotFound.
+
+	missingEdgeTypeXml := String streamContents: [ :stream |
+			                      stream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'.
+			                      stream nextPutAll: '<graphml xmlns="http://graphml.graphdrawing.org/xmlns">'.
+			                      stream nextPutAll: '<graph id="'.
+			                      stream nextPutAll: UUID new asString.
+			                      stream nextPutAll: '" edgedefault="directed">'.
+			                      stream nextPutAll: '<data key="name">MissingEdgeType</data>'.
+			                      stream nextPutAll: '<node id="'.
+			                      stream nextPutAll: existingNodeUuid asString.
+			                      stream nextPutAll: '"><data key="name">Broken</data><data key="node-type">regularEntity</data></node>'.
+			                      stream nextPutAll: '<edge id="'.
+			                      stream nextPutAll: UUID new asString.
+			                      stream nextPutAll: '" source="'.
+			                      stream nextPutAll: existingNodeUuid asString.
+			                      stream nextPutAll: '" target="'.
+			                      stream nextPutAll: existingNodeUuid asString.
+			                      stream nextPutAll: '"><data key="name">bad</data></edge>'.
+			                      stream nextPutAll: '</graph></graphml>' ].
+	self should: [ graphML import: missingEdgeTypeXml into: OPErd new ] raise: KeyNotFound.
 
 	danglingEdgeXml := String streamContents: [ :stream |
 			                   stream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'.
@@ -414,7 +508,8 @@ OPErdGraphMLTest >> testImportErrorBoundaryCases [
 			                   stream nextPutAll: '<data key="name">bad</data>'.
 			                   stream nextPutAll: '<data key="edge-type">regular</data>'.
 			                   stream nextPutAll: '</edge></graph></graphml>' ].
-	self should: [ graphML import: danglingEdgeXml ] raise: KeyNotFound
+	self should: [ graphML import: danglingEdgeXml ] raise: KeyNotFound.
+	self should: [ graphML import: danglingEdgeXml into: OPErd new ] raise: KeyNotFound
 ]
 
 { #category : 'tests' }
@@ -470,6 +565,69 @@ OPErdGraphMLTest >> testImportIntoTargetModelFromStringAndMemoryFilePopulatesPos
 ]
 
 { #category : 'tests' }
+OPErdGraphMLTest >> testImportToModelInEditorUsesGraphMLFilterAndAppliesDefaultLayoutWhenUnpositioned [
+
+	| sourceModel memoryFile targetModel mockOpenDialog capturedTitle capturedExtensions capturedFilterName capturedOkAction openCalled mockEditor mockWorkbench mockProjectTree mockDiagramController mockLayouter refreshedAll showedAll appliedLayout capturedNotifications |
+	sourceModel := OPErdExamples exampleUniversityERD.
+	memoryFile := FileSystem memory root / 'import-dialog.graphml'.
+	memoryFile writeStreamDo: [ :stream | stream nextPutAll: (graphML export: sourceModel) ].
+	targetModel := OPErd new name: 'Initial Target'.
+
+	capturedTitle := nil.
+	capturedExtensions := nil.
+	capturedFilterName := nil.
+	capturedOkAction := nil.
+	openCalled := false.
+	capturedNotifications := OrderedCollection new.
+	mockOpenDialog := Mock new.
+	StOpenFilePresenter stub new willReturn: mockOpenDialog.
+	(mockOpenDialog stub title: Any) will: [ :dialogTitle | capturedTitle := dialogTitle ].
+	(mockOpenDialog stub extensions: Any named: Any) will: [ :extensions :filterName |
+			capturedExtensions := extensions.
+			capturedFilterName := filterName ].
+	(mockOpenDialog stub okAction: Any) will: [ :actionBlock | capturedOkAction := actionBlock ].
+	mockOpenDialog stub open will: [ openCalled := true ].
+
+	refreshedAll := false.
+	showedAll := false.
+	appliedLayout := false.
+	mockProjectTree := Mock new.
+	mockProjectTree stub refresh will: [ refreshedAll := true ].
+	mockWorkbench := Mock new.
+	mockWorkbench stub projectTree willReturn: mockProjectTree.
+	mockLayouter := Mock new.
+	mockLayouter stub defaultLayout will: [ appliedLayout := true ].
+	mockDiagramController := Mock new.
+	mockDiagramController stub showAllElements will: [ showedAll := true ].
+	mockDiagramController stub layouter willReturn: mockLayouter.
+	mockEditor := Mock new.
+	mockEditor stub workbench willReturn: mockWorkbench.
+	mockEditor stub diagramController willReturn: mockDiagramController.
+
+	OPErdGraphML importToModel: targetModel inEditor: mockEditor.
+
+	self assert: openCalled description: 'importToModel:inEditor: must open the file dialog'.
+	self assert: capturedTitle equals: 'Choose a GraphML file to import from'.
+	self assert: capturedExtensions equals: #( graphml xml ).
+	self assert: capturedFilterName equals: 'GraphML files'.
+
+	[ capturedOkAction value: memoryFile ]
+		on: InformativeNotification
+		do: [ :notification |
+				capturedNotifications add: notification messageText.
+				notification resume ].
+
+	self assertCollection: capturedNotifications hasSameElements: { ('Imported from ' , memoryFile fullName) }.
+	self assert: targetModel uuid equals: sourceModel uuid.
+	self assert: targetModel name equals: sourceModel name.
+	self assert: targetModel states size equals: sourceModel states size.
+	self assert: targetModel transitions size equals: sourceModel transitions size.
+	self assert: refreshedAll description: 'updateModelAfterImport: must refresh the project tree'.
+	self assert: showedAll description: 'updateModelAfterImport: must show all diagram elements'.
+	self assert: appliedLayout description: 'updateModelAfterImport: must apply default layout when positions are absent'
+]
+
+{ #category : 'tests' }
 OPErdGraphMLTest >> testNodeForTypeMapsAllTwelveVariantsAndRejectsUnknown [
 
 	| expectedMappings |
@@ -514,4 +672,74 @@ OPErdGraphMLTest >> testTemplateContainsGraphMlSchemaAndPlaceholders [
 	self assert: (templateString includesSubstring: '<key id="edge-type"') description: 'Template must declare edge-type key'.
 	self assert: (templateString includesSubstring: '{{model.uuid}}') description: 'Template must render model uuid'.
 	self assert: (templateString includesSubstring: '{{graphmlType}}') description: 'Template must render element graphmlType'
+]
+
+{ #category : 'tests' }
+OPErdGraphMLTest >> testUpdateModelAfterImportAppliesPositionsAndUpdatesBoundsWhenPresent [
+
+	| sourceModel personEntity idAttribute transition positionsByUuid positionedXml targetModel project projectController diagramController mockProjectTree mockWorkbench mockEditor refreshedAll personShape attributeShape |
+	sourceModel := OPErd new name: 'Positioned Import'.
+	personEntity := OPErdEntity new name: 'Person'.
+	idAttribute := OPErdAttribute new
+		               name: 'person_id';
+		               beKey;
+		               yourself.
+	transition := OPErdTransition from: personEntity to: idAttribute named: 'has'.
+	sourceModel addAll: {
+			personEntity.
+			idAttribute.
+			transition }.
+
+	positionsByUuid := Dictionary new.
+	positionsByUuid at: personEntity uuid put: 180 @ 260.
+	positionsByUuid at: idAttribute uuid put: 340 @ 420.
+	positionedXml := self positionedGraphMlXmlForModel: sourceModel positionsByUuid: positionsByUuid.
+
+	targetModel := OPErd new.
+	graphML import: positionedXml into: targetModel.
+
+	project := OPProject new.
+	project addModel: targetModel.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPErdController new.
+	projectController addDiagramController: diagramController.
+	diagramController model: targetModel.
+	diagramController diagramElement: (OPOpenPonkDiagram forModelElement: targetModel).
+	diagramController canvasPresenter: (OPHeadlessCanvasPresenter new
+			 canvas: RSCanvas new;
+			 yourself).
+
+	refreshedAll := false.
+	mockProjectTree := Mock new.
+	mockProjectTree stub refresh will: [ refreshedAll := true ].
+	mockWorkbench := Mock new.
+	mockWorkbench stub projectTree willReturn: mockProjectTree.
+	mockEditor := Mock new.
+	mockEditor stub workbench willReturn: mockWorkbench.
+	mockEditor stub diagramController willReturn: diagramController.
+
+	OPErdGraphML updateModelAfterImport: mockEditor.
+
+	self assert: refreshedAll description: 'updateModelAfterImport: must refresh the project tree'.
+	personShape := diagramController diagramElement ownedElements detect: [ :eachElement |
+		               eachElement modelElement uuid = personEntity uuid ].
+	attributeShape := diagramController diagramElement ownedElements detect: [ :eachElement |
+		                  eachElement modelElement uuid = idAttribute uuid ].
+	self assert: personShape roassalShape position equals: 180 @ 260.
+	self assert: personShape bounds isNotNil description: 'updateNodePositionsof: must populate entity bounds via updateFromRender'.
+	self assert: personShape bounds position equals: 180 @ 260.
+	self assert: attributeShape roassalShape position equals: 340 @ 420.
+	self
+		assert: attributeShape bounds isNotNil
+		description: 'updateNodePositionsof: must populate attribute bounds via updateFromRender'.
+	self assert: attributeShape bounds position equals: 340 @ 420.
+
+	OPErdGraphML classPool at: #xPositions put: (Dictionary with: personEntity uuid -> '10').
+	OPErdGraphML classPool at: #yPositions put: nil.
+	OPErdGraphML updateNodePositionsof: mockEditor.
+	self assert: personShape bounds position equals: 180 @ 260.
+
+	OPErdGraphML classPool at: #xPositions put: nil.
+	OPErdGraphML updateNodePositionsof: mockEditor.
+	self assert: personShape bounds position equals: 180 @ 260
 ]

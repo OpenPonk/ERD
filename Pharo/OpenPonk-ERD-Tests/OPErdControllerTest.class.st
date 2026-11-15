@@ -9,9 +9,10 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdControllerTest >> controllerClass [
 	"Answer the diagram controller class under test."
+
 	^ OPErdController
 ]
 
@@ -21,15 +22,17 @@ OPErdControllerTest >> diagramModelClass [
 	^ OPErd
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdControllerTest >> modelClass [
 	"Answer the model class managed by the diagram controller."
+
 	^ OPErd
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPErdControllerTest >> newModel [
 	"Answer a new instance of the model container."
+
 	^ OPErd new
 ]
 

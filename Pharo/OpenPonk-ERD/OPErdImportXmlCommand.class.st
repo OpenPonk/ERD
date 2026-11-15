@@ -26,12 +26,14 @@ OPErdImportXmlCommand >> defaultMenuIcon [
 
 { #category : 'accessing' }
 OPErdImportXmlCommand >> defaultMenuItemName [
-	"Answers the display name of the ERD import command."
-	^ 'Import as xmi'
+	"Answers the display name of the ERD GraphML import command."
+
+	^ 'Import from GraphML...'
 ]
 
 { #category : 'execution' }
 OPErdImportXmlCommand >> execute [
-	"Imports XMI model data into the active ERD domain model and updates diagram."
+	"Imports GraphML model data into the active ERD domain model and updates the diagram."
+
 	OPErdGraphML importToModel: self model inEditor: self editor
 ]

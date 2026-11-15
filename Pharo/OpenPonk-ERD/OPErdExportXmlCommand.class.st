@@ -26,12 +26,14 @@ OPErdExportXmlCommand >> defaultMenuIcon [
 
 { #category : 'accessing' }
 OPErdExportXmlCommand >> defaultMenuItemName [
-	"Answers the display name of the ERD export command."
-	^ 'Export as xmi'
+	"Answers the display name of the ERD GraphML export command."
+
+	^ 'Export as GraphML...'
 ]
 
 { #category : 'execution' }
 OPErdExportXmlCommand >> execute [
-	"Exports the ERD domain model to an XMI file."
+	"Exports the ERD domain model to a GraphML file."
+
 	OPErdGraphML exportPackage: self model
 ]

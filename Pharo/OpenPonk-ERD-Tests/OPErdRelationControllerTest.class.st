@@ -9,21 +9,24 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdRelationControllerTest class >> diagramElementClass [
 	"Answer the shape class representing a relation."
+
 	^ OPErdRelationShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdRelationControllerTest >> controllerClass [
 	"Answer the controller class under test."
+
 	^ OPErdRelationController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdRelationControllerTest >> modelClass [
 	"Answer the model class under test."
+
 	^ OPErdRelation
 ]
 

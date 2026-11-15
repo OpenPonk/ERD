@@ -9,56 +9,65 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest class >> diagramElementClass [
 	"Answer the edge shape class representing an ERD transition."
+
 	^ OPErdTransitionShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> controllerClass [
 	"Answer the relationship controller class under test."
+
 	^ OPErdTransitionController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> diagramControllerClass [
 	"Answer the top-level diagram controller class."
+
 	^ OPErdController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> diagramModelClass [
 	"Answer the diagram model container class."
+
 	^ OPErd
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> modelClass [
 	"Answer the transition model class."
+
 	^ OPErdTransition
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> sourceControllerClass [
 	"In ERD, standard transition connects from an Entity."
+
 	^ OPErdEntityController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> sourceModelClass [
 	"Answer the source model class."
+
 	^ OPErdEntity
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> targetControllerClass [
 	"In ERD, standard transition connects to a Relation."
+
 	^ OPErdRelationController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTransitionControllerTest >> targetModelClass [
 	"Answer the target model class."
+
 	^ OPErdRelation
 ]

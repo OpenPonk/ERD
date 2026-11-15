@@ -94,19 +94,21 @@ OPErdAttributeShape >> updateBorder [
 		width: (self roassalShape width).
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
 OPErdAttributeShape >> updateDetails [
+
 	self updateBorder.
 	self updateInnerEllipse.
 	self updateLabel
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
 OPErdAttributeShape >> updateInnerEllipse [
-	innerEllipse 	
-		radius: (self roassalShape radius - 3);
-		width: (self roassalShape width - 7);
-		height: (self roassalShape height - 7).
+
+	innerEllipse
+		radius: self roassalShape radius - 3;
+		width: self roassalShape width - 7;
+		height: self roassalShape height - 7
 ]
 
 { #category : 'updating' }

@@ -42,15 +42,3 @@ OPErdEntityController >> canBeTargetFor: aController [
 								  ifTrue: [ self viewModel validSources includes: aController source model class ]
 								  ifFalse: [ false ] ] ]
 ]
-
-{ #category : 'deprecation' }
-OPErdEntityController >> sourceIsValid: aModel [
-	self deprecated: 'Use viewModel instead' transformWith: '`@receiver sourceIsValid: `@arg1' -> '`@receiver viewModel sourceIsValid: `@arg1'.
-	^ self viewModel sourceIsValid: aModel
-]
-
-{ #category : 'deprecation' }
-OPErdEntityController >> validSources [
-	self deprecated: 'Use viewModel instead'.
-	^ self viewModel validSources
-]

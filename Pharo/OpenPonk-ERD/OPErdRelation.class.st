@@ -13,8 +13,9 @@ Class {
 	#tag : 'Models'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdRelation >> beIdentifying [
+
 	self isIdentifying: true
 ]
 

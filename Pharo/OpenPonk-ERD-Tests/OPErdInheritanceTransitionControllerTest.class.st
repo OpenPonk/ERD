@@ -9,14 +9,16 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdInheritanceTransitionControllerTest >> controllerClass [
 	"Answer the specialized controller class."
+
 	^ OPErdInheritanceTransitionController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdInheritanceTransitionControllerTest >> targetControllerClass [
+
 	^ OPErdExtensionsController
 ]
 

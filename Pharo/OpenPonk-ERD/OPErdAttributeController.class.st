@@ -34,33 +34,3 @@ OPErdAttributeController >> canBeTargetFor: aController [
 		  ifTrue: [ self viewModel sourceIsValid: aController source model ]
 		  ifFalse: [ false ]
 ]
-
-{ #category : 'deprecation' }
-OPErdAttributeController >> derivedValidation [
-	self deprecated: 'Use viewModel instead' transformWith: '`@receiver derivedValidation' -> '`@receiver viewModel derivedValidation'.
-	^ self viewModel derivedValidation
-]
-
-{ #category : 'deprecation' }
-OPErdAttributeController >> sourceIsValid: aModel [
-	self deprecated: 'Use viewModel instead' transformWith: '`@receiver sourceIsValid: `@arg1' -> '`@receiver viewModel sourceIsValid: `@arg1'.
-	^ self viewModel sourceIsValid: aModel
-]
-
-{ #category : 'deprecation' }
-OPErdAttributeController >> validDerivedSources [
-	self deprecated: 'Use viewModel instead'.
-	^ self viewModel validDerivedSources
-]
-
-{ #category : 'deprecation' }
-OPErdAttributeController >> validDerivedTargets [
-	self deprecated: 'Use viewModel instead'.
-	^ self viewModel validDerivedTargets
-]
-
-{ #category : 'deprecation' }
-OPErdAttributeController >> validSources [
-	self deprecated: 'Use viewModel instead'.
-	^ self viewModel validSources
-]

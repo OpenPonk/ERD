@@ -33,12 +33,12 @@ OPErdModelSerializerTest >> tearDown [
 { #category : 'tests' }
 OPErdModelSerializerTest >> testMetadataAndFormatIdentifiers [
 
-	| matchingInfo mismatchedFormatInfo mismatchedVersionInfo |
-	self assert: OPErdModelSerializer formatName equals: #'graphml-ston'.
+	| matchingInfo mismatchedFormatInfo mismatchedVersionInfo deprecatedInfo |
+	self assert: OPErdModelSerializer formatName equals: #graphml.
 	self assert: OPErdModelSerializer exportVersion equals: 1.
 	self assert: OPErdModelSerializer minImportVersion equals: 1.
 	self assert: OPErdModelSerializer exportSubject equals: #model.
-	self assertCollection: OPErdModelSerializer fileExtensions hasSameElements: #( #'graphml-ston' ).
+	self assertCollection: OPErdModelSerializer fileExtensions hasSameElements: #( #xml ).
 
 	matchingInfo := OPErdModelSerializer exportInfo.
 	self
@@ -56,15 +56,20 @@ OPErdModelSerializerTest >> testMetadataAndFormatIdentifiers [
 
 	mismatchedVersionInfo := OPExportInfo new
 		                         subject: #model;
-		                         format: #'graphml-ston';
+		                         format: #graphml;
 		                         version: 2;
 		                         yourself.
 	self
 		deny: (OPErdModelSerializer supportsExportInfo: mismatchedVersionInfo)
 		description: 'Serializer must reject an unsupported version'.
 
-	self assert: serializer formatName equals: 'ston'.
-	self assert: serializer modelExtension equals: 'graphml'
+	self assert: serializer formatName equals: #graphml.
+	self assert: serializer fileExtension equals: #xml.
+	self assert: OPErdModelDeprecatedSerializer formatName equals: #'graphml-ston'.
+	self assertCollection: OPErdModelDeprecatedSerializer fileExtensions hasSameElements: #( #'graphml-ston' #ston #graphml ).
+	deprecatedInfo := OPErdModelDeprecatedSerializer exportInfo.
+	self assert: (OPErdModelSerializer forExportInfo: deprecatedInfo) class identicalTo: OPErdModelDeprecatedSerializer.
+	self assert: (OPErdModelSerializer forExportInfo: matchingInfo) class identicalTo: OPErdModelSerializer
 ]
 
 { #category : 'tests' }
@@ -99,39 +104,53 @@ OPErdModelSerializerTest >> testRoundtrip [
 ]
 
 { #category : 'tests' }
-OPErdModelSerializerTest >> testSerializeAndMaterializeDiagram [
+OPErdModelSerializerTest >> testSaveUsesGraphmlXmlAndLoadSupportsLegacyExtensions [
 
-	| personEntity diagram entityShape expectedBounds stonString restoredDiagram restoredShape |
-	personEntity := model states detect: [ :eachNode | eachNode name = 'Person' ].
-	diagram := OPOpenPonkDiagram forModelElement: model.
-	diagram
-		name: 'University Diagram';
-		isOpen: true;
-		isSelected: false.
-	entityShape := OPErdEntityShape forModelElement: personEntity.
-	entityShape owningElement: diagram.
-	diagram ownedElements add: entityShape.
-	expectedBounds := OPNodeBounds withPosition: 120 @ 80 extent: 100 @ 50.
-	entityShape bounds: expectedBounds.
+	| directorySerializer serializedModel xmlContent exportFolder exportInfo loadedModel legacyCases |
+	directorySerializer := OPMementoDirectorySerializer forPlugin: OPErdPlugin new.
+	serializedModel := OPErdExamples exampleUniversityERD.
+	xmlContent := serializer serializeModel: serializedModel.
 
-	stonString := serializer serializeDiagram: diagram.
-	self assert: (stonString includesSubstring: 'OPOpenPonkDiagram') description: 'Serialized diagram must encode OPOpenPonkDiagram'.
-	self assert: (stonString includesSubstring: 'OPErdEntityShape') description: 'Serialized diagram must encode owned entity shape'.
+	exportFolder := FileSystem memory root / 'erd-new-export'.
+	exportFolder ensureCreateDirectory.
+	directorySerializer saveModelOf: (OPMemento model: serializedModel diagrams: #(  )) to: exportFolder.
+	self assert: (exportFolder / 'model.xml') exists description: 'New ERD export must write model.xml without ston in filename'.
+	self deny: (exportFolder / 'model.graphml-ston') exists description: 'New ERD export must not write legacy model.graphml-ston'.
+	self deny: (exportFolder / 'model.ston') exists description: 'New ERD export must not write legacy model.ston'.
+	exportInfo := exportFolder / OPExportInfo fileName readStreamDo: [ :readStream |
+		              (NeoJSONReader on: readStream) nextAs: OPExportInfo ].
+	self assert: exportInfo format equals: #graphml.
+	self
+		assert: (OPErdModelSerializer forExportInfoFile: exportFolder / OPExportInfo fileName) class
+		identicalTo: OPErdModelSerializer.
 
-	restoredDiagram := serializer materializeDiagramFrom: stonString.
-	self deny: restoredDiagram identicalTo: diagram.
-	self assert: restoredDiagram class identicalTo: OPOpenPonkDiagram.
-	self assert: restoredDiagram name equals: 'University Diagram'.
-	self assert: restoredDiagram isOpen description: 'Serialized diagram must preserve isOpen'.
-	self deny: restoredDiagram isSelected description: 'Serialized diagram must preserve isSelected'.
+	loadedModel := directorySerializer loadModelFrom: exportFolder.
+	self assert: loadedModel uuid equals: serializedModel uuid.
+	self assert: loadedModel name equals: serializedModel name.
 
-	restoredDiagram resolveAllModelElements: (model elements asArray copyWith: model).
-	self assert: restoredDiagram modelElement identicalTo: model.
-	self assert: restoredDiagram ownedElements size equals: 1.
-	restoredShape := restoredDiagram ownedElements first.
-	self assert: restoredShape class identicalTo: OPErdEntityShape.
-	self assert: restoredShape modelElement identicalTo: personEntity.
-	self assert: restoredShape bounds equals: expectedBounds
+	legacyCases := {
+		               #( 'erd-legacy-graphml-ston' 'model.graphml-ston' ).
+		               #( 'erd-legacy-ston' 'model.ston' ).
+		               #( 'erd-legacy-graphml' 'model.graphml' ) }.
+	legacyCases do: [ :eachCase |
+			| legacyFolder legacyInfo restoredLegacyModel |
+			legacyFolder := FileSystem memory root / eachCase first.
+			legacyFolder ensureCreateDirectory.
+			legacyInfo := OPExportInfo new
+				              subject: #model;
+				              format: #'graphml-ston';
+				              version: 1;
+				              yourself.
+			legacyFolder / OPExportInfo fileName writeStreamDo: [ :writeStream | (OPJsonWriter on: writeStream) nextPut: legacyInfo ].
+			legacyFolder / eachCase second writeStreamDo: [ :writeStream | writeStream nextPutAll: xmlContent ].
+			self
+				assert: (OPErdModelSerializer forExportInfoFile: legacyFolder / OPExportInfo fileName) class
+				identicalTo: OPErdModelDeprecatedSerializer.
+			restoredLegacyModel := directorySerializer loadModelFrom: legacyFolder.
+			self assert: restoredLegacyModel uuid equals: serializedModel uuid.
+			self assert: restoredLegacyModel name equals: serializedModel name.
+			self assert: restoredLegacyModel states size equals: serializedModel states size.
+			self assert: restoredLegacyModel transitions size equals: serializedModel transitions size ]
 ]
 
 { #category : 'tests' }

@@ -24,15 +24,17 @@ OPControllerOfErdTest >> connection: aTransitionControllerClass from: aSourceCon
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPControllerOfErdTest >> diagramControllerClass [
 	"Answer the top-level diagram controller class for ERD."
+
 	^ OPErdController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPControllerOfErdTest >> diagramModelClass [
 	"Answer the top-level diagram model container class for ERD."
+
 	^ OPErd
 ]
 

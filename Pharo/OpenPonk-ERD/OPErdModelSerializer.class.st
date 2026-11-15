@@ -15,26 +15,22 @@ OPErdModelSerializer class >> exportVersion [
 	^ 1
 ]
 
+{ #category : 'accessing' }
+OPErdModelSerializer class >> fileExtensions [
+
+	^ #( #xml )
+]
+
 { #category : 'formatting' }
 OPErdModelSerializer class >> formatName [
 
-	^ #'graphml-ston'
+	^ #graphml
 ]
 
 { #category : 'accessing' }
 OPErdModelSerializer class >> minImportVersion [
 
 	^ 1
-]
-
-{ #category : 'formatting' }
-OPErdModelSerializer >> formatName [
-	^ 'ston'
-]
-
-{ #category : 'formatting' }
-OPErdModelSerializer >> materializeDiagramFrom: aString [
-	^ STON fromString: aString
 ]
 
 { #category : 'serialize/materialize' }
@@ -45,16 +41,6 @@ OPErdModelSerializer >> materializeModelFrom: aStream [
 { #category : 'serialize/materialize' }
 OPErdModelSerializer >> materializeModelFromString: aString [
 	^ OPErdGraphML new import: aString
-]
-
-{ #category : 'formatting' }
-OPErdModelSerializer >> modelExtension [
-	^ 'graphml'
-]
-
-{ #category : 'formatting' }
-OPErdModelSerializer >> serializeDiagram: aDiagramMemento [
-	^ STON toStringPretty: aDiagramMemento
 ]
 
 { #category : 'serialize/materialize' }

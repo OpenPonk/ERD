@@ -15,10 +15,10 @@ Class {
 	#tag : 'Models'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdExtensions >> beDisjoint [
+
 	self isDisjoint: true
-	
 ]
 
 { #category : 'actions' }
@@ -28,13 +28,15 @@ OPErdExtensions >> beNormal [
 	self isDisjoint: false.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdExtensions >> beOverlapping [
+
 	self isOverlapping: true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdExtensions >> beUnion [
+
 	self isUnion: true
 ]
 

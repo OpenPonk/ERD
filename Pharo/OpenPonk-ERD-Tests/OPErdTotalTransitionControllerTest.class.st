@@ -9,14 +9,16 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTotalTransitionControllerTest >> controllerClass [
 	"Answer the specialized controller class."
+
 	^ OPErdTotalTransitionController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdTotalTransitionControllerTest >> sourceControllerClass [
+
 	^ OPErdWeakEntityController
 ]
 

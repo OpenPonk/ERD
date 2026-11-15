@@ -46,8 +46,9 @@ OPErdTransition >> asTransition [
 	^ self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdTransition >> beInheritance [
+
 	self isInheritance: true
 ]
 
@@ -57,10 +58,10 @@ OPErdTransition >> beNormal [
 	self isInheritance: false.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdTransition >> beTotal [
+
 	self isTotal: true
-	
 ]
 
 { #category : 'removing' }

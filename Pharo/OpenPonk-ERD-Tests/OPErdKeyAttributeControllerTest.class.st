@@ -9,9 +9,10 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdKeyAttributeControllerTest >> controllerClass [
 	"Answer the specialized controller class."
+
 	^ OPErdKeyAttributeController
 ]
 

@@ -55,8 +55,9 @@ OPErdExtensionsShape >> renderShapeDetails [
 		for: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
 OPErdExtensionsShape >> updateDetails [
+
 	self updateLabel
 ]
 

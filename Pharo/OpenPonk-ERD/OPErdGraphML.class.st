@@ -30,49 +30,62 @@ OPErdGraphML class >> exportPackage: aModel [
 
 { #category : 'importing' }
 OPErdGraphML class >> importToModel: aModel inEditor: anEditor [
-	"Imports XMI model data into aModel and refreshes the diagram controller and layout in anEditor."
+	"Imports GraphML model data into aModel and refreshes the diagram controller and layout in anEditor."
+
 	StOpenFilePresenter new
-		title: 'Choose a XMI export of UML model';
-		okAction: [ :file | 
-			self new import: file into: aModel.
-			self inform: 'Imported from ' , file fullName.
-			self updateModelAfterImport: anEditor ];
-		extensions: #( xmi xml uml ) named: 'XMI files';
+		title: 'Choose a GraphML file to import from';
+		okAction: [ :file |
+				self new import: file into: aModel.
+				InformativeNotification signal: 'Imported from ' , file fullName.
+				self updateModelAfterImport: anEditor ];
+		extensions: #( graphml xml ) named: 'GraphML files';
 		open
 ]
 
-{ #category : 'as yet unclassified' }
-OPErdGraphML class >> updateModelAfterImport: aModel [
-	aModel workbench projectTree refresh.
-	aModel diagramController showAllElements.
-	self updateNodePositionsof: aModel.
+{ #category : 'importing' }
+OPErdGraphML class >> updateModelAfterImport: anEditor [
+	"Refreshes the project tree, shows imported diagram elements, and restores node positions or runs default layout."
+
+	anEditor workbench projectTree refresh.
+	anEditor diagramController showAllElements.
+	(xPositions isNotNil and: [ yPositions isNotNil and: [ xPositions isNotEmpty ] ])
+		ifTrue: [ self updateNodePositionsof: anEditor ]
+		ifFalse: [ anEditor diagramController layouter defaultLayout ]
 ]
 
-{ #category : 'as yet unclassified' }
-OPErdGraphML class >> updateNodePositionsof: aModel [
-	aModel diagramController diagramElement ownedElements
-		do: [ :each | 
-			each modelElement isState
-				ifTrue: [ 
-					each roassalShape translateTo:
-						(xPositions at: each modelElement uuid) asInteger
-						@ (yPositions at: each modelElement uuid) asInteger ] ]
+{ #category : 'importing' }
+OPErdGraphML class >> updateNodePositionsof: anEditor [
+	"Translates rendered diagram node shapes to the coordinates recorded during the last GraphML import."
+
+	| xLookup yLookup diagramController |
+	xLookup := xPositions ifNil: [ ^ self ].
+	yLookup := yPositions ifNil: [ ^ self ].
+	diagramController := anEditor diagramController.
+	diagramController diagramElement ownedElements do: [ :eachElement |
+			(eachElement isNode and: [ eachElement roassalShape isNotNil ]) ifTrue: [
+					eachElement modelElement ifNotNil: [ :eachModelElement |
+							xLookup at: eachModelElement uuid ifPresent: [ :xValue |
+									yLookup at: eachModelElement uuid ifPresent: [ :yValue |
+											eachElement roassalShape translateTo: xValue asNumber @ yValue asNumber.
+											eachElement updateFromRender ] ] ] ] ].
+	diagramController updateCanvas
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'importing' }
 OPErdGraphML >> edgeForType: aType [
-	aType = #regular
-		ifTrue: [ ^ OPErdTransition new
-			beNormal;
-			yourself ].
-	aType = #total
-		ifTrue: [ ^ OPErdTransition new
-			beTotal;
-			yourself ].
-	aType = #inheritance
-		ifTrue: [ ^ OPErdTransition new
-			beInheritance;
-			yourself ]
+
+	aType = #regular ifTrue: [
+			^ OPErdTransition new
+				  beNormal;
+				  yourself ].
+	aType = #total ifTrue: [
+			^ OPErdTransition new
+				  beTotal;
+				  yourself ].
+	aType = #inheritance ifTrue: [
+			^ OPErdTransition new
+				  beInheritance;
+				  yourself ]
 ]
 
 { #category : 'exporting' }
@@ -93,71 +106,37 @@ OPErdGraphML >> export: aModel [
 
 { #category : 'importing' }
 OPErdGraphML >> import: aXml [
-	| model doc graph graphData node nodeData edge edgeData nodes |
-	doc := XMLDOMParser parse: aXml.
-	graph := (doc root / #graph) first.
-	graphData := (graph / #data
-		collect: [ :each | (each attributeAt: #key) -> each stringValue ])
-		asDictionary.
-	model := OPErd new.
-	model uuid: (UUID fromString: (graph attributeAt: #id)).
-	model name: (graphData at: #name).
-	nodes := Dictionary new.
-	graph / #node
-		do: [ :each | 
-			nodeData := (each / #data
-				collect: [ :data | (data attributeAt: #key) -> data stringValue ])
-				asDictionary.
-			node := self nodeForType: (nodeData at: #'node-type').
-			node uuid: (UUID fromString: (each attributeAt: #id)).
-			node name: (nodeData at: #name).
-			nodes at: node uuid put: node.
-			model add: node ].
-	graph / #edge
-		do: [ :each | 
-			edgeData := (each / #data
-				collect: [ :data | (data attributeAt: #key) -> data stringValue ])
-				asDictionary.
-			(edge := self edgeForType: (edgeData at: #'edge-type'))
-				uuid: (UUID fromString: (each attributeAt: #id));
-				name: (edgeData at: #name);
-				source: (nodes at: (UUID fromString: (each attributeAt: #source)));
-				target: (nodes at: (UUID fromString: (each attributeAt: #target))).
-			model add: edge ].
-	^ model
+
+	^ self import: aXml into: OPErd new
 ]
 
 { #category : 'import' }
 OPErdGraphML >> import: aXml into: model [
+
 	| doc graph graphData node nodeData edge edgeData nodes |
 	doc := XMLDOMParser parse: aXml.
 	graph := (doc root / #graph) first.
-	graphData := (graph / #data
-		collect: [ :each | (each attributeAt: #key) -> each stringValue ])
-		asDictionary.
+	graphData := (graph / #data collect: [ :each | (each attributeAt: #key) -> each stringValue ]) asDictionary.
 	model uuid: (UUID fromString: (graph attributeAt: #id)).
 	model name: (graphData at: #name).
 	nodes := Dictionary new.
 	xPositions := Dictionary new.
 	yPositions := Dictionary new.
-	graph / #node
-		do: [ :each | 
-			nodeData := (each / #data
-				collect: [ :data | (data attributeAt: #key) -> data stringValue ])
-				asDictionary.
+	graph / #node do: [ :each |
+			nodeData := (each / #data collect: [ :data | (data attributeAt: #key) -> data stringValue ]) asDictionary.
 			node := self nodeForType: (nodeData at: #'node-type').
 			node uuid: (UUID fromString: (each attributeAt: #id)).
 			node name: (nodeData at: #name).
-			xPositions at: node uuid put: (nodeData at: #xPosition).
-			yPositions at: node uuid put: (nodeData at: #yPosition).
+			nodeData at: #xPosition ifPresent: [ :xValue |
+					nodeData at: #yPosition ifPresent: [ :yValue |
+							xPositions at: node uuid put: xValue.
+							yPositions at: node uuid put: yValue ] ].
 			nodes at: node uuid put: node.
 			model add: node ].
-	graph / #edge
-		do: [ :each | 
-			edgeData := (each / #data
-				collect: [ :data | (data attributeAt: #key) -> data stringValue ])
-				asDictionary.
-			(edge := self edgeForType: (edgeData at: #'edge-type'))
+	graph / #edge do: [ :each |
+			edgeData := (each / #data collect: [ :data | (data attributeAt: #key) -> data stringValue ]) asDictionary.
+			edge := self edgeForType: (edgeData at: #'edge-type').
+			edge
 				uuid: (UUID fromString: (each attributeAt: #id));
 				name: (edgeData at: #name);
 				source: (nodes at: (UUID fromString: (each attributeAt: #source)));

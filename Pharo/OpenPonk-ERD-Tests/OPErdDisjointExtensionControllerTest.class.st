@@ -9,9 +9,10 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdDisjointExtensionControllerTest >> controllerClass [
 	"Answer the specialized controller class."
+
 	^ OPErdDisjointExtensionController
 ]
 

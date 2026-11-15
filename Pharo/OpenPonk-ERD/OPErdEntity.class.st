@@ -18,14 +18,10 @@ OPErdEntity >> beNormal [
 	self isWeak: false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPErdEntity >> beWeak [
-	self isWeak: true
-]
 
-{ #category : 'accessing' }
-OPErdEntity >> diagramElement [
-	^ OPErdEntityShape
+	self isWeak: true
 ]
 
 { #category : 'associating' }

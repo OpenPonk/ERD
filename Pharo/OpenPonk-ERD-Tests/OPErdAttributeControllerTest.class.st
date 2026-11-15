@@ -9,21 +9,24 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdAttributeControllerTest class >> diagramElementClass [
 	"Answer the shape class representing an attribute."
+
 	^ OPErdAttributeShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdAttributeControllerTest >> controllerClass [
 	"Answer the controller class under test."
+
 	^ OPErdAttributeController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdAttributeControllerTest >> modelClass [
 	"Answer the model class under test."
+
 	^ OPErdAttribute
 ]
 

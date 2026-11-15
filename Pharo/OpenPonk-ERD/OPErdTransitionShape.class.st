@@ -20,28 +20,41 @@ OPErdTransitionShape >> createOwnedElementsWithoutController [
 	OPErdTransitionLabel in: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPErdTransitionShape >> inheritanceMarker [
-	^ (RSMarker new
-				shape: (RSPolygon new
-					points: { 10@ -10 . 10@ 0 . 0@ 5 . -10@0 .
-					-10@ -10 . -9@ -10 . -9@0 . 0@ 4 . 9@0 . 9@ -10 };
-					border: (RSBorder new color: Color black; width: 1);
-					color: Color black;
-					cornerRadii: 10;
-					yourself);
-				offsetRatio: 0.45;
-				offset: 10;
-				yourself)
+
+	^ RSMarker new
+		  shape: (RSPolygon new
+				   points: {
+						   (10 @ -10).
+						   (10 @ 0).
+						   (0 @ 5).
+						   (-10 @ 0).
+						   (-10 @ -10).
+						   (-9 @ -10).
+						   (-9 @ 0).
+						   (0 @ 4).
+						   (9 @ 0).
+						   (9 @ -10) };
+				   border: (RSBorder new
+						    color: Color black;
+						    width: 1);
+				   color: Color black;
+				   cornerRadii: 10;
+				   yourself);
+		  offsetRatio: 0.45;
+		  offset: 10;
+		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPErdTransitionShape >> inheritanceMarkerNil [
+
 	^ RSMarker new
-				shape: (RSPolygon new
-					points: { 0@0 };
-					yourself);
-				yourself
+		  shape: (RSPolygon new
+				   points: { (0 @ 0) };
+				   yourself);
+		  yourself
 ]
 
 { #category : 'rendering' }

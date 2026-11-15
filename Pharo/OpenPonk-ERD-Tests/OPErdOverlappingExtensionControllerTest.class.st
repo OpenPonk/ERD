@@ -9,9 +9,10 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPErdOverlappingExtensionControllerTest >> controllerClass [
 	"Answer the specialized controller class."
+
 	^ OPErdOverlappingExtensionController
 ]
 
