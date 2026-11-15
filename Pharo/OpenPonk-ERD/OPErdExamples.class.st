@@ -50,23 +50,6 @@ OPErdExamples class >> exampleERDModel [
 ]
 
 { #category : 'examples' }
-OPErdExamples class >> exampleERDsample [
-	| project |
-	project := OPProject new name: 'Entity Relationship Diagram'.
-	project addModel: self exampleERDModel.
-	^ (OPWorkbench openProject: project) showAllElementsInAllDiagrams
-]
-
-{ #category : 'world menu' }
-OPErdExamples class >> exampleEmpty [
-	| project erd |
-	project := OPProject new name: 'Entity Relationship Diagram'.
-	erd := OPErd new name: 'New ER Diagram'.
-	project addModel: erd.
-	(OPWorkbench openProject: project) showAllElementsInAllDiagrams
-]
-
-{ #category : 'examples' }
 OPErdExamples class >> exampleUniversityERD [
 	| erdModel personEntity studentEntity teacherEntity personIdAttribute personNameAttribute studentGpaAttribute teacherSalaryAttribute isaExtension |
 	erdModel := OPErd new name: 'University Specialization ERD'.
