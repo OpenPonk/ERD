@@ -18,8 +18,10 @@ OPErdDerivedAttributeControllerTest >> controllerClass [
 { #category : 'tests' }
 OPErdDerivedAttributeControllerTest >> testCreateModelInCreatesDerivedAttribute [
 	"Verify that createModelIn initializes a derived attribute model."
-	| attrModel |
-	attrModel := controller createModelIn: diagramController model.
-	self assert: attrModel isDerived.
-	self assert: controller model isDerived
+
+	| attributeModel |
+	attributeModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: attributeModel.
+	self assert: attributeModel isDerived description: 'Created attribute model must be marked as derived'.
+	self deny: attributeModel isNormal description: 'Derived attribute model must not report as normal'
 ]

@@ -29,10 +29,10 @@ OPErdAttributeController >> canBeSourceFor: aController [
 
 { #category : 'connecting' }
 OPErdAttributeController >> canBeTargetFor: aController [
-	^ (aController class == OPErdTransitionController)
-		ifTrue: [ ^ self sourceIsValid: aController source model  ]
-		ifFalse: [ ^ false ]
 
+	^ aController class == OPErdTransitionController
+		  ifTrue: [ self viewModel sourceIsValid: aController source model ]
+		  ifFalse: [ false ]
 ]
 
 { #category : 'deprecation' }

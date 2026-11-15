@@ -100,7 +100,8 @@ OPErdTransition >> isInheritance: aBoolean [
 
 { #category : 'testing' }
 OPErdTransition >> isNormal [
-	^ (self isTotal & self isInheritance) not
+
+	^ (self isTotal or: [ self isInheritance ]) not
 ]
 
 { #category : 'comparing' }

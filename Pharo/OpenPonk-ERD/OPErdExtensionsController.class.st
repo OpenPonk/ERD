@@ -23,8 +23,8 @@ OPErdExtensionsController class >> viewModelClass [
 
 { #category : 'connecting' }
 OPErdExtensionsController >> canBeSourceFor: aController [
-	^ (aController class == OPErdTransitionController) | 
-	  (aController class == OPErdTotalTransitionController)
+
+	^ aController class == OPErdTransitionController or: [ aController class == OPErdTotalTransitionController ]
 ]
 
 { #category : 'connecting' }

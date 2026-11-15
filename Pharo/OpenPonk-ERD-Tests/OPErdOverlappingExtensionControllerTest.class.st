@@ -18,8 +18,10 @@ OPErdOverlappingExtensionControllerTest >> controllerClass [
 { #category : 'tests' }
 OPErdOverlappingExtensionControllerTest >> testCreateModelInCreatesOverlappingExtension [
 	"Verify that createModelIn initializes an overlapping extension model."
-	| extModel |
-	extModel := controller createModelIn: diagramController model.
-	self assert: extModel isOverlapping.
-	self assert: controller model isOverlapping
+
+	| extensionModel |
+	extensionModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: extensionModel.
+	self assert: extensionModel isOverlapping description: 'Created extension model must be marked as overlapping'.
+	self deny: extensionModel isNormal description: 'Overlapping extension model must not report as normal'
 ]

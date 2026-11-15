@@ -18,8 +18,10 @@ OPErdKeyAttributeControllerTest >> controllerClass [
 { #category : 'tests' }
 OPErdKeyAttributeControllerTest >> testCreateModelInCreatesKeyAttribute [
 	"Verify that createModelIn initializes a key attribute model."
-	| attrModel |
-	attrModel := controller createModelIn: diagramController model.
-	self assert: attrModel isKey.
-	self assert: controller model isKey
+
+	| attributeModel |
+	attributeModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: attributeModel.
+	self assert: attributeModel isKey description: 'Created attribute model must be marked as key'.
+	self deny: attributeModel isNormal description: 'Key attribute model must not report as normal'
 ]

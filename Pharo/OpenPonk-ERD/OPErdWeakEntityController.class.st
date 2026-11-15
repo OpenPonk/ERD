@@ -12,16 +12,19 @@ Class {
 
 { #category : 'connecting' }
 OPErdWeakEntityController >> canBeTargetFor: aController [
-	^ (aController class == OPErdTotalTransitionController)
-		ifTrue: [ (aController source modelClass == OPErdRelation)
-			ifTrue: [ ^ true ]
-			ifFalse: [ ^ (aController source model class == OPErdExtensions) ]  ]
-		ifFalse: [ (aController class == OPErdInheritanceTransitionController)
-			ifTrue: [ ^ (aController source modelClass == OPErdEntity) and: 
-							(aController source model uuid ~~ self model uuid) ]
-			ifFalse: [ (aController class == OPErdTransitionController)
-				ifTrue: [ ^ self sourceIsValid: aController source model ]
-				ifFalse: [ ^ false ] ] ]
+
+	^ aController class == OPErdTotalTransitionController
+		  ifTrue: [
+				  aController source modelClass == OPErdRelation
+					  ifTrue: [ true ]
+					  ifFalse: [ aController source model class == OPErdExtensions ] ]
+		  ifFalse: [
+				  aController class == OPErdInheritanceTransitionController
+					  ifTrue: [ aController source modelClass == OPErdEntity and: [ aController source model uuid ~~ self model uuid ] ]
+					  ifFalse: [
+							  aController class == OPErdTransitionController
+								  ifTrue: [ self viewModel sourceIsValid: aController source model ]
+								  ifFalse: [ false ] ] ]
 ]
 
 { #category : 'construction' }

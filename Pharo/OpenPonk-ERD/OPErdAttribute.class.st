@@ -91,5 +91,6 @@ OPErdAttribute >> isMultivalued: aBoolean [
 
 { #category : 'associating' }
 OPErdAttribute >> isNormal [
-	^ (isDerived & isMultivalued & isKey) not
+
+	^ (isDerived or: [ isMultivalued or: [ isKey ] ]) not
 ]

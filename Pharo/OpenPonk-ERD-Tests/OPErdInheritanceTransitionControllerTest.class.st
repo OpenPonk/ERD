@@ -23,12 +23,14 @@ OPErdInheritanceTransitionControllerTest >> targetControllerClass [
 { #category : 'tests' }
 OPErdInheritanceTransitionControllerTest >> testCreateModelInCreatesInheritanceTransition [
 	"Verify that createModelIn initializes an inheritance transition model."
-	| transModel sourceCtrl targetCtrl |
-	sourceCtrl := diagramController newControllerFor: OPErdEntity new.
-	targetCtrl := diagramController newControllerFor: OPErdEntity new.
-	controller source: sourceCtrl.
-	controller target: targetCtrl.
-	transModel := controller createModelIn: diagramController model.
-	self assert: transModel isInheritance.
-	self assert: controller model isInheritance
+
+	| transitionModel customSourceController customTargetController |
+	customSourceController := diagramController newControllerFor: OPErdEntity new.
+	customTargetController := diagramController newControllerFor: OPErdEntity new.
+	controller source: customSourceController.
+	controller target: customTargetController.
+	transitionModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: transitionModel.
+	self assert: transitionModel isInheritance description: 'Created transition model must be marked as inheritance'.
+	self deny: transitionModel isNormal description: 'Inheritance transition model must not report as normal'
 ]

@@ -36,23 +36,35 @@ OPErdControllerTest >> newModel [
 { #category : 'tests' }
 OPErdControllerTest >> testCanBeTargetFor [
 	"Verify valid and invalid target acceptance rules for the diagram controller."
-	self assert: (controller canBeTargetFor: OPErdEntityController new).
-	self assert: (controller canBeTargetFor: OPErdRelationController new).
-	self assert: (controller canBeTargetFor: OPErdAttributeController new).
-	self assert: (controller canBeTargetFor: OPErdExtensionsController new).
-	self deny: (controller canBeTargetFor: OPErdTransitionController new)
+
+	self
+		assert: (controller canBeTargetFor: OPErdEntityController new)
+		description: 'ERD diagram controller must accept entity controller as target'.
+	self
+		assert: (controller canBeTargetFor: OPErdRelationController new)
+		description: 'ERD diagram controller must accept relation controller as target'.
+	self
+		assert: (controller canBeTargetFor: OPErdAttributeController new)
+		description: 'ERD diagram controller must accept attribute controller as target'.
+	self
+		assert: (controller canBeTargetFor: OPErdExtensionsController new)
+		description: 'ERD diagram controller must accept extensions controller as target'.
+	self
+		deny: (controller canBeTargetFor: OPErdTransitionController new)
+		description: 'ERD diagram controller must reject transition controller as target'
 ]
 
 { #category : 'tests' }
 OPErdControllerTest >> testControllerFactory [
 	"Verify that the controller factory registers all core ERD model classes."
+
 	| factory |
 	factory := controller controllerFactory.
-	self assert: (factory hasControllerFor: OPErdEntity new).
-	self assert: (factory hasControllerFor: OPErdRelation new).
-	self assert: (factory hasControllerFor: OPErdAttribute new).
-	self assert: (factory hasControllerFor: OPErdExtensions new).
-	self assert: (factory hasControllerFor: OPErdTransition new)
+	self assert: (factory hasControllerFor: OPErdEntity new) description: 'Controller factory must register OPErdEntity'.
+	self assert: (factory hasControllerFor: OPErdRelation new) description: 'Controller factory must register OPErdRelation'.
+	self assert: (factory hasControllerFor: OPErdAttribute new) description: 'Controller factory must register OPErdAttribute'.
+	self assert: (factory hasControllerFor: OPErdExtensions new) description: 'Controller factory must register OPErdExtensions'.
+	self assert: (factory hasControllerFor: OPErdTransition new) description: 'Controller factory must register OPErdTransition'
 ]
 
 { #category : 'tests' }

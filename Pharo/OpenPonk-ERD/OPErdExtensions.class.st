@@ -70,7 +70,8 @@ OPErdExtensions >> isDisjoint: aBoolean [
 
 { #category : 'associating' }
 OPErdExtensions >> isNormal [
-	^ (isUnion & isDisjoint & isOverlapping) not
+
+	^ (isUnion or: [ isDisjoint or: [ isOverlapping ] ]) not
 ]
 
 { #category : 'accessing' }

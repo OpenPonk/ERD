@@ -18,8 +18,10 @@ OPErdDisjointExtensionControllerTest >> controllerClass [
 { #category : 'tests' }
 OPErdDisjointExtensionControllerTest >> testCreateModelInCreatesDisjointExtension [
 	"Verify that createModelIn initializes a disjoint extension model."
-	| extModel |
-	extModel := controller createModelIn: diagramController model.
-	self assert: extModel isDisjoint.
-	self assert: controller model isDisjoint
+
+	| extensionModel |
+	extensionModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: extensionModel.
+	self assert: extensionModel isDisjoint description: 'Created extension model must be marked as disjoint'.
+	self deny: extensionModel isNormal description: 'Disjoint extension model must not report as normal'
 ]

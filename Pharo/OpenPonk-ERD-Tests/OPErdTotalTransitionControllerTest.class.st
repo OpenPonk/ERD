@@ -23,12 +23,14 @@ OPErdTotalTransitionControllerTest >> sourceControllerClass [
 { #category : 'tests' }
 OPErdTotalTransitionControllerTest >> testCreateModelInCreatesTotalTransition [
 	"Verify that createModelIn initializes a total transition model."
-	| transModel sourceCtrl targetCtrl |
-	sourceCtrl := diagramController newControllerFor: OPErdEntity new.
-	targetCtrl := diagramController newControllerFor: OPErdRelation new.
-	controller source: sourceCtrl.
-	controller target: targetCtrl.
-	transModel := controller createModelIn: diagramController model.
-	self assert: transModel isTotal.
-	self assert: controller model isTotal
+
+	| transitionModel customSourceController customTargetController |
+	customSourceController := diagramController newControllerFor: OPErdEntity new.
+	customTargetController := diagramController newControllerFor: OPErdRelation new.
+	controller source: customSourceController.
+	controller target: customTargetController.
+	transitionModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: transitionModel.
+	self assert: transitionModel isTotal description: 'Created transition model must be marked as total'.
+	self deny: transitionModel isNormal description: 'Total transition model must not report as normal'
 ]

@@ -18,8 +18,10 @@ OPErdMultivaluedAttributeControllerTest >> controllerClass [
 { #category : 'tests' }
 OPErdMultivaluedAttributeControllerTest >> testCreateModelInCreatesMultivaluedAttribute [
 	"Verify that createModelIn initializes a multivalued attribute model."
-	| attrModel |
-	attrModel := controller createModelIn: diagramController model.
-	self assert: attrModel isMultivalued.
-	self assert: controller model isMultivalued
+
+	| attributeModel |
+	attributeModel := controller createModelIn: diagramController model.
+	self assert: controller model identicalTo: attributeModel.
+	self assert: attributeModel isMultivalued description: 'Created attribute model must be marked as multivalued'.
+	self deny: attributeModel isNormal description: 'Multivalued attribute model must not report as normal'
 ]

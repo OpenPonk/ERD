@@ -39,7 +39,7 @@ OPErdEntityController >> canBeTargetFor: aController [
 								  ifFalse: [ aController source model class == OPErdExtensions ] ]
 					  ifFalse: [
 							  aController class == OPErdTransitionController
-								  ifTrue: [ self validSources includes: aController source model class ]
+								  ifTrue: [ self viewModel validSources includes: aController source model class ]
 								  ifFalse: [ false ] ] ]
 ]
 

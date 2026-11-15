@@ -15,6 +15,15 @@ OPControllerOfErdTest class >> isAbstract [
 	^ self = OPControllerOfErdTest
 ]
 
+{ #category : 'helpers' }
+OPControllerOfErdTest >> connection: aTransitionControllerClass from: aSourceController [
+
+	^ aTransitionControllerClass new
+		  diagramController: diagramController;
+		  source: aSourceController;
+		  yourself
+]
+
 { #category : 'accessing' }
 OPControllerOfErdTest >> diagramControllerClass [
 	"Answer the top-level diagram controller class for ERD."
@@ -25,4 +34,11 @@ OPControllerOfErdTest >> diagramControllerClass [
 OPControllerOfErdTest >> diagramModelClass [
 	"Answer the top-level diagram model container class for ERD."
 	^ OPErd
+]
+
+{ #category : 'helpers' }
+OPControllerOfErdTest >> showNewModelInDiagram: aModel [
+
+	diagramController model add: aModel.
+	^ diagramController showWithoutDependentInDiagramModel: aModel
 ]

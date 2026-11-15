@@ -55,18 +55,9 @@ OPErdAttributeViewModel >> commandForProperty: aSymbol accessor: anAccessor oldV
 
 { #category : 'validation' }
 OPErdAttributeViewModel >> derivedValidation [
-	| inc out |
-	inc := self model incoming isEmpty
-		       ifTrue: [ true ]
-		       ifFalse: [
-			       self model incoming allSatisfy: [ :each |
-				       self validDerivedSources includes: each source class ] ].
-	out := self model outgoing isEmpty
-		       ifTrue: [ true ]
-		       ifFalse: [
-		       self model outgoing includesAny: self validDerivedTargets ].
-	inc & out ifTrue: [ ^ true ].
-	^ false
+
+	^ (self model incoming allSatisfy: [ :each | self validDerivedSources includes: each source class ]) and: [
+		  self model outgoing allSatisfy: [ :each | self validDerivedTargets includes: each target class ] ]
 ]
 
 { #category : 'accessing' }
@@ -79,11 +70,11 @@ OPErdAttributeViewModel >> icon [
 
 { #category : 'testing' }
 OPErdAttributeViewModel >> sourceIsValid: aModel [
-	(self model isDerived or: [ self model isKey ])
-		ifTrue: [ ^ self validSources includes: aModel class ].
-	(aModel class == self model class)
-		ifTrue: [ ^ ((aModel uuid ~~ self model uuid) and: ((aModel isDerived) | aModel isKey) not) ]
-		ifFalse: [ ^ self validSources includes: aModel class ]
+
+	(self model isDerived or: [ self model isKey ]) ifFalse: [
+		aModel class == self model class ifTrue: [
+			^ aModel uuid ~~ self model uuid and: [ (aModel isDerived or: [ aModel isKey ]) not ] ] ].
+	^ self validSources includes: aModel class
 ]
 
 { #category : 'accessing - DirectedRelationship' }
