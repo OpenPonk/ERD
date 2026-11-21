@@ -1,6 +1,5 @@
 "
-View model for the top-level Entity-Relationship Diagram model. 
-Provides essential child models and icon definitions for the workbench tree and UI integration.
+View model for the top-level Entity-Relationship Diagram model. Provides child models and icon definitions for the workbench tree and UI integration.
 "
 Class {
 	#name : 'OPErdViewModel',
@@ -22,11 +21,6 @@ OPErdViewModel class >> modelClass [ ^ OPErd
 
 { #category : 'accessing' }
 OPErdViewModel >> childrenModels [ ^ self model states
-]
-
-{ #category : 'accessing' }
-OPErdViewModel >> essentialChildrenModels [
-			^ self model elements asArray
 ]
 
 { #category : 'accessing' }

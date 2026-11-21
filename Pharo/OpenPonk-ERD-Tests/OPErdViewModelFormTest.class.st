@@ -348,16 +348,19 @@ OPErdViewModelFormTest >> testTransitionViewModelFormBindingsAndUndo [
 ]
 
 { #category : 'tests' }
-OPErdViewModelFormTest >> testViewModelEssentialChildrenAndIcons [
+OPErdViewModelFormTest >> testViewModelChildrenAndIcons [
 
-	| erdModel entityModel relationModel attributeModel extensionModel transitionModel erdViewModel entityViewModel relationViewModel attributeViewModel extensionViewModel transitionViewModel |
+	| project projectController erdModel entityModel relationModel attributeModel extensionModel transitionModel erdViewModel entityViewModel relationViewModel attributeViewModel extensionViewModel transitionViewModel |
 	self assert: OPErdNodeViewModel isAbstract description: 'Abstract base node view model must report as abstract'.
 	self deny: OPErdEntityViewModel isAbstract description: 'Concrete entity view model must not report as abstract'.
 	self assert: OPErdNodeViewModel modelClass identicalTo: OPErdNode.
 
 	erdModel := OPErd named: 'Diagram'.
-	erdViewModel := OPErdViewModel new model: erdModel.
-	self assertEmpty: erdViewModel essentialChildrenModels.
+	project := OPProject named: 'ErdViewModelTest'.
+	project addModel: erdModel.
+	projectController := OPProjectController forProject: project.
+	erdViewModel := projectController viewModelRegistry viewModelFor: erdModel.
+	self assertEmpty: erdViewModel childrenModels.
 
 	entityModel := OPErdEntity named: 'Customer'.
 	relationModel := OPErdRelation named: 'places'.
@@ -371,8 +374,12 @@ OPErdViewModelFormTest >> testViewModelEssentialChildrenAndIcons [
 			extensionModel.
 			transitionModel }.
 
-	self assert: erdViewModel essentialChildrenModels class identicalTo: Array.
-	self assertCollection: erdViewModel essentialChildrenModels hasSameElements: {
+	self assertCollection: erdViewModel childrenModels hasSameElements: {
+			entityModel.
+			relationModel.
+			attributeModel.
+			extensionModel }.
+	self assertCollection: erdViewModel allChildrenModels hasSameElements: {
 			entityModel.
 			relationModel.
 			attributeModel.
