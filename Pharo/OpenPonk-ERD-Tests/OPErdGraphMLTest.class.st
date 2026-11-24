@@ -419,6 +419,25 @@ OPErdGraphMLTest >> testExportAndImportRoundtripAllTwelveNodeAndThreeEdgeTypes [
 ]
 
 { #category : 'tests' }
+OPErdGraphMLTest >> testExportPackageFallsBackToDefaultFileNameWhenModelNameMissingOrBlank [
+
+	| capturedFileNames |
+	capturedFileNames := OrderedCollection new.
+	(OPExportFileDialog stub
+		 exportBlock: Any
+		 defaultFileName: Any
+		 extensions: Any
+		 named: Any
+		 title: Any) will: [ :exportBlock :defaultFileName :extensions :filterName :dialogTitle |
+		capturedFileNames add: defaultFileName ].
+
+	OPErdGraphML exportPackage: (OPErd new name: '   ').
+	OPErdGraphML exportPackage: Object new.
+
+	self assert: capturedFileNames asArray equals: #( 'export.graphml' 'export.graphml' )
+]
+
+{ #category : 'tests' }
 OPErdGraphMLTest >> testExportPackagePassesGraphMLExtensionsAndTitleToExportDialog [
 
 	| modelWithSpecialName capturedBlock capturedFileName capturedExtensions capturedFilterName capturedTitle exportedXml |

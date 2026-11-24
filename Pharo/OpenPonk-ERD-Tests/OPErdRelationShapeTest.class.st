@@ -29,3 +29,19 @@ OPErdRelationShapeTest >> testRemoveRenderCleansUpAttachedShapesFromCanvas [
 			RSPolygon }.
 	self assertEmpty: canvas shapes
 ]
+
+{ #category : 'tests' }
+OPErdRelationShapeTest >> testRemoveRenderCleansUpEntityAndAttributeAttachedShapesFromCanvas [
+
+	| canvas entityShape attributeShape |
+	canvas := RSCanvas new.
+	entityShape := OPErdEntityShape forModelElement: (OPErdEntity named: 'Customer').
+	attributeShape := OPErdAttributeShape forModelElement: (OPErdAttribute named: 'name').
+	entityShape renderIn: canvas.
+	attributeShape renderIn: canvas.
+	self denyEmpty: canvas shapes.
+
+	entityShape removeRender.
+	attributeShape removeRender.
+	self assertEmpty: canvas shapes
+]

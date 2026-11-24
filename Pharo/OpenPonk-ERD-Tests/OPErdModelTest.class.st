@@ -48,6 +48,38 @@ OPErdModelTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPErdModelTest >> testDeprecatedIncomingTransitionAliasesAndDelegation [
+
+	| createdTransition legacyTransition otherEntity |
+	self assert: OPErdIncomingTransition isDeprecated description: 'OPErdIncomingTransition must remain marked as deprecated'.
+	createdTransition := OPErdIncomingTransition new.
+	self assert: createdTransition class identicalTo: OPErdTransition.
+
+	transitionModel
+		beTotal;
+		beInheritance.
+	legacyTransition := OPErdIncomingTransition basicNew.
+	legacyTransition instVarNamed: #transition put: transitionModel.
+	self assert: legacyTransition source identicalTo: entityModel.
+	self assert: legacyTransition target identicalTo: attributeModel.
+	self assert: legacyTransition isTotal description: 'Legacy incoming transition must delegate isTotal to wrapped transition'.
+	self
+		assert: legacyTransition isInheritance
+		description: 'Legacy incoming transition must delegate isInheritance to wrapped transition'.
+
+	otherEntity := OPErdEntity named: 'Other'.
+	legacyTransition
+		source: relationModel;
+		target: otherEntity;
+		isTotal: false;
+		isInheritance: false.
+	self assert: legacyTransition source identicalTo: relationModel.
+	self assert: legacyTransition target identicalTo: otherEntity.
+	self deny: legacyTransition isTotal description: 'Explicit own isTotal must override wrapped transition'.
+	self deny: legacyTransition isInheritance description: 'Explicit own isInheritance must override wrapped transition'
+]
+
+{ #category : 'tests' }
 OPErdModelTest >> testDiagramAndNodePredicatesAndArrowOperator [
 
 	| baseNode arrowTransition twoArgTransition threeArgTransition |

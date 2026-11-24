@@ -112,3 +112,11 @@ OPErdNodeController >> hookDiagramElement [
 OPErdNodeController >> modelAsParent [
 	^ self model owner
 ]
+
+{ #category : 'diagram elements' }
+OPErdNodeController >> unhookDiagramElement [
+
+	super unhookDiagramElement.
+
+	(self diagramElement ifNotExists: [ ^ self ]) adornmentCreationBlock: [ :builder |  ]
+]

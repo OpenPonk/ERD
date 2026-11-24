@@ -48,11 +48,7 @@ OPErdExtensionsShape >> renderShapeDetails [
 	RSLocation new
 		stick: label on: self roassalShape;
 		center.
-	self canvas add: label.
-	self roassalShape
-		when: RSShapeRemovedEvent
-		do: [ label remove ]
-		for: self
+	self canvas add: label
 ]
 
 { #category : 'updating' }

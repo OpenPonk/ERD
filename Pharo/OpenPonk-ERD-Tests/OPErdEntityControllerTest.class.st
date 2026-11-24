@@ -31,6 +31,62 @@ OPErdEntityControllerTest >> modelClass [
 ]
 
 { #category : 'tests' }
+OPErdEntityControllerTest >> testAdornmentsSelectAttributeRelationAndTransitionTools [
+
+	| palette mockEditor mockWorkbench capturedActions mockBuilder attributeTool attributeModel attributeController relationTool relationModel relationController transitionTool createdTransitions |
+	diagramController model add: model.
+	controller := diagramController showWithoutDependentInDiagramModel: model.
+	mockWorkbench := Mock new.
+	mockEditor := Mock new.
+	mockEditor stub workbench willReturn: mockWorkbench.
+	palette := OPPalette new.
+	palette owner: mockEditor.
+	palette createPaletteFor: diagramController.
+	mockEditor stub palette willReturn: palette.
+	diagramController editor: mockEditor.
+	[
+		capturedActions := OrderedCollection new.
+		mockBuilder := Mock new.
+		(mockBuilder stub addIconShape: Any action: Any) will: [ :iconShape :actionBlock | capturedActions add: actionBlock ].
+
+		(controller diagramElement instVarNamed: #adornmentCreationBlock) value: mockBuilder.
+		self assert: capturedActions size equals: 3.
+
+		capturedActions first value.
+		attributeTool := palette selectedTool.
+		self assert: attributeTool class identicalTo: OPNodeCreationTool.
+		self assert: (attributeTool instVarNamed: #factory) value class identicalTo: OPErdAttributeController.
+		attributeModel := OPErdAttribute named: 'attr'.
+		diagramController model add: attributeModel.
+		attributeController := diagramController showWithoutDependentInDiagramModel: attributeModel.
+		(attributeTool instVarNamed: #onComplete) value: attributeController.
+		self assert: palette selectedTool class identicalTo: OPSelectionTool.
+
+		capturedActions second value.
+		relationTool := palette selectedTool.
+		self assert: relationTool class identicalTo: OPNodeCreationTool.
+		self assert: (relationTool instVarNamed: #factory) value class identicalTo: OPErdRelationController.
+		relationModel := OPErdRelation named: 'rel'.
+		diagramController model add: relationModel.
+		relationController := diagramController showWithoutDependentInDiagramModel: relationModel.
+		(relationTool instVarNamed: #onComplete) value: relationController.
+		self assert: palette selectedTool class identicalTo: OPSelectionTool.
+
+		createdTransitions := diagramController model transitions.
+		self assert: createdTransitions size equals: 2.
+		self assert: createdTransitions first source identicalTo: controller model.
+		self assert: createdTransitions first target identicalTo: attributeModel.
+		self assert: createdTransitions second source identicalTo: controller model.
+		self assert: createdTransitions second target identicalTo: relationModel.
+
+		capturedActions third value.
+		transitionTool := palette selectedTool.
+		self assert: transitionTool class identicalTo: OPConnectionCreationTool.
+		self assert: (transitionTool instVarNamed: #factory) value class identicalTo: OPErdTransitionController ] ensure: [
+		diagramController editor: nil ]
+]
+
+{ #category : 'tests' }
 OPErdEntityControllerTest >> testCanBeSourceFor [
 
 	self
@@ -111,4 +167,22 @@ OPErdEntityControllerTest >> testCanBeTargetFor [
 	self
 		deny: (weakViaFactoryController canBeTargetFor: (self connection: OPErdTransitionController from: regularRelationController))
 		description: 'Weak entity via factory controller must reject regular transition from relation'
+]
+
+{ #category : 'tests' }
+OPErdEntityControllerTest >> testUnhookDiagramElementResetsAdornmentCreationBlock [
+
+	| shape builder |
+	diagramController model add: model.
+	controller := diagramController showWithoutDependentInDiagramModel: model.
+	shape := controller diagramElement.
+
+	controller unhookDiagramElement.
+	builder := OPRSAdornmentBuilder new.
+	(shape instVarNamed: #adornmentCreationBlock) value: builder.
+	self assertEmpty: (builder instVarNamed: #adornments).
+
+	controller diagramElement: OPNoShape instance.
+	controller unhookDiagramElement.
+	self deny: controller diagramElement exists description: 'Unhooking with OPNoShape must leave diagramElement non-existent'
 ]

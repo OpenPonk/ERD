@@ -13,6 +13,12 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'accessing' }
+OPErdTransitionShape >> attachedShapes [
+
+	^ super attachedShapes , { total }
+]
+
 { #category : 'initialization' }
 OPErdTransitionShape >> createOwnedElementsWithoutController [
 
@@ -86,11 +92,7 @@ OPErdTransitionShape >> renderShapeDetails [
 		         to: self target roassalShape;
 		         yourself.
 	RSLocation new stick: total on: self roassalShape.
-	self canvas add: total.
-	self roassalShape
-		when: RSShapeRemovedEvent
-		do: [ total remove ]
-		for: self
+	self canvas add: total
 ]
 
 { #category : 'accessing' }

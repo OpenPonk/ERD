@@ -45,30 +45,20 @@ OPErdRelationShape >> renderShapeDetails [
 	RSLocation new stick: label on: self roassalShape.
 	identifying := RSPolygon new
 		               points: {
-				               ((self roassalShape points at: 1) asPoint x
-				                @ ((self roassalShape points at: 1) asPoint y - 3)).
-				               ((self roassalShape points at: 2) asPoint x - 4
-				                @ (self roassalShape points at: 2) asPoint y).
-				               ((self roassalShape points at: 3) asPoint x
-				                @ ((self roassalShape points at: 3) asPoint y + 3)).
-				               ((self roassalShape points at: 4) asPoint x + 4
-				                @ (self roassalShape points at: 4) asPoint y) };
+				               ((self roassalShape points at: 1) asPoint x @ ((self roassalShape points at: 1) asPoint y - 3)).
+				               ((self roassalShape points at: 2) asPoint x - 4 @ (self roassalShape points at: 2) asPoint y).
+				               ((self roassalShape points at: 3) asPoint x @ ((self roassalShape points at: 3) asPoint y + 3)).
+				               ((self roassalShape points at: 4) asPoint x + 4 @ (self roassalShape points at: 4) asPoint y) };
 		               color: Color transparent;
 		               borderColor: Color transparent;
-		               yourself. "{ 0@21. 31@0. 0@(-21). -31@0. }"
-		
+		               yourself.
+
 	self addEventForwardingFrom: identifying to: self roassalShape.
-	
+
 	RSLocation new stick: identifying on: self roassalShape.
 	self canvas
 		add: label;
-		add: identifying.
-	self roassalShape
-		when: RSShapeRemovedEvent
-		do: [
-			label remove.
-			identifying remove ]
-		for: self
+		add: identifying
 ]
 
 { #category : 'rendering' }

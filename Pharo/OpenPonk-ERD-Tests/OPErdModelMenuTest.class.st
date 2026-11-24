@@ -89,3 +89,20 @@ OPErdModelMenuTest >> testXmlCommandsExecuteDelegatesToErdGraphML [
 	self assert: importedModel identicalTo: targetModel.
 	self assert: importedEditor identicalTo: mockEditor
 ]
+
+{ #category : 'tests' }
+OPErdModelMenuTest >> testXmlCommandsModelMenuActivationMetadata [
+
+	| exportActivation importActivation |
+	exportActivation := OPErdExportXmlCommand modelMenuActivation.
+	self assert: exportActivation class identicalTo: OPModelMenuActivation.
+	self assert: exportActivation menuGroup identicalTo: OPModelBasicMenuGroup.
+	self assert: exportActivation menuItemOrder equals: 10.
+	self assert: exportActivation activeContext equals: OPEditor asAnnotationContext.
+
+	importActivation := OPErdImportXmlCommand modelMenuActivation.
+	self assert: importActivation class identicalTo: OPModelMenuActivation.
+	self assert: importActivation menuGroup identicalTo: OPModelBasicMenuGroup.
+	self assert: importActivation menuItemOrder equals: 20.
+	self assert: importActivation activeContext equals: OPEditor asAnnotationContext
+]

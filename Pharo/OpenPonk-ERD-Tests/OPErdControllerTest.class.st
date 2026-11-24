@@ -72,9 +72,81 @@ OPErdControllerTest >> testControllerFactory [
 
 { #category : 'tests' }
 OPErdControllerTest >> testInitializePalette [
-	"Verify that the palette is correctly populated with tools and separators (2 default + 19 ERD items = 21)."
-	| palette |
+	"Verify that the palette is populated with all expected ERD tools, types, and controller factories."
+
+	| palette entries expectedSpecs |
 	palette := OPPalette new.
 	controller initializePalette: palette.
-	self assert: palette items size equals: 21
+	self assert: palette items size equals: 21.
+
+	entries := palette items select: [ :eachItem | eachItem isKindOf: OPPaletteEntry ].
+	expectedSpecs := {
+		                 {
+			                 'Regular Entity'.
+			                 OPNodeCreationTool.
+			                 OPErdEntityController }.
+		                 {
+			                 'Weak Entity'.
+			                 OPNodeCreationTool.
+			                 OPErdWeakEntityController }.
+		                 {
+			                 'Regular Relation'.
+			                 OPNodeCreationTool.
+			                 OPErdRelationController }.
+		                 {
+			                 'Identifying Relation'.
+			                 OPNodeCreationTool.
+			                 OPErdIdentifyingRelationController }.
+		                 {
+			                 'Regular Attribute'.
+			                 OPNodeCreationTool.
+			                 OPErdAttributeController }.
+		                 {
+			                 'Derived Attribute'.
+			                 OPNodeCreationTool.
+			                 OPErdDerivedAttributeController }.
+		                 {
+			                 'Multivalued Attribute'.
+			                 OPNodeCreationTool.
+			                 OPErdMultivaluedAttributeController }.
+		                 {
+			                 'Key Attribute'.
+			                 OPNodeCreationTool.
+			                 OPErdKeyAttributeController }.
+		                 {
+			                 'Regular Connection'.
+			                 OPConnectionCreationTool.
+			                 OPErdTransitionController }.
+		                 {
+			                 'Total Connection'.
+			                 OPConnectionCreationTool.
+			                 OPErdTotalTransitionController }.
+		                 {
+			                 'Inheritance Connection'.
+			                 OPConnectionCreationTool.
+			                 OPErdInheritanceTransitionController }.
+		                 {
+			                 'Custom State'.
+			                 OPNodeCreationTool.
+			                 OPErdExtensionsController }.
+		                 {
+			                 'Union'.
+			                 OPNodeCreationTool.
+			                 OPErdUnionExtensionController }.
+		                 {
+			                 'Disjoint'.
+			                 OPNodeCreationTool.
+			                 OPErdDisjointExtensionController }.
+		                 {
+			                 'Overlapping'.
+			                 OPNodeCreationTool.
+			                 OPErdOverlappingExtensionController } }.
+
+	self assertCollection: (entries collect: #label) includesAll: (expectedSpecs collect: #first).
+	expectedSpecs do: [ :eachSpec |
+			| entry |
+			entry := entries detect: [ :eachEntry | eachEntry label = eachSpec first ].
+			entry click.
+			self assert: palette selectedTool class identicalTo: eachSpec second.
+			self assert: (palette selectedTool instVarNamed: #factory) value class identicalTo: eachSpec third ]
 ]

@@ -12,7 +12,8 @@ Class {
 
 { #category : 'accessing' }
 OPErdPlugin class >> repositoryName [
-	^ #erd
+
+	^ #ERD
 ]
 
 { #category : 'accessing' }

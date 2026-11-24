@@ -76,14 +76,7 @@ OPErdAttributeShape >> renderShapeDetails [
 	self canvas
 		add: border;
 		add: label;
-		add: innerEllipse.
-	self roassalShape
-		when: RSShapeRemovedEvent
-		do: [
-			label remove.
-			border remove.
-			innerEllipse remove ]
-		for: self
+		add: innerEllipse
 ]
 
 { #category : 'update' }

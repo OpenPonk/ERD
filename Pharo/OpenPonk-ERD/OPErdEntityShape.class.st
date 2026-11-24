@@ -54,21 +54,15 @@ OPErdEntityShape >> renderShapeDetails [
 				         width: 1.5;
 				         yourself);
 		        yourself.
-		
+
 	self addEventForwardingFrom: weak to: self roassalShape.
 	self addEventForwardingFrom: label to: self roassalShape.
-		
+
 	"Size changing according to main shape"
 	RSLocation new stick: weak on: self roassalShape.
 	self canvas
 		add: label;
-		add: weak.
-	self roassalShape
-		when: RSShapeRemovedEvent
-		do: [
-			label remove.
-			weak remove ]
-		for: self
+		add: weak
 ]
 
 { #category : 'rendering' }

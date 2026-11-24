@@ -71,3 +71,27 @@ OPErdTransitionControllerTest >> targetModelClass [
 
 	^ OPErdRelation
 ]
+
+{ #category : 'tests' }
+OPErdTransitionControllerTest >> testShowInDiagramEnsuresSourceAndTarget [
+
+	| sourceEntity targetRelation transitionModel shownController |
+	sourceEntity := OPErdEntity named: 'Customer'.
+	targetRelation := OPErdRelation named: 'places'.
+	transitionModel := OPErdTransition from: sourceEntity to: targetRelation named: '1'.
+	diagramController model addAll: {
+			sourceEntity.
+			targetRelation.
+			transitionModel }.
+
+	shownController := diagramController showInDiagramModel: transitionModel.
+	self assert: shownController model identicalTo: transitionModel.
+	self assert: shownController source model identicalTo: sourceEntity.
+	self assert: shownController target model identicalTo: targetRelation.
+	self
+		assert: (diagramController hasControllerForModel: sourceEntity)
+		description: 'Showing transition must also show its source entity'.
+	self
+		assert: (diagramController hasControllerForModel: targetRelation)
+		description: 'Showing transition must also show its target relation'
+]

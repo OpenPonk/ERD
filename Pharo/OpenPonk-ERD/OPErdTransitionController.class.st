@@ -21,34 +21,7 @@ OPErdTransitionController class >> viewModelClass [
 	^ OPErdTransitionViewModel
 ]
 
-{ #category : 'accessing' }
-OPErdTransitionController >> ensureSourceAndTargetIn: aDiagramController [
-
-	source ifNil: [
-		self source:
-			(aDiagramController showWithoutDependentInDiagramModel:
-				 self model source) ].
-	target ifNil: [
-		self target:
-			(aDiagramController showWithoutDependentInDiagramModel:
-				 self model target) ]
-]
-
 { #category : 'testing' }
 OPErdTransitionController >> isHideable [
 	^ true
-]
-
-{ #category : 'construction' }
-OPErdTransitionController >> showInDiagram: aDiagramController [
-
-	self ensureSourceAndTargetIn: aDiagramController.
-	^ super showInDiagram: aDiagramController
-]
-
-{ #category : 'construction' }
-OPErdTransitionController >> showWithoutDependentInDiagram: aDiagramController [
-
-	self ensureSourceAndTargetIn: aDiagramController.
-	^ super showWithoutDependentInDiagram: aDiagramController
 ]
